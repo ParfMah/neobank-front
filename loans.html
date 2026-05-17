@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mes Prêts — NeoBank</title>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <link rel="stylesheet" href="../css/enhancements.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="../css/loans.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="manifest" href="../manifest.json" />
+  <meta name="theme-color" content="#00d4ff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.svg" />
+</head>
+<body class="dash-body">
+
+<div class="dash-layout">
+  <!-- ─── SIDEBAR ──────────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">◆</span><span class="logo-text">NeoBank</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-label">Principal</div>
+        <a class="nav-item" href="dashboard.html">
+          <span class="nav-item-icon">◈</span> Vue d'ensemble
+        </a>
+        <a class="nav-item" href="dashboard.html">
+          <span class="nav-item-icon">⇄</span> Transactions
+        </a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Crédit</div>
+        <a class="nav-item active" data-tab="my-loans">
+          <span class="nav-item-icon">◎</span> Mes prêts
+        </a>
+        <a class="nav-item" data-tab="apply">
+          <span class="nav-item-icon">＋</span> Demander un prêt
+        </a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Compte</div>
+        <a class="nav-item" href="dashboard.html">
+          <span class="nav-item-icon">◉</span> Profil
+        </a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="user-avatar" id="userAvatar">??</div>
+        <div class="user-info">
+          <div class="user-name" id="userName">—</div>
+          <div class="user-role">Compte courant</div>
+        </div>
+      </div>
+      <button class="nav-item" id="logoutBtn" style="width:100%;margin-top:6px;border:none;background:none;">
+        <span class="nav-item-icon">⏻</span> Déconnexion
+      </button>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ───────────────────────────────────────────────── -->
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="topbar-btn" id="sidebarToggle">☰</button>
+        <span class="topbar-title" id="topbarTitle">Mes prêts</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary btn-sm" onclick="switchTab('apply')">＋ Nouveau prêt</button>
+      </div>
+    </div>
+
+    <div class="dash-content">
+
+      <!-- ─── TABS ──────────────────────────────────────────── -->
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="my-loans">Mes prêts</button>
+        <button class="tab-btn" data-tab="apply">Faire une demande</button>
+        <button class="tab-btn" data-tab="simulator">Simulateur</button>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           TAB 1 : MES PRÊTS
+      ══════════════════════════════════════════ -->
+      <div id="tab-my-loans">
+        <div id="loansContainer">
+          <div class="empty-state">
+            <div class="loader-spinner" style="margin:auto"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           TAB 2 : DEMANDE DE PRÊT
+      ══════════════════════════════════════════ -->
+      <div id="tab-apply" style="display:none;">
+        <div class="apply-grid">
+          <!-- Formulaire -->
+          <div>
+            <div class="card card-sm" style="margin-bottom:var(--space-lg);">
+              <div class="section-title-sm" style="margin-bottom:var(--space-lg);">Type de prêt</div>
+              <div class="loan-type-grid" id="loanTypeGrid">
+                <button class="loan-type-btn selected" data-type="personal" data-rate="5.9">
+                  <span class="loan-type-icon">👤</span>
+                  <span>Personnel</span>
+                  <span style="font-size:0.7rem;color:var(--color-accent)">5.9%</span>
+                </button>
+                <button class="loan-type-btn" data-type="auto" data-rate="4.5">
+                  <span class="loan-type-icon">🚗</span>
+                  <span>Auto</span>
+                  <span style="font-size:0.7rem;color:var(--color-accent)">4.5%</span>
+                </button>
+                <button class="loan-type-btn" data-type="mortgage" data-rate="3.2">
+                  <span class="loan-type-icon">🏠</span>
+                  <span>Immobilier</span>
+                  <span style="font-size:0.7rem;color:var(--color-accent)">3.2%</span>
+                </button>
+                <button class="loan-type-btn" data-type="business" data-rate="6.8">
+                  <span class="loan-type-icon">💼</span>
+                  <span>Pro</span>
+                  <span style="font-size:0.7rem;color:var(--color-accent)">6.8%</span>
+                </button>
+                <button class="loan-type-btn" data-type="student" data-rate="2.5">
+                  <span class="loan-type-icon">🎓</span>
+                  <span>Étudiant</span>
+                  <span style="font-size:0.7rem;color:var(--color-accent)">2.5%</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="card card-sm">
+              <div class="section-title-sm" style="margin-bottom:var(--space-lg);">Paramètres du prêt</div>
+              <div id="applyAlert" class="alert" style="display:none;"></div>
+              <form id="applyForm" novalidate>
+                <div class="form-group">
+                  <label class="form-label">Montant souhaité</label>
+                  <div style="display:flex;align-items:center;gap:var(--space-md);">
+                    <input type="range" id="applyAmount" min="500" max="50000" value="10000" step="500"
+                           style="flex:1;" />
+                    <input type="number" id="applyAmountNum" class="form-input"
+                           value="10000" min="100" max="100000"
+                           style="width:120px;text-align:right;" />
+                  </div>
+                  <span class="form-error" id="applyAmountError"></span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Durée de remboursement</label>
+                  <div style="display:flex;align-items:center;gap:var(--space-md);">
+                    <input type="range" id="applyDuration" min="6" max="84" value="24" step="6"
+                           style="flex:1;" />
+                    <span class="form-input" id="applyDurationDisplay"
+                          style="width:120px;text-align:center;display:flex;align-items:center;justify-content:center;">
+                      24 mois
+                    </span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Objet du prêt <span class="text-muted">(optionnel)</span></label>
+                  <input type="text" id="applyPurpose" class="form-input"
+                         placeholder="Ex: Achat véhicule, travaux, voyage..." maxlength="500" />
+                </div>
+
+                <div class="form-group" style="background:var(--color-surface-2);padding:14px;border-radius:var(--radius-md);">
+                  <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:6px;">
+                    <span class="text-muted">Taux appliqué</span>
+                    <span id="applyRateDisplay" class="text-accent">5.90%</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;font-size:0.78rem;">
+                    <span class="text-muted">Décision sous</span>
+                    <span>24 heures</span>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full btn-large" id="applyBtn">
+                  Soumettre ma demande
+                </button>
+                <p style="text-align:center;font-size:0.75rem;color:var(--color-text-3);margin-top:var(--space-sm);">
+                  Simulation non contractuelle — décision soumise à acceptation
+                </p>
+              </form>
+            </div>
+          </div>
+
+          <!-- Résumé simulation (sticky) -->
+          <div>
+            <div class="sim-result-box">
+              <div class="section-title-sm" style="margin-bottom:var(--space-md);">Récapitulatif</div>
+              <div class="sim-box-main">
+                <div class="sim-box-monthly-label">Mensualité estimée</div>
+                <div class="sim-box-monthly-value" id="applyMonthly">€440.44</div>
+              </div>
+              <div class="sim-box-detail">
+                <span class="text-muted">Montant emprunté</span>
+                <span id="applyPrincipal">€10,000.00</span>
+              </div>
+              <div class="sim-box-detail">
+                <span class="text-muted">Durée</span>
+                <span id="applyDurationResult">24 mois</span>
+              </div>
+              <div class="sim-box-detail">
+                <span class="text-muted">Taux annuel</span>
+                <span id="applyRateResult">5.90%</span>
+              </div>
+              <div class="sim-box-detail">
+                <span class="text-muted">Coût total des intérêts</span>
+                <span id="applyInterest" class="text-warning">€—</span>
+              </div>
+              <div class="sim-box-detail" style="border-top:1px solid var(--color-border);padding-top:10px;margin-top:4px;">
+                <span class="text-muted"><strong>Coût total</strong></span>
+                <span id="applyTotal"><strong>€—</strong></span>
+              </div>
+
+              <!-- Aperçu tableau d'amortissement -->
+              <div style="margin-top:var(--space-lg);">
+                <div style="font-size:0.78rem;color:var(--color-text-3);margin-bottom:var(--space-sm);">
+                  APERÇU DES PREMIÈRES ÉCHÉANCES
+                </div>
+                <div id="schedulePreview" style="font-size:0.78rem;display:flex;flex-direction:column;gap:4px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════
+           TAB 3 : SIMULATEUR STANDALONE
+      ══════════════════════════════════════════ -->
+      <div id="tab-simulator" style="display:none;">
+        <div style="max-width:800px;margin:auto;">
+          <div class="card card-sm" style="margin-bottom:var(--space-lg);">
+            <div class="section-title-sm" style="margin-bottom:var(--space-xl);">Paramètres</div>
+            <div class="form-group">
+              <label class="form-label">Montant</label>
+              <div style="display:flex;align-items:center;gap:var(--space-md);">
+                <input type="range" id="simAmount" min="500" max="50000" value="10000" step="500" style="flex:1" />
+                <span class="form-input" id="simAmountDisplay" style="width:130px;text-align:center;display:flex;align-items:center;justify-content:center;">€10,000</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Durée</label>
+              <div style="display:flex;align-items:center;gap:var(--space-md);">
+                <input type="range" id="simDuration" min="6" max="84" value="24" step="6" style="flex:1" />
+                <span class="form-input" id="simDurationDisplay" style="width:130px;text-align:center;display:flex;align-items:center;justify-content:center;">24 mois</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Taux annuel</label>
+              <div style="display:flex;align-items:center;gap:var(--space-md);">
+                <input type="range" id="simRate" min="1" max="20" value="5.5" step="0.5" style="flex:1" />
+                <span class="form-input" id="simRateDisplay" style="width:130px;text-align:center;display:flex;align-items:center;justify-content:center;">5.5%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Résultats -->
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-md);margin-bottom:var(--space-lg);">
+            <div class="card card-sm" style="text-align:center;">
+              <div style="font-size:0.72rem;color:var(--color-text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Mensualité</div>
+              <div id="simMonthly" style="font-family:var(--font-display);font-size:1.6rem;font-weight:800;color:var(--color-accent);">—</div>
+            </div>
+            <div class="card card-sm" style="text-align:center;">
+              <div style="font-size:0.72rem;color:var(--color-text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Coût total</div>
+              <div id="simTotal" style="font-family:var(--font-display);font-size:1.6rem;font-weight:800;">—</div>
+            </div>
+            <div class="card card-sm" style="text-align:center;">
+              <div style="font-size:0.72rem;color:var(--color-text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Intérêts totaux</div>
+              <div id="simInterest" style="font-family:var(--font-display);font-size:1.6rem;font-weight:800;color:var(--color-warning);">—</div>
+            </div>
+          </div>
+
+          <!-- Tableau d'amortissement complet -->
+          <div class="card card-sm">
+            <div class="section-header-row" style="margin-bottom:var(--space-md)">
+              <span class="section-title-sm">Tableau d'amortissement complet</span>
+              <span id="simTEG" class="badge badge-accent"></span>
+            </div>
+            <div class="table-wrapper amort-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>Capital</th>
+                    <th>Intérêts</th>
+                    <th>Mensualité</th>
+                    <th>Capital restant</th>
+                  </tr>
+                </thead>
+                <tbody id="simTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /dash-content -->
+  </main>
+</div>
+
+<!-- ─── MODAL DÉTAIL PRÊT ──────────────────────────────────── -->
+<div class="modal-overlay hidden" id="loanDetailModal">
+  <div class="modal" style="max-width:640px;">
+    <div class="modal-header">
+      <span class="modal-title" id="modalLoanTitle">Détail du prêt</span>
+      <button class="modal-close" onclick="closeLoanModal()">✕</button>
+    </div>
+    <div id="loanDetailContent"></div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="../js/performance.js"></script>
+  <script src="../js/security.js"></script>
+  <script src="../js/main.js"></script>
+<script src="../js/api.js"></script>
+<script>
+if (!requireAuth()) throw new Error('not authenticated');
+
+// ─── Calc mensualité (même formule que backend) ───────────────
+function calcMonthly(principal, annualRate, months) {
+  if (annualRate === 0) return parseFloat((principal / months).toFixed(2));
+  const r = annualRate / 100 / 12;
+  return parseFloat((principal * (r * Math.pow(1+r,months)) / (Math.pow(1+r,months)-1)).toFixed(2));
+}
+
+function generateSchedule(principal, rate, months) {
+  const r = rate / 100 / 12;
+  const monthly = calcMonthly(principal, rate, months);
+  let balance = principal;
+  const rows = [];
+  for (let i = 1; i <= months; i++) {
+    const interest = parseFloat((balance * r).toFixed(2));
+    let cap = parseFloat((monthly - interest).toFixed(2));
+    if (i === months) cap = parseFloat(balance.toFixed(2));
+    balance = Math.max(0, parseFloat((balance - cap).toFixed(2)));
+    const due = new Date(); due.setMonth(due.getMonth() + i);
+    rows.push({ n: i, date: due, cap: Math.abs(cap), interest: Math.abs(interest), total: parseFloat((Math.abs(cap)+Math.abs(interest)).toFixed(2)), remaining: balance });
+  }
+  return rows;
+}
+
+// ─── État courant du formulaire ───────────────────────────────
+let selectedType = 'personal';
+let selectedRate = 5.9;
+let currentLoans = [];
+
+// ─── Init ─────────────────────────────────────────────────────
+async function init() {
+  const user = API.getCurrentUser();
+  if (user) {
+    document.getElementById('userAvatar').textContent = (user.firstName[0]+user.lastName[0]).toUpperCase();
+    document.getElementById('userName').textContent   = `${user.firstName} ${user.lastName}`;
+  }
+  await loadLoans();
+  initApplyForm();
+  initSimulator();
+
+  // Hash routing (#apply)
+  if (window.location.hash === '#apply') switchTab('apply');
+}
+
+// ─── Charger les prêts ────────────────────────────────────────
+async function loadLoans() {
+  const container = document.getElementById('loansContainer');
+  try {
+    const data = await API.loans.list();
+    currentLoans = data.loans;
+
+    if (!data.loans.length) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">◎</div>
+          <div class="empty-title">Aucun prêt en cours</div>
+          <div class="empty-desc">Faites une demande de crédit en quelques clics.</div>
+          <button class="btn btn-primary" onclick="switchTab('apply')">Faire une demande</button>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = `<div class="loans-grid">${data.loans.map(loanCard).join('')}</div>`;
+  } catch (err) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-desc">${err.message}</div></div>`;
+  }
+}
+
+function loanCard(loan) {
+  const progress = loan.repaymentProgress || 0;
+  const isActive = loan.status === 'active';
+  return `
+    <div class="loan-card ${isActive ? 'active-loan' : ''}" onclick="openLoanDetail('${loan._id}')">
+      <div class="loan-card-header">
+        <div>
+          <div class="loan-number">${loan.loanNumber}</div>
+          <div class="loan-amount">${formatCurrency(loan.principalAmount)}</div>
+          <div class="loan-meta">${loan.durationMonths} mois · ${loan.annualInterestRate}% · ${loan.type}</div>
+        </div>
+        ${statusBadge(loan.status)}
+      </div>
+      ${isActive ? `
+        <div class="repay-progress">
+          <div class="repay-progress-label">
+            <span>Remboursé: ${formatCurrency(loan.amountPaid || 0)}</span>
+            <span>${progress}%</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+        </div>
+      ` : ''}
+      <div class="loan-card-footer">
+        <div class="loan-monthly">
+          Mensualité: <strong>${formatCurrency(loan.monthlyPayment)}</strong>
+        </div>
+        ${isActive ? `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation();repayLoan('${loan._id}')">Payer</button>` : ''}
+        ${loan.status === 'pending' ? '<span class="badge badge-warning">En attente</span>' : ''}
+      </div>
+    </div>`;
+}
+
+// ─── Détail d'un prêt ─────────────────────────────────────────
+async function openLoanDetail(id) {
+  document.getElementById('loanDetailModal').classList.remove('hidden');
+  document.getElementById('loanDetailContent').innerHTML = '<div style="text-align:center;padding:var(--space-xl)"><div class="loader-spinner" style="margin:auto"></div></div>';
+
+  try {
+    const data = await API.loans.get(id);
+    const loan = data.loan;
+    document.getElementById('modalLoanTitle').textContent = `Prêt ${loan.loanNumber}`;
+
+    const schedule = loan.amortizationSchedule || [];
+    const rows = schedule.map((s, idx) => {
+      const isPaid = s.isPaid;
+      const isNext = !isPaid && s.installmentNumber === loan.nextInstallmentNumber;
+      const cls = isPaid ? 'amort-row-paid' : (isNext ? 'amort-row-next' : '');
+      return `<tr class="${cls}">
+        <td>${s.installmentNumber}</td>
+        <td>${formatDate(s.dueDate)}</td>
+        <td>${formatCurrency(s.principalPayment)}</td>
+        <td>${formatCurrency(s.interestPayment)}</td>
+        <td><strong>${formatCurrency(s.totalPayment)}</strong></td>
+        <td>${formatCurrency(s.remainingBalance)}</td>
+        <td>${isPaid ? '<span class="badge badge-success">✓</span>' : (isNext ? '<span class="badge badge-accent">→</span>' : '')}</td>
+      </tr>`;
+    }).join('');
+
+    document.getElementById('loanDetailContent').innerHTML = `
+      <div class="loan-detail-grid">
+        <div class="loan-detail-item">
+          <div class="loan-detail-label">Montant emprunté</div>
+          <div class="loan-detail-value">${formatCurrency(loan.principalAmount)}</div>
+        </div>
+        <div class="loan-detail-item">
+          <div class="loan-detail-label">Mensualité</div>
+          <div class="loan-detail-value text-accent">${formatCurrency(loan.monthlyPayment)}</div>
+        </div>
+        <div class="loan-detail-item">
+          <div class="loan-detail-label">Taux annuel</div>
+          <div class="loan-detail-value">${loan.annualInterestRate}%</div>
+        </div>
+        <div class="loan-detail-item">
+          <div class="loan-detail-label">Durée</div>
+          <div class="loan-detail-value">${loan.durationMonths} mois</div>
+        </div>
+        <div class="loan-detail-item">
+          <div class="loan-detail-label">Coût total intérêts</div>
+          <div class="loan-detail-value text-warning">${formatCurrency(loan.totalInterest)}</div>
+        </div>
+        <div class="loan-detail-item">
+          <div class="loan-detail-label">Statut</div>
+          <div class="loan-detail-value">${statusBadge(loan.status)}</div>
+        </div>
+        ${loan.status === 'active' ? `
+        <div class="loan-detail-item">
+          <div class="loan-detail-label">Capital restant</div>
+          <div class="loan-detail-value">${formatCurrency(loan.remainingBalance)}</div>
+        </div>
+        <div class="loan-detail-item">
+          <div class="loan-detail-label">Prochaine échéance</div>
+          <div class="loan-detail-value ${new Date(loan.nextDueDate) < new Date() ? 'text-danger' : ''}">${loan.nextDueDate ? formatDate(loan.nextDueDate) : '—'}</div>
+        </div>` : ''}
+      </div>
+      ${schedule.length ? `
+        <div class="section-title-sm" style="margin-bottom:var(--space-md)">Tableau d'amortissement</div>
+        <div class="table-wrapper amort-table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Échéance</th><th>Capital</th><th>Intérêts</th><th>Total</th><th>Restant</th><th></th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>` : ''}
+      ${loan.status === 'active' ? `
+        <div style="margin-top:var(--space-lg)">
+          <button class="btn btn-primary btn-full" onclick="closeLoanModal();repayLoan('${loan._id}')">
+            Effectuer le remboursement ${formatCurrency(loan.amortizationSchedule?.find(s=>!s.isPaid)?.totalPayment||0)}
+          </button>
+        </div>` : ''}`;
+  } catch (err) {
+    document.getElementById('loanDetailContent').innerHTML = `<div class="tx-empty">${err.message}</div>`;
+  }
+}
+
+function closeLoanModal() { document.getElementById('loanDetailModal').classList.add('hidden'); }
+document.getElementById('loanDetailModal').addEventListener('click', function(e) { if(e.target===this) closeLoanModal(); });
+
+// ─── Remboursement ────────────────────────────────────────────
+async function repayLoan(id) {
+  if (!confirm('Confirmer le remboursement de cette échéance ?')) return;
+  try {
+    const data = await API.loans.repay(id);
+    showToast(data.message, 'success', 6000);
+    await loadLoans();
+  } catch (err) { showToast(err.message, 'error'); }
+}
+
+// ─── Init formulaire demande ──────────────────────────────────
+function initApplyForm() {
+  // Sélection du type
+  document.querySelectorAll('.loan-type-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.loan-type-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedType = btn.dataset.type;
+      selectedRate = parseFloat(btn.dataset.rate);
+      document.getElementById('applyRateDisplay').textContent = selectedRate.toFixed(2) + '%';
+      document.getElementById('applyRateResult').textContent  = selectedRate.toFixed(2) + '%';
+      updateApplySummary();
+    });
+  });
+
+  // Slider montant ↔ champ numérique
+  const sliderAmount = document.getElementById('applyAmount');
+  const inputAmount  = document.getElementById('applyAmountNum');
+  sliderAmount.addEventListener('input', () => { inputAmount.value = sliderAmount.value; updateApplySummary(); });
+  inputAmount.addEventListener('input', () => {
+    let v = Math.min(50000, Math.max(100, parseInt(inputAmount.value)||100));
+    sliderAmount.value = v; updateApplySummary();
+  });
+
+  // Slider durée
+  document.getElementById('applyDuration').addEventListener('input', function() {
+    document.getElementById('applyDurationDisplay').textContent = this.value + ' mois';
+    updateApplySummary();
+  });
+
+  updateApplySummary();
+
+  // Soumission
+  document.getElementById('applyForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn     = document.getElementById('applyBtn');
+    const alertEl = document.getElementById('applyAlert');
+    const amount  = parseInt(document.getElementById('applyAmountNum').value);
+    const months  = parseInt(document.getElementById('applyDuration').value);
+
+    if (!amount || amount < 100) {
+      document.getElementById('applyAmountError').textContent = 'Montant minimum: 100€';
+      document.getElementById('applyAmountError').classList.add('visible'); return;
+    }
+
+    btn.disabled = true; btn.textContent = 'Envoi en cours...';
+    alertEl.style.display = 'none';
+
+    try {
+      const data = await API.loans.apply({ amount, durationMonths: months, type: selectedType, purpose: document.getElementById('applyPurpose').value });
+      showToast('Demande soumise ! Référence: ' + data.loan.loanNumber, 'success', 6000);
+      switchTab('my-loans');
+      await loadLoans();
+    } catch (err) {
+      alertEl.className = 'alert alert-error';
+      alertEl.textContent = err.message;
+      alertEl.style.display = 'flex';
+    } finally { btn.disabled = false; btn.textContent = 'Soumettre ma demande'; }
+  });
+}
+
+function updateApplySummary() {
+  const amount  = parseFloat(document.getElementById('applyAmountNum').value) || 10000;
+  const months  = parseInt(document.getElementById('applyDuration').value)    || 24;
+  const monthly = calcMonthly(amount, selectedRate, months);
+  const total   = parseFloat((monthly * months).toFixed(2));
+  const interest= parseFloat((total - amount).toFixed(2));
+
+  document.getElementById('applyMonthly').textContent      = formatCurrency(monthly);
+  document.getElementById('applyPrincipal').textContent    = formatCurrency(amount);
+  document.getElementById('applyDurationResult').textContent = months + ' mois';
+  document.getElementById('applyInterest').textContent     = formatCurrency(interest);
+  document.getElementById('applyTotal').innerHTML          = `<strong>${formatCurrency(total)}</strong>`;
+
+  // Aperçu 3 premières échéances
+  const schedule = generateSchedule(amount, selectedRate, months);
+  const preview  = document.getElementById('schedulePreview');
+  preview.innerHTML = schedule.slice(0,3).map(s => `
+    <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--color-border);">
+      <span class="text-muted">Mois ${s.n}</span>
+      <span>${formatCurrency(s.total)}</span>
+      <span class="text-muted" style="font-size:0.7rem">(int: ${formatCurrency(s.interest)})</span>
+    </div>`).join('');
+}
+
+// ─── Init simulateur standalone ───────────────────────────────
+function initSimulator() {
+  ['simAmount','simDuration','simRate'].forEach(id => {
+    document.getElementById(id).addEventListener('input', renderSimulator);
+  });
+  renderSimulator();
+}
+
+function renderSimulator() {
+  const amount  = parseFloat(document.getElementById('simAmount').value)   || 10000;
+  const months  = parseInt(document.getElementById('simDuration').value)   || 24;
+  const rate    = parseFloat(document.getElementById('simRate').value)     || 5.5;
+
+  document.getElementById('simAmountDisplay').textContent   = formatCurrency(amount);
+  document.getElementById('simDurationDisplay').textContent = months + ' mois';
+  document.getElementById('simRateDisplay').textContent     = rate + '%';
+  document.getElementById('simTEG').textContent             = 'TEG ' + rate.toFixed(2) + '%';
+
+  const monthly  = calcMonthly(amount, rate, months);
+  const total    = parseFloat((monthly * months).toFixed(2));
+  const interest = parseFloat((total - amount).toFixed(2));
+
+  document.getElementById('simMonthly').textContent  = formatCurrency(monthly);
+  document.getElementById('simTotal').textContent    = formatCurrency(total);
+  document.getElementById('simInterest').textContent = formatCurrency(interest);
+
+  const schedule = generateSchedule(amount, rate, months);
+  document.getElementById('simTableBody').innerHTML = schedule.map(s => `
+    <tr>
+      <td>${s.n}</td>
+      <td style="font-size:0.8rem;color:var(--color-text-2)">${formatDate(s.date)}</td>
+      <td>${formatCurrency(s.cap)}</td>
+      <td style="color:var(--color-warning)">${formatCurrency(s.interest)}</td>
+      <td><strong>${formatCurrency(s.total)}</strong></td>
+      <td style="color:var(--color-text-2)">${formatCurrency(s.remaining)}</td>
+    </tr>`).join('');
+}
+
+// ─── Navigation tabs ─────────────────────────────────────────
+function switchTab(tab) {
+  ['my-loans','apply','simulator'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t===tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === tab);
+  });
+  document.querySelectorAll('.nav-item[data-tab]').forEach(item => {
+    item.classList.toggle('active', item.dataset.tab === tab);
+  });
+  const titles = { 'my-loans':'Mes prêts', apply:'Nouvelle demande', simulator:'Simulateur' };
+  document.getElementById('topbarTitle').textContent = titles[tab] || tab;
+}
+
+document.querySelectorAll('.tab-btn[data-tab]').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+document.querySelectorAll('.nav-item[data-tab]').forEach(item => item.addEventListener('click', () => switchTab(item.dataset.tab)));
+document.getElementById('sidebarToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
+document.getElementById('logoutBtn').addEventListener('click', async () => { try { await API.auth.logout(); } catch {} API.redirectToLogin(); });
+
+init();
+</script>
+<script src="../js/extras.js"></script>
+</body>
+</html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NeoBank — La banque du futur. Gérez vos finances, demandez des crédits et suivez vos transactions en temps réel." />
+  <title>NeoBank — Votre banque du futur</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/landing.css"/>
+  <link rel="stylesheet" href="../css/enhancements.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="manifest" href="../manifest.json" />
+  <meta name="theme-color" content="#00d4ff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.svg" />
+</head>
+<body>
+
+  <!-- ─── NAVBAR ─────────────────────────────────────────────── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">◆</span>
+        <span class="logo-text">NeoBank</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#features">Fonctionnalités</a></li>
+        <li><a href="about.html">À Propos</a></li>
+        <li><a href="simulator.html">Simulateur</a></li>
+        <li><a href="pricing.html">Tarifs</a></li>
+        <li><a href="faq.html">FAQ</a></li><li><a href="download.html">📱 App</a></li>
+        <li class="nav-mobile-register" style="display:none;"><a href="register.html" class="btn btn-primary btn-full">Ouvrir un compte</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-ghost">Connexion</a>
+        <a href="register.html" class="btn btn-primary">Ouvrir un compte</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ───────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-grid"></div>
+    </div>
+    <div class="hero-container" style="max-width:1200px;margin:0 auto;padding:var(--space-4xl) var(--space-2xl);">
+      <div style="max-width:640px;">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Plateforme 100% sécurisée &amp; réglementée
+        </div>
+        <h1 class="hero-title" style="letter-spacing:-0.03em;line-height:1.08;">
+          La banque qui<br />
+          <span class="title-highlight">travaille pour vous</span>
+        </h1>
+        <p class="hero-desc">
+          Gérez vos finances, demandez des crédits et suivez vos transactions en temps réel.
+          NeoBank réinvente l'expérience bancaire avec la puissance de la technologie.
+        </p>
+        <div class="hero-cta">
+          <a href="register.html" class="btn btn-primary btn-large">
+            Commencer gratuitement
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#simulation" class="btn btn-outline btn-large">Simuler un crédit</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-value">50K+</span>
+            <span class="stat-label">Clients actifs</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <span class="stat-value">€2.4M</span>
+            <span class="stat-label">Transactions / jour</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <span class="stat-value">99.9%</span>
+            <span class="stat-label">Disponibilité</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte flottante déco -->
+    <div class="hero-card-float">
+      <div class="float-card">
+        <div class="float-card-header">
+          <span class="float-chip">◆ NEOBANK VISA</span>
+          <span class="float-status">● Actif</span>
+        </div>
+        <div class="float-card-number">•••• •••• •••• 4291</div>
+        <div class="float-card-footer">
+          <span>JEAN M.</span>
+          <span>12/27</span>
+        </div>
+      </div>
+      <div class="float-notif">
+        <div class="notif-icon">✓</div>
+        <div>
+          <div class="notif-title">Virement reçu</div>
+          <div class="notif-amount">+ €25000.00</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── BANDEAU CHIFFRES CLÉS ──────────────────────────────── -->
+  <div style="background:rgba(255,255,255,0.02);border-top:1px solid rgba(0,212,255,0.08);border-bottom:1px solid rgba(0,212,255,0.08);overflow:hidden;">
+    <div class="section-container" style="padding:28px var(--space-2xl);">
+      <div style="display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;gap:20px;">
+        <div style="text-align:center;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:1.9rem;font-weight:800;background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">50K+</div>
+          <div style="font-size:.72rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;">Clients actifs</div>
+        </div>
+        <div style="width:1px;height:40px;background:rgba(255,255,255,.08);flex-shrink:0;"></div>
+        <div style="text-align:center;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:1.9rem;font-weight:800;background:linear-gradient(135deg,#f59e0b,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">4,9★</div>
+          <div style="font-size:.72rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;">Note utilisateurs</div>
+        </div>
+        <div style="width:1px;height:40px;background:rgba(255,255,255,.08);flex-shrink:0;"></div>
+        <div style="text-align:center;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:1.9rem;font-weight:800;background:linear-gradient(135deg,#10b981,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">150+</div>
+          <div style="font-size:.72rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;">Pays couverts</div>
+        </div>
+        <div style="width:1px;height:40px;background:rgba(255,255,255,.08);flex-shrink:0;"></div>
+        <div style="text-align:center;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:1.9rem;font-weight:800;background:linear-gradient(135deg,#8b5cf6,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">100%</div>
+          <div style="font-size:.72rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;">En ligne</div>
+        </div>
+        <div style="width:1px;height:40px;background:rgba(255,255,255,.08);flex-shrink:0;"></div>
+        <div style="text-align:center;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:1.9rem;font-weight:800;background:linear-gradient(135deg,#00d4ff,#10b981);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0€</div>
+          <div style="font-size:.72rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;">Frais cachés</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ─── FEATURES ───────────────────────────────────────────── -->
+  <section class="features nb-img-features" id="features">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <span class="section-tag">Pourquoi NeoBank</span>
+        <h2 class="section-title">Tout ce dont vous avez besoin</h2>
+        <p class="section-desc">Une suite complète d'outils financiers conçus pour votre réussite.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="feature-icon">⚡</div>
+          <h3>Virements instantanés</h3>
+          <p>Envoyez et recevez de l'argent en quelques secondes, 24h/24 et 7j/7, sans frais cachés.</p>
+        </div>
+        <div class="feature-card feature-card-accent reveal reveal-delay-2">
+          <div class="feature-icon">📊</div>
+          <h3>Dashboard intelligent</h3>
+          <p>Visualisez vos finances avec des graphiques clairs et des insights personnalisés en temps réel.</p>
+        </div>
+        <div class="feature-card reveal reveal-delay-3">
+          <div class="feature-icon">🔒</div>
+          <h3>Sécurité bancaire</h3>
+          <p>Chiffrement JWT, rate limiting, protection XSS/CSRF et audit trail complet de chaque action.</p>
+        </div>
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="feature-icon">💳</div>
+          <h3>Crédit rapide</h3>
+          <p>Obtenez une décision de prêt en moins de 24h avec notre simulateur en ligne instantané.</p>
+        </div>
+        <div class="feature-card feature-card-accent reveal reveal-delay-2">
+          <div class="feature-icon">📱</div>
+          <h3>Application mobile</h3>
+          <p>Gérez vos comptes depuis n'importe où avec notre app iOS et Android ou notre PWA.</p>
+        </div>
+        <div class="feature-card reveal reveal-delay-3">
+          <div class="feature-icon">🌍</div>
+          <h3>Sans frontières</h3>
+          <p>Transactions internationales sans frais cachés dans plus de 150 pays via IBAN universel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─── DIVIDER ──────────────────────────────────────────── -->
+  <div class="nb-divider"></div>
+
+  <!-- ─── SOCIAL PROOF — IMAGE FOND : ACCORD DE PRÊT ─────── -->
+  <section class="nb-img-loan">
+    <div class="nb-proof-section">
+      <div class="nb-proof-grid">
+        <div class="nb-proof-item reveal">
+          <span class="nb-proof-num text-gradient">50K+</span>
+          <span class="nb-proof-lbl">Clients satisfaits</span>
+        </div>
+        <div class="nb-proof-item reveal rd1">
+          <span class="nb-proof-num text-gradient-gold">98%</span>
+          <span class="nb-proof-lbl">Taux de satisfaction</span>
+        </div>
+        <div class="nb-proof-item reveal rd2">
+          <span class="nb-proof-num text-gradient-green">150+</span>
+          <span class="nb-proof-lbl">Pays couverts</span>
+        </div>
+        <div class="nb-proof-item reveal rd3">
+          <span class="nb-proof-num text-gradient-violet">4,9★</span>
+          <span class="nb-proof-lbl">Note moyenne</span>
+        </div>
+      </div>
+
+      <!-- Témoignages -->
+      <div class="nb-testimonials section-container">
+        <div class="nb-testimonial reveal">
+          <div class="nb-stars">★★★★★</div>
+          <p class="nb-testimonial-text">NeoBank a complètement changé ma façon de gérer mon argent. Les virements instantanés et le dashboard sont absolument incroyables. Je recommande à 100&nbsp;%.</p>
+          <div class="nb-testimonial-author">
+            <div class="nb-testimonial-avatar" style="background:linear-gradient(135deg,#00d4ff,#7c3aed)">SM</div>
+            <div>
+              <div class="nb-stars">★★★★★</div>
+              <div class="nb-testimonial-name">Sophie Martin</div>
+              <div class="nb-testimonial-role">Consultante, Paris</div>
+            </div>
+          </div>
+        </div>
+        <div class="nb-testimonial reveal rd1">
+          <div class="nb-stars">★★★★★</div>
+          <p class="nb-testimonial-text">J'ai obtenu mon crédit auto en 48h après une simulation sur NeoBank. Tout était clair, transparent, aucune mauvaise surprise. Une vraie banque du XXIe siècle.</p>
+          <div class="nb-testimonial-author">
+            <div class="nb-testimonial-avatar" style="background:linear-gradient(135deg,#10b981,#00d4ff)">KD</div>
+            <div>
+              <div class="nb-stars">★★★★★</div>
+              <div class="nb-testimonial-name">Kofi Diallo</div>
+              <div class="nb-testimonial-role">Entrepreneur, Lyon</div>
+            </div>
+          </div>
+        </div>
+        <div class="nb-testimonial reveal rd2">
+          <div class="nb-stars">★★★★★</div>
+          <p class="nb-testimonial-text">Toute ma famille est passée sur NeoBank. Mes parents adorent la simplicité et moi j'adore les fonctionnalités avancées. C'est la banque idéale pour tous.</p>
+          <div class="nb-testimonial-author">
+            <div class="nb-testimonial-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">AL</div>
+            <div>
+              <div class="nb-stars">★★★★★</div>
+              <div class="nb-testimonial-name">Amandine Lebrun</div>
+              <div class="nb-testimonial-role">Enseignante, Bordeaux</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── DIVIDER ──────────────────────────────────────────── -->
+  <div class="nb-divider-warm nb-divider"></div>
+
+
+  <!-- ─── SIMULATEUR DE CRÉDIT ────────────────────────────────── -->
+  <style>
+    .nb-loan-btn {
+      padding: 7px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      background: transparent;
+      color: var(--color-text-2);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font-body);
+    }
+    .nb-loan-btn:hover {
+      border-color: rgba(0,212,255,0.25);
+      color: var(--color-text);
+    }
+    .nb-loan-btn.nb-active {
+      border-color: rgba(0,212,255,0.4) !important;
+      background: rgba(0,212,255,0.12) !important;
+      color: #00d4ff !important;
+    }
+    .nb-num-input {
+      width: 100%;
+      margin-top: 8px;
+      padding: 10px 14px;
+      background: var(--color-bg-2);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      color: var(--color-text);
+      font-size: 1rem;
+      font-family: var(--font-display);
+      font-weight: 600;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+    }
+    .nb-num-input:focus {
+      outline: none;
+      border-color: rgba(0,212,255,0.4);
+    }
+    .nb-taeg-display {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #00d4ff;
+      min-width: 52px;
+      text-align: right;
+    }
+    .nb-warning {
+      padding: 10px 14px;
+      background: rgba(0,212,255,0.04);
+      border: 1px solid rgba(0,212,255,0.12);
+      border-radius: 8px;
+    }
+    .nb-warning p {
+      font-size: 0.75rem;
+      color: var(--color-text-3);
+      margin: 0;
+    }
+  </style>
+  <section class="simulation" id="simulation">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <span class="section-tag">Simulateur</span>
+        <h2 class="section-title">Calculez votre crédit</h2>
+        <p class="section-desc">Estimez vos mensualités en temps réel. Même calcul que notre backend.</p>
+      </div>
+      <div class="simulator-wrapper reveal">
+        <div class="simulator-form">
+          <!-- TYPE DE PRÊT -->
+          <div class="sim-field">
+            <label>Type de prêt</label>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
+              <button class="nb-loan-btn nb-active" data-loan-type="personnel">💳 Crédit personnel</button>
+              <button class="nb-loan-btn" data-loan-type="auto">🚗 Crédit auto</button>
+              <button class="nb-loan-btn" data-loan-type="immo">🏠 Crédit immobilier</button>
+              <button class="nb-loan-btn" data-loan-type="etude">🎓 Prêt étudiant</button>
+            </div>
+          </div>
+          <!-- MONTANT -->
+          <div class="sim-field">
+            <label>Montant souhaité</label>
+            <div class="sim-input-wrap">
+              <input type="range" id="simAmount" min="500" max="100000" value="15000" step="500" />
+              <span class="sim-value" id="simAmountDisplay">€15 000</span>
+            </div>
+            <input type="number" id="simAmountNum" value="15000" min="500" max="100000" step="500" class="nb-num-input" />
+          </div>
+          <!-- DURÉE -->
+          <div class="sim-field">
+            <label>Durée du remboursement</label>
+            <div class="sim-input-wrap">
+              <input type="range" id="simDuration" min="6" max="84" value="36" step="6" />
+              <span class="sim-value" id="simDurationDisplay">36 mois</span>
+            </div>
+          </div>
+          <!-- TAEG FIXE -->
+          <div class="sim-field">
+            <label>Taux annuel (TAEG) <span id="rateNote" style="font-size:.74rem;color:var(--color-text-3);font-weight:400;">— crédit personnel <em>fixé</em></span></label>
+            <div class="sim-input-wrap">
+              <input type="range" id="simRate" min="1" max="5" value="3" step="0.1"
+                disabled style="opacity:0.3;cursor:not-allowed;pointer-events:none;flex:1;" />
+              <span class="nb-taeg-display" id="simRateDisplay">3.0%</span>
+            </div>
+          </div>
+          <!-- APPORT -->
+          <div class="sim-field">
+            <label>Apport personnel (optionnel)</label>
+            <input type="number" id="simApport" value="0" min="0" placeholder="€ 0" class="nb-num-input" />
+          </div>
+          <!-- AVERTISSEMENT -->
+          <div class="nb-warning">
+            <p>⚠️ Simulation indicative et non contractuelle. Les taux réels peuvent varier selon votre profil.</p>
+          </div>
+        </div>
+
+        <div class="simulator-results">
+          <div class="sim-result-main">
+            <span class="sim-result-label">Mensualité estimée</span>
+            <span class="sim-result-value" id="simMonthly">—</span>
+            <span style="font-size:.78rem;color:var(--color-text-3);margin-top:2px;">par mois pendant <span id="simResMonths">—</span></span>
+          </div>
+          <div class="sim-result-details">
+            <div class="sim-detail">
+              <span>Montant emprunté</span>
+              <span id="simResMontant">—</span>
+            </div>
+            <div class="sim-detail">
+              <span>Apport</span>
+              <span id="simResApport">—</span>
+            </div>
+            <div class="sim-detail">
+              <span>Coût total du crédit</span>
+              <span id="simTotal">—</span>
+            </div>
+            <div class="sim-detail">
+              <span>Intérêts totaux</span>
+              <span id="simInterest" style="color:var(--color-warning)">—</span>
+            </div>
+            <div class="sim-detail">
+              <span>Taux effectif global</span>
+              <span id="simTEG" style="color:var(--color-accent)">—</span>
+            </div>
+          </div>
+          <a href="simulator.html" class="btn btn-outline btn-full" style="margin-top:12px;">
+            Simulation avancée →
+          </a>
+          <a href="register.html" class="btn btn-primary btn-full" style="margin-top:8px;">
+            Faire une demande de prêt →
+          </a>
+          <p class="sim-disclaimer">* Simulation indicative non contractuelle</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── MOBILE APP ─────────────────────────────────────────── -->
+  <section class="mobile-app" id="mobile-app">
+    <div class="section-container">
+      <div class="app-content">
+        <div class="app-text reveal">
+          <span class="section-tag">Application mobile</span>
+          <h2>Votre banque dans votre poche</h2>
+          <p>Téléchargez NeoBank et gérez vos finances où que vous soyez. Disponible sur iOS et Android.</p>
+          <div class="app-store-buttons">
+            <a href="install.html" class="app-store-btn" id="appStoreBtn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              <div>
+                <span class="store-subtitle">Télécharger sur</span>
+                <span class="store-name">App Store</span>
+              </div>
+            </a>
+            <a href="install.html" class="app-store-btn" id="googlePlayBtn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.99.2l12.46-7.19-2.83-2.83L3.18 23.76zm-1.1-20.2C1.79 3.9 1.67 4.2 1.67 4.56v14.88c0 .36.12.66.41.9l.08.07 8.34-8.34v-.2L2.08 3.56zm18.63 8.54l-2.37-1.37-2.9 2.9 2.9 2.9 2.37-1.37c.68-.39.68-1.03 0-1.42zm-17.53 9.9l10.2-5.89-2.83-2.83-7.37 7.37v1.35z"/></svg>
+              <div>
+                <span class="store-subtitle">Disponible sur</span>
+                <span class="store-name">Google Play</span>
+              </div>
+            </a>
+          </div>
+          <p class="pwa-note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            Ou utilisez notre <a href="#" id="pwaInstall">Progressive Web App</a> directement dans votre navigateur
+          </p>
+        </div>
+        <div class="app-mockup reveal">
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <div class="phone-header"><span>NeoBank</span><span>◆</span></div>
+              <div class="phone-balance">
+                <span class="phone-balance-label">Solde disponible</span>
+                <span class="phone-balance-amount">€12,450.00</span>
+              </div>
+              <div class="phone-actions">
+                <div class="phone-action">↑ Envoyer</div>
+                <div class="phone-action">↓ Recevoir</div>
+                <div class="phone-action">⊕ Crédit</div>
+              </div>
+              <div class="phone-transactions">
+                <div class="phone-tx"><span>Netflix</span><span class="tx-neg">-€13.99</span></div>
+                <div class="phone-tx"><span>Salaire</span><span class="tx-pos">+€2,800</span></div>
+                <div class="phone-tx"><span>Loyer</span><span class="tx-neg">-€850</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:var(--space-sm)">
+          <span class="logo-icon">◆</span>
+          <span class="logo-text">NeoBank</span>
+        </div>
+        <p>La banque du futur, aujourd'hui.<br />Établissement de paiement agréé.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Produits</h4>
+          <a href="open-account.html">Compte courant</a>
+          <a href="#">Épargne</a>
+          <a href="simulator.html">Crédit</a>
+          <a href="pricing.html">Tarifs</a>
+        </div>
+        <div class="footer-col">
+          <h4>Entreprise</h4>
+          <a href="about.html">À Propos</a>
+          <a href="security.html">Sécurité</a>
+          <a href="contact.html">Contact</a>
+          <a href="faq.html">FAQ</a>
+        </div>
+        <div class="footer-col">
+          <h4>Accès</h4>
+          <a href="login.html">Connexion</a>
+          <a href="register.html">Créer un compte</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="admin.html">Admin</a>
+        </div>
+        <div class="footer-col">
+          <h4>Légal</h4>
+          <a href="legal.html">CGU</a>
+          <a href="legal.html#privacy">Confidentialité</a>
+          <a href="legal.html#cookies">Cookies</a>
+          <a href="legal.html">Mentions légales</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 NeoBank. Tous droits réservés. Projet de démonstration fintech.</p>
+    </div>
+  </footer>
+
+  <div id="toast-container"></div>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/simulator.js"></script>
+  <script>
+    // ─── Intersection Observer pour animations reveal ──────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ─── Rediriger si déjà connecté ───────────────────────────
+    if (localStorage.getItem('accessToken')) {
+      const u = JSON.parse(localStorage.getItem('user') || '{}');
+      const notice = document.createElement('div');
+      notice.style.cssText = 'position:fixed;top:80px;right:24px;z-index:300;';
+      notice.innerHTML = `
+        <div style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:12px 16px;font-size:0.82rem;display:flex;gap:10px;align-items:center;box-shadow:var(--shadow-lg);">
+          <span>Connecté en tant que <strong>${u.firstName || 'Utilisateur'}</strong></span>
+          <a href="dashboard.html" class="btn btn-primary btn-sm">Mon espace →</a>
+        </div>`;
+      document.body.appendChild(notice);
+    }
+  </script>
+<script src="../js/extras.js"></script>
+</body>
+</html>

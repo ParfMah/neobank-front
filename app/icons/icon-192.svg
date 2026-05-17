@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#1a0a35"/>
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" rx="38" fill="url(#g2)"/>
+  <polygon points="96,15.36 176.64000000000001,57.599999999999994 176.64000000000001,134.39999999999998 96,176.64000000000001 15.36,134.39999999999998 15.36,57.599999999999994"
+    fill="url(#g)" opacity="0.2"/>
+  <polygon points="96,15.36 176.64000000000001,57.599999999999994 176.64000000000001,134.39999999999998 96,176.64000000000001 15.36,134.39999999999998 15.36,57.599999999999994"
+    fill="none" stroke="url(#g)" stroke-width="3"/>
+  <text x="96" y="119.03999999999999" text-anchor="middle"
+    font-family="Arial Black, sans-serif" font-weight="900"
+    font-size="65.28" fill="url(#g)">N</text>
+</svg>

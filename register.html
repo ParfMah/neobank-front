@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Créer un compte — NeoBank</title>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <link rel="stylesheet" href="../css/enhancements.css" />
+  <link rel="stylesheet" href="../css/auth.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="manifest" href="../manifest.json" />
+  <meta name="theme-color" content="#00d4ff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.svg" />
+</head>
+<body class="auth-body">
+  <div class="auth-layout">
+    <div class="auth-brand">
+      <div class="auth-brand-inner">
+        <a href="index.html" class="nav-logo">
+          <span class="logo-icon">◆</span><span class="logo-text">NeoBank</span>
+        </a>
+        <div class="brand-content">
+          <h2>Rejoignez<br />NeoBank</h2>
+          <p>Ouvrez votre compte en 2 minutes.<br />Gratuit, sans engagement.</p>
+          <div class="brand-features">
+            <div class="brand-feat"><span>✓</span> Compte ouvert en 2 min</div>
+            <div class="brand-feat"><span>✓</span> Aucun frais cachés</div>
+            <div class="brand-feat"><span>✓</span> Carte Visa offerte</div>
+            <div class="brand-feat"><span>✓</span> Données 100% sécurisées</div>
+          </div>
+        </div>
+        <div class="brand-orb"></div>
+      </div>
+    </div>
+
+    <div class="auth-form-panel">
+      <div class="auth-form-inner">
+        <div class="auth-form-header">
+          <h1>Créer un compte</h1>
+          <p>Rejoignez 50 000+ clients satisfaits</p>
+        </div>
+
+        <div id="registerAlert" class="alert" style="display:none;"></div>
+
+        <form id="registerForm" novalidate>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="firstName">Prénom</label>
+              <input type="text" id="firstName" name="firstName" class="form-input" placeholder="Jean" autocomplete="given-name" required />
+              <span class="form-error" id="firstNameError"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="lastName">Nom</label>
+              <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Dupont" autocomplete="family-name" required />
+              <span class="form-error" id="lastNameError"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="email">Adresse email</label>
+            <div class="form-input-wrap">
+              <svg class="form-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+              <input type="email" id="email" name="email" class="form-input" placeholder="vous@example.com" autocomplete="email" required />
+            </div>
+            <span class="form-error" id="emailError"></span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="phone">Téléphone <span class="text-muted">(optionnel)</span></label>
+            <div class="form-input-wrap">
+              <svg class="form-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <input type="tel" id="phone" name="phone" class="form-input" placeholder="+33 6 12 34 56 78" autocomplete="tel" />
+            </div>
+            <span class="form-error" id="phoneError"></span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="password">Mot de passe</label>
+            <div class="form-input-wrap">
+              <svg class="form-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="password" name="password" class="form-input" placeholder="Minimum 8 caractères" autocomplete="new-password" required />
+              <button type="button" class="form-toggle-password" id="togglePassword" aria-label="Afficher">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <!-- Indicateur de force du mot de passe -->
+            <div class="password-strength" id="passwordStrength">
+              <div class="strength-bar">
+                <div class="strength-fill" id="strengthFill"></div>
+              </div>
+              <span class="strength-label" id="strengthLabel"></span>
+            </div>
+            <span class="form-error" id="passwordError"></span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="confirmPassword">Confirmer le mot de passe</label>
+            <div class="form-input-wrap">
+              <svg class="form-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" placeholder="Répétez le mot de passe" autocomplete="new-password" required />
+            </div>
+            <span class="form-error" id="confirmPasswordError"></span>
+          </div>
+
+          <div class="form-group form-group-inline">
+            <label class="checkbox-label">
+              <input type="checkbox" id="acceptTerms" required />
+              <span class="checkbox-custom"></span>
+              J'accepte les <a href="#" class="form-link">CGU</a> et la <a href="#" class="form-link">politique de confidentialité</a>
+            </label>
+            <span class="form-error" id="termsError"></span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full btn-large" id="registerBtn">
+            Créer mon compte gratuitement
+          </button>
+
+          <div class="divider">ou</div>
+          <div class="auth-footer-links">
+            <p>Déjà client ? <a href="login.html" class="form-link">Se connecter</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="../js/security.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/api.js"></script>
+  <script>
+    // Toggle password
+    document.getElementById('togglePassword').addEventListener('click', () => {
+      const i = document.getElementById('password');
+      i.type = i.type === 'password' ? 'text' : 'password';
+    });
+
+    // Indicateur de force du mot de passe
+    document.getElementById('password').addEventListener('input', function() {
+      const val = this.value;
+      const fill = document.getElementById('strengthFill');
+      const label = document.getElementById('strengthLabel');
+      document.getElementById('passwordStrength').style.display = val ? 'flex' : 'none';
+
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[@$!%*?&#\-_]/.test(val)) score++;
+
+      const levels = [
+        { color: '#ef4444', label: 'Très faible', width: '25%' },
+        { color: '#f59e0b', label: 'Faible',      width: '50%' },
+        { color: '#3b82f6', label: 'Moyen',       width: '75%' },
+        { color: '#10b981', label: 'Fort',         width: '100%' }
+      ];
+      const l = levels[Math.max(0, score - 1)] || levels[0];
+      fill.style.width = l.width;
+      fill.style.background = l.color;
+      label.textContent = l.label;
+      label.style.color = l.color;
+    });
+
+    // Validation
+    function validateForm() {
+      let valid = true;
+      const fields = ['firstName','lastName','email','password','confirmPassword'];
+      fields.forEach(f => {
+        document.getElementById(f).classList.remove('is-error');
+        const err = document.getElementById(f + 'Error');
+        if (err) err.classList.remove('visible');
+      });
+
+      const show = (field, msg) => {
+        document.getElementById(field).classList.add('is-error');
+        const err = document.getElementById(field + 'Error');
+        if (err) { err.textContent = msg; err.classList.add('visible'); }
+        valid = false;
+      };
+
+      const v = { firstName: document.getElementById('firstName').value.trim(), lastName: document.getElementById('lastName').value.trim(), email: document.getElementById('email').value.trim(), password: document.getElementById('password').value, confirmPassword: document.getElementById('confirmPassword').value };
+
+      if (!v.firstName || v.firstName.length < 2) show('firstName', 'Prénom requis (min 2 caractères)');
+      if (!v.lastName  || v.lastName.length < 2)  show('lastName', 'Nom requis (min 2 caractères)');
+      if (!v.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email)) show('email', 'Email invalide');
+      if (!v.password || v.password.length < 8) show('password', 'Minimum 8 caractères');
+      else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#\-_])/.test(v.password)) show('password', 'Doit contenir maj, min, chiffre, caractère spécial');
+      if (v.confirmPassword !== v.password) show('confirmPassword', 'Les mots de passe ne correspondent pas');
+
+      if (!document.getElementById('acceptTerms').checked) {
+        document.getElementById('termsError').textContent = 'Vous devez accepter les CGU';
+        document.getElementById('termsError').classList.add('visible');
+        valid = false;
+      }
+
+      return valid;
+    }
+
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validateForm()) return;
+
+      const btn = document.getElementById('registerBtn');
+      const alertEl = document.getElementById('registerAlert');
+      btn.disabled = true; btn.textContent = 'Création en cours...';
+      alertEl.style.display = 'none';
+
+      try {
+        const data = await API.post('/auth/register', {
+          firstName: document.getElementById('firstName').value.trim(),
+          lastName:  document.getElementById('lastName').value.trim(),
+          email:     document.getElementById('email').value.trim(),
+          password:  document.getElementById('password').value,
+          confirmPassword: document.getElementById('confirmPassword').value,
+          phone:     document.getElementById('phone').value.trim() || undefined
+        });
+
+        if (data.success) {
+          localStorage.setItem('accessToken', data.accessToken);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          showToast('Compte créé avec succès !', 'success');
+          setTimeout(() => window.location.href = 'dashboard.html', 1000);
+        }
+      } catch (err) {
+        alertEl.className = 'alert alert-error';
+        alertEl.textContent = err.message || 'Erreur lors de la création du compte.';
+        alertEl.style.display = 'flex';
+      } finally {
+        btn.disabled = false; btn.textContent = 'Créer mon compte gratuitement';
+      }
+    });
+  </script>
+<script src="../js/extras.js"></script>
+</body>
+</html>

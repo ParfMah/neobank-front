@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Simulateur de crédit — NeoBank</title>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <link rel="stylesheet" href="../css/landing.css"/>
+  <link rel="stylesheet" href="../css/enhancements.css"/>
+  <link rel="stylesheet" href="../css/pages.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <meta name="theme-color" content="#00d4ff"/>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo"><span class="logo-icon">◆</span><span class="logo-text">NeoBank</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#features">Fonctionnalités</a></li>
+      <li><a href="about.html">À Propos</a></li>
+      <li><a href="simulator.html">Simulateur</a></li>
+      <li><a href="pricing.html">Tarifs</a></li>
+      <li><a href="faq.html">FAQ</a></li><li><a href="download.html">📱 App</a></li>
+      <li class="nav-mobile-register" style="display:none;"><a href="register.html" class="btn btn-primary btn-full">Ouvrir un compte</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-ghost">Connexion</a>
+      <a href="register.html" class="btn btn-primary">Ouvrir un compte</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-bg"><div class="page-orb page-orb-1"></div><div class="page-orb page-orb-2"></div><div class="page-grid-bg"></div></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Accueil</a><span class="breadcrumb-sep">›</span><span>Simulateur de crédit</span></div>
+    <div class="page-tag">Simulateur</div>
+    <h1>Calculez votre crédit <span class="gradient-text">en temps réel</span></h1>
+    <p>Obtenez une estimation instantanée de vos mensualités, du coût total et du tableau d'amortissement pour votre projet.</p>
+  </div>
+</section>
+
+<section class="nb-img-loan">
+  <div class="page-wrap">
+    <!-- TABS TYPE DE CRÉDIT -->
+    <div class="sim-tabs" id="loanTabs">
+      <button class="sim-tab active" data-type="personnel">💳 Crédit personnel</button>
+      <button class="sim-tab" data-type="auto">🚗 Crédit auto</button>
+      <button class="sim-tab" data-type="immo">🏠 Crédit immobilier</button>
+      <button class="sim-tab" data-type="etude">🎓 Prêt étudiant</button>
+    </div>
+
+    <div class="sim-layout">
+      <!-- PANNEAU GAUCHE -->
+      <div class="sim-panel reveal">
+        <h3>Paramètres du crédit</h3>
+
+        <div class="sim-field">
+          <label>Montant souhaité</label>
+          <div class="sim-input-row">
+            <input type="range" id="simAmount" min="500" max="100000" value="15000" step="500"/>
+            <span class="sim-val" id="simAmountDisplay">€15 000</span>
+          </div>
+          <input type="number" class="sim-number-input" id="simAmountNum" value="15000" min="500" max="100000" step="500" style="margin-top:8px;"/>
+        </div>
+
+        <div class="sim-field">
+          <label>Durée du remboursement</label>
+          <div class="sim-input-row">
+            <input type="range" id="simDuration" min="6" max="84" value="36" step="6"/>
+            <span class="sim-val" id="simDurationDisplay">36 mois</span>
+          </div>
+        </div>
+
+        <div class="sim-field">
+          <label>Taux annuel (TAEG) <span id="rateNote" style="font-size:.75rem;color:var(--color-text-3);">— crédit personnel</span> <span style="font-size:.72rem;color:var(--color-text-3);font-style:italic;">fixé</span></label>
+          <div class="sim-input-row">
+            <input type="range" id="simRate" min="1" max="5" value="3" step="0.1"
+              disabled style="opacity:0.35;cursor:not-allowed;pointer-events:none;"/>
+            <span class="sim-val" id="simRateDisplay" style="color:var(--color-accent);font-weight:700;">3.0%</span>
+          </div>
+        </div>
+
+        <div class="sim-field">
+          <label>Apport personnel (optionnel)</label>
+          <input type="number" class="sim-number-input" id="simApport" value="0" min="0" placeholder="€ 0"/>
+        </div>
+
+        <div style="margin-top:var(--space-lg);padding:var(--space-md);background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.15);border-radius:var(--radius-md);">
+          <p style="font-size:.78rem;color:var(--color-text-3);margin:0;">
+            ⚠️ Simulation indicative et non contractuelle. Les taux réels peuvent varier selon votre profil.
+          </p>
+        </div>
+      </div>
+
+      <!-- PANNEAU DROIT — RÉSULTATS -->
+      <div>
+        <div class="sim-panel reveal rd1" style="margin-bottom:var(--space-lg);">
+          <h3>Résultats de la simulation</h3>
+          <div style="text-align:center;padding:var(--space-lg) 0;">
+            <span style="font-size:.85rem;color:var(--color-text-2);">Mensualité estimée</span>
+            <span class="result-main-value" id="simMonthly">—</span>
+            <span style="font-size:.8rem;color:var(--color-text-3);">par mois pendant <span id="resMonths">—</span></span>
+          </div>
+          <div class="result-rows">
+            <div class="result-row"><span>Montant emprunté</span><span id="resMontant" style="color:var(--color-text);">—</span></div>
+            <div class="result-row"><span>Apport</span><span id="resApport" style="color:var(--color-text);">—</span></div>
+            <div class="result-row"><span>Coût total du crédit</span><span id="resTotal" style="color:var(--color-text);">—</span></div>
+            <div class="result-row"><span>Intérêts totaux</span><span id="resInterest" style="color:var(--color-warning);">—</span></div>
+            <div class="result-row"><span>TAEG</span><span id="resTAEG" style="color:var(--color-accent);">—</span></div>
+          </div>
+          <a href="register.html" class="btn btn-primary btn-full" style="margin-top:var(--space-lg);">Faire une demande de prêt →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLEAU D'AMORTISSEMENT -->
+    <div style="margin-top:var(--space-3xl);" class="reveal">
+      <div class="section-header-center" style="margin-bottom:var(--space-xl);">
+        <div class="section-label">Détail</div>
+        <h2 class="section-h2">Tableau d'amortissement</h2>
+        <p class="section-sub">Les 12 premières échéances de votre prêt.</p>
+      </div>
+      <div class="amort-table-wrap">
+        <table class="amort-table">
+          <thead>
+            <tr><th>#</th><th>Mensualité</th><th>Capital remboursé</th><th>Intérêts</th><th>Capital restant dû</th></tr>
+          </thead>
+          <tbody id="amortBody">
+            <tr><td colspan="5" style="text-align:center;color:var(--color-text-3);padding:24px;">Ajustez les paramètres pour voir le tableau</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-bloc reveal" style="margin-top:var(--space-3xl);">
+      <h2>Prêt à concrétiser votre projet ?</h2>
+      <p>Créez votre compte NeoBank en 5 minutes et soumettez votre demande de crédit en ligne.</p>
+      <div class="cta-row">
+        <a href="register.html" class="btn btn-primary btn-large">Ouvrir un compte</a>
+        <a href="faq.html" class="btn btn-outline btn-large">Lire la FAQ crédit</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand"><div class="nav-logo" style="margin-bottom:var(--space-sm)"><span class="logo-icon">◆</span><span class="logo-text">NeoBank</span></div><p>La banque du futur, aujourd'hui.</p></div>
+    <div class="footer-links">
+      <div class="footer-col"><h4>Produits</h4><a href="open-account.html">Compte courant</a><a href="simulator.html">Crédit</a><a href="pricing.html">Tarifs</a></div>
+      <div class="footer-col"><h4>Entreprise</h4><a href="about.html">À Propos</a><a href="security.html">Sécurité</a><a href="contact.html">Contact</a><a href="faq.html">FAQ</a></div>
+      <div class="footer-col"><h4>Accès</h4><a href="login.html">Connexion</a><a href="register.html">Créer un compte</a></div>
+      <div class="footer-col"><h4>Légal</h4><a href="legal.html">CGU</a><a href="legal.html">Confidentialité</a><a href="legal.html">Mentions légales</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 NeoBank. Tous droits réservés.</p></div>
+</footer>
+<div id="toast-container"></div>
+<script src="../js/main.js"></script>
+<script>
+// ─── TAUX FIXES PAR TYPE ─────────────────────────────────────
+const FIXED_RATES_PAGE = { personnel:3.0, auto:3.5, immo:2.1, etude:1.9 };
+const TYPE_LABELS = { personnel:'crédit personnel', auto:'crédit auto', immo:'crédit immobilier', etude:'prêt étudiant' };
+let currentType = 'personnel';
+
+const fmt  = n => '€' + Math.round(n).toLocaleString('fr-FR');
+const fmtD = n => (Math.round(n*100)/100).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+function calcSim() {
+  const amount   = parseFloat(document.getElementById('simAmount').value);
+  const duration = parseInt(document.getElementById('simDuration').value);
+  const rate     = FIXED_RATES_PAGE[currentType]; // ← taux fixe selon le type
+  const apport   = parseFloat(document.getElementById('simApport').value)||0;
+  const principal = Math.max(0, amount - apport);
+  const monthlyRate = rate / 100 / 12;
+
+  const monthly = monthlyRate === 0
+    ? principal / duration
+    : principal * monthlyRate * Math.pow(1+monthlyRate, duration) / (Math.pow(1+monthlyRate, duration) - 1);
+
+  const total    = monthly * duration;
+  const interest = total - principal;
+
+  document.getElementById('simMonthly').textContent   = '€' + fmtD(monthly);
+  document.getElementById('resMonths').textContent    = duration + ' mois';
+  document.getElementById('resMontant').textContent   = fmt(principal);
+  document.getElementById('resApport').textContent    = fmt(apport);
+  document.getElementById('resTotal').textContent     = fmt(total);
+  document.getElementById('resInterest').textContent  = fmt(interest);
+  document.getElementById('resTAEG').textContent      = rate.toFixed(1) + ' %';
+
+  // Sync affichage taux (lecture seule)
+  const rateSlider = document.getElementById('simRate');
+  const rateDisplay = document.getElementById('simRateDisplay');
+  if (rateSlider) rateSlider.value = rate;
+  if (rateDisplay) rateDisplay.textContent = rate.toFixed(1) + '%';
+  const rateNote = document.getElementById('rateNote');
+  if (rateNote) rateNote.textContent = '— ' + TYPE_LABELS[currentType];
+
+  // Tableau amortissement (12 premières lignes)
+  let balance = principal;
+  let rows = '';
+  const max = Math.min(12, duration);
+  for (let i = 1; i <= max; i++) {
+    const intPart = balance * monthlyRate;
+    const capPart = monthly - intPart;
+    balance = Math.max(0, balance - capPart);
+    rows += `<tr>
+      <td>${i}</td>
+      <td>€${fmtD(monthly)}</td>
+      <td style="color:var(--color-success)">€${fmtD(capPart)}</td>
+      <td style="color:var(--color-warning)">€${fmtD(intPart)}</td>
+      <td>€${fmtD(balance)}</td>
+    </tr>`;
+  }
+  document.getElementById('amortBody').innerHTML = rows;
+}
+
+// Sliders montant + durée
+document.getElementById('simAmount').addEventListener('input', function(){
+  document.getElementById('simAmountDisplay').textContent = '€' + parseInt(this.value).toLocaleString('fr-FR');
+  document.getElementById('simAmountNum').value = this.value;
+  calcSim();
+});
+document.getElementById('simAmountNum').addEventListener('input', function(){
+  document.getElementById('simAmount').value = this.value;
+  document.getElementById('simAmountDisplay').textContent = '€' + parseInt(this.value||0).toLocaleString('fr-FR');
+  calcSim();
+});
+document.getElementById('simDuration').addEventListener('input', function(){
+  document.getElementById('simDurationDisplay').textContent = this.value + ' mois';
+  calcSim();
+});
+document.getElementById('simApport').addEventListener('input', calcSim);
+
+// Tabs type de prêt → changent le taux fixe
+document.querySelectorAll('.sim-tab').forEach(btn => {
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.sim-tab').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    currentType = this.dataset.type;
+    calcSim();
+  });
+});
+
+const obs = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+calcSim();
+</script>
+<script src="../js/extras.js"></script>
+</body>
+</html>

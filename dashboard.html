@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — NeoBank</title>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <link rel="stylesheet" href="../css/enhancements.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="manifest" href="../manifest.json" />
+  <meta name="theme-color" content="#00d4ff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.svg" />
+</head>
+<body class="dash-body">
+
+<div class="dash-layout">
+  <!-- ─── SIDEBAR ──────────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">◆</span>
+      <span class="logo-text">NeoBank</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-label">Principal</div>
+        <a class="nav-item active" data-page="overview">
+          <span class="nav-item-icon">◈</span> Vue d'ensemble
+        </a>
+        <a class="nav-item" data-page="transactions">
+          <span class="nav-item-icon">⇄</span> Transactions
+        </a>
+        <a class="nav-item" data-page="transfer">
+          <span class="nav-item-icon">↗</span> Virement
+        </a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Crédit</div>
+        <a class="nav-item" href="loans.html">
+          <span class="nav-item-icon">◎</span> Mes prêts
+        </a>
+        <a class="nav-item" href="loans.html#apply">
+          <span class="nav-item-icon">＋</span> Demander un prêt
+        </a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Compte</div>
+        <a class="nav-item" href="settings.html">
+          <span class="nav-item-icon">⚙</span> Paramètres
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user" id="sidebarUser">
+        <div class="user-avatar" id="userAvatar">??</div>
+        <div class="user-info">
+          <div class="user-name" id="userName">Chargement...</div>
+          <div class="user-role" id="userRole">—</div>
+        </div>
+      </div>
+      <button class="nav-item" id="logoutBtn" style="width:100%;margin-top:6px;border:none;background:none;">
+        <span class="nav-item-icon">⏻</span> Déconnexion
+      </button>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ───────────────────────────────────────────────── -->
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <div class="topbar-left" style="display:flex;align-items:center;gap:12px;">
+        <button class="topbar-btn" id="sidebarToggle">☰</button>
+        <span class="topbar-title" id="topbarTitle">Vue d'ensemble</span>
+      </div>
+      <div class="topbar-actions">
+        <div class="topbar-btn notif-dot" title="Notifications">🔔</div>
+        <div class="topbar-btn" title="Aide">?</div>
+      </div>
+    </div>
+
+    <div class="dash-content" id="dashContent">
+      <!-- PAGE: OVERVIEW -->
+      <div id="page-overview">
+        <!-- Balance Card -->
+        <div class="balance-card">
+          <div class="balance-card-left">
+            <div class="balance-tag">
+              <div class="balance-dot"></div>
+              <span>Solde disponible</span>
+            </div>
+            <div class="balance-amount" id="balanceAmount">€ —</div>
+            <div class="balance-meta">
+              <div class="balance-meta-item">
+                <span class="balance-meta-label">Crédits ce mois</span>
+                <span class="balance-meta-value text-success" id="monthCredits">—</span>
+              </div>
+              <div class="balance-meta-item">
+                <span class="balance-meta-label">Débits ce mois</span>
+                <span class="balance-meta-value text-danger" id="monthDebits">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="balance-card-right">
+            <div class="card-visual">
+              <div class="card-chip"></div>
+              <div class="card-number" id="cardNumber">•••• •••• •••• ——</div>
+              <div class="card-footer-info">
+                <span id="cardHolder">—</span>
+                <span id="cardExpiry">——/——</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <div class="quick-action" onclick="openModal('transfer')">
+            <div class="quick-action-icon">↗</div>
+            <span class="quick-action-label">Envoyer</span>
+          </div>
+          <div class="quick-action" onclick="openModal('deposit')">
+            <div class="quick-action-icon">↙</div>
+            <span class="quick-action-label">Déposer</span>
+          </div>
+          <div class="quick-action" onclick="window.location.href='loans.html#apply'">
+            <div class="quick-action-icon">◎</div>
+            <span class="quick-action-label">Crédit</span>
+          </div>
+          <div class="quick-action" onclick="switchPage('transactions')">
+            <div class="quick-action-icon">≡</div>
+            <span class="quick-action-label">Historique</span>
+          </div>
+        </div>
+
+        <!-- Grid -->
+        <div class="dash-grid">
+          <!-- Transactions récentes -->
+          <div class="card card-sm">
+            <div class="section-header-row">
+              <span class="section-title-sm">Transactions récentes</span>
+              <button class="btn btn-ghost btn-sm" onclick="switchPage('transactions')">Tout voir →</button>
+            </div>
+            <div class="tx-list" id="recentTxList">
+              <div class="tx-empty">Chargement...</div>
+            </div>
+          </div>
+
+          <!-- Sidebar droite -->
+          <div class="dash-sidebar-right">
+            <!-- Stats -->
+            <div class="card card-sm">
+              <div class="section-header-row" style="margin-bottom:var(--space-md)">
+                <span class="section-title-sm">Dépenses (30j)</span>
+              </div>
+              <div class="chart-container">
+                <canvas id="categoryChart"></canvas>
+              </div>
+            </div>
+            <!-- Graphe mensuel -->
+            <div class="card card-sm">
+              <div class="section-header-row" style="margin-bottom:var(--space-md)">
+                <span class="section-title-sm">Flux 6 mois</span>
+              </div>
+              <div class="chart-container">
+                <canvas id="monthlyChart"></canvas>
+              </div>
+            </div>
+            <!-- Infos compte -->
+            <div class="card card-sm">
+              <div class="section-title-sm" style="margin-bottom:var(--space-md)">Infos compte</div>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div style="display:flex;justify-content:space-between;font-size:0.82rem;">
+                  <span class="text-muted">IBAN</span>
+                  <span id="ibanDisplay" style="font-family:monospace;font-size:0.75rem;">—</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:0.82rem;">
+                  <span class="text-muted">BIC</span>
+                  <span id="bicDisplay">—</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:0.82rem;">
+                  <span class="text-muted">Type</span>
+                  <span id="accountType">—</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:0.82rem;">
+                  <span class="text-muted">Statut</span>
+                  <span id="accountStatus">—</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: TRANSACTIONS -->
+      <div id="page-transactions" style="display:none;">
+        <div class="card">
+          <div class="section-header-row">
+            <span class="section-title-sm">Toutes les transactions</span>
+            <div style="display:flex;gap:8px;">
+              <select class="form-input" id="txFilterType" style="padding:6px 10px;font-size:0.8rem;">
+                <option value="">Tous types</option>
+                <option value="transfer_in">Virements reçus</option>
+                <option value="transfer_out">Virements envoyés</option>
+                <option value="deposit">Dépôts</option>
+                <option value="loan_disbursement">Prêts</option>
+                <option value="card_payment">Carte</option>
+                <option value="admin_credit">Crédit admin</option>
+              </select>
+              <select class="form-input" id="txFilterDir" style="padding:6px 10px;font-size:0.8rem;">
+                <option value="">Toutes</option>
+                <option value="credit">Crédits</option>
+                <option value="debit">Débits</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Type</th>
+                  <th>Date</th>
+                  <th>Statut</th>
+                  <th class="text-right">Montant</th>
+                </tr>
+              </thead>
+              <tbody id="txTableBody">
+                <tr><td colspan="5" class="tx-empty">Chargement...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="txPagination" style="display:flex;justify-content:center;gap:8px;padding:var(--space-lg) 0;"></div>
+        </div>
+      </div>
+
+      <!-- PAGE: TRANSFER (inline) -->
+      <div id="page-transfer" style="display:none;">
+        <div class="card" style="max-width:560px;margin:auto;">
+          <div class="section-header-row">
+            <span class="section-title-sm">Effectuer un virement</span>
+          </div>
+          <div id="transferAlert" class="alert" style="display:none;"></div>
+          <form id="transferForm" novalidate>
+            <div class="form-group">
+              <label class="form-label">IBAN destinataire</label>
+              <input type="text" id="recipientIban" class="form-input" placeholder="FR76 0000 0000 0000 0000 0000 000" />
+              <span class="form-error" id="ibanError"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Montant (€)</label>
+              <input type="number" id="transferAmount" class="form-input" placeholder="0.00" min="0.01" step="0.01" />
+              <span class="form-error" id="amountError"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Description</label>
+              <input type="text" id="transferDesc" class="form-input" placeholder="Ex: Remboursement restaurant" maxlength="200" />
+              <span class="form-error" id="descError"></span>
+            </div>
+            <div class="form-group" style="background:var(--color-surface-2);padding:14px;border-radius:var(--radius-md);">
+              <div style="display:flex;justify-content:space-between;font-size:0.85rem;">
+                <span class="text-muted">Solde actuel</span>
+                <span id="transferBalance" class="text-accent">—</span>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full" id="transferBtn">Confirmer le virement</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- PAGE: PROFILE -->
+      <div id="page-profile" style="display:none;">
+        <div class="card" style="max-width:560px;">
+          <div class="section-title-sm" style="margin-bottom:var(--space-xl)">Mes informations</div>
+          <div style="display:flex;flex-direction:column;gap:16px;" id="profileInfo"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ─── MODAL VIREMENT ─────────────────────────────────────────── -->
+<div class="modal-overlay hidden" id="transferModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Nouveau virement</span>
+      <button class="modal-close" onclick="closeModal('transfer')">✕</button>
+    </div>
+    <div id="modalTransferAlert" class="alert" style="display:none;"></div>
+    <form id="modalTransferForm" novalidate>
+      <div class="form-group">
+        <label class="form-label">IBAN destinataire</label>
+        <input type="text" id="mRecipientIban" class="form-input" placeholder="FR76 ..." />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Montant (€)</label>
+        <input type="number" id="mAmount" class="form-input" placeholder="0.00" min="0.01" step="0.01" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <input type="text" id="mDesc" class="form-input" placeholder="Motif du virement" maxlength="200" />
+      </div>
+      <button type="submit" class="btn btn-primary btn-full" id="mTransferBtn">Envoyer</button>
+    </form>
+  </div>
+</div>
+
+<!-- ─── MODAL DÉPÔT ────────────────────────────────────────────── -->
+<div class="modal-overlay hidden" id="depositModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Déposer des fonds</span>
+      <button class="modal-close" onclick="closeModal('deposit')">✕</button>
+    </div>
+    <div id="modalDepositAlert" class="alert" style="display:none;"></div>
+    <form id="modalDepositForm" novalidate>
+      <div class="form-group">
+        <label class="form-label">Montant (€)</label>
+        <input type="number" id="dAmount" class="form-input" placeholder="Ex: 500" min="1" step="0.01" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <input type="text" id="dDesc" class="form-input" placeholder="Ex: Virement bancaire" />
+      </div>
+      <button type="submit" class="btn btn-primary btn-full" id="dBtn">Déposer</button>
+    </form>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="../js/performance.js"></script>
+  <script src="../js/security.js"></script>
+  <script src="../js/main.js"></script>
+<script src="../js/api.js"></script>
+<script>
+  // ─── Garde d'authentification ─────────────────────────────
+  if (!requireAuth()) throw new Error('not authenticated');
+
+  let statsData = null;
+  let currentPage = 1;
+  let monthlyChart = null;
+  let categoryChart = null;
+
+  // ─── Init ─────────────────────────────────────────────────
+  async function init() {
+    const user = API.getCurrentUser();
+    if (!user) { API.redirectToLogin(); return; }
+
+    // Remplir le profil sidebar
+    document.getElementById('userAvatar').textContent = (user.firstName[0] + user.lastName[0]).toUpperCase();
+    document.getElementById('userName').textContent   = `${user.firstName} ${user.lastName}`;
+    document.getElementById('userRole').textContent   = user.role === 'admin' ? 'Administrateur' : 'Compte courant';
+    document.getElementById('cardHolder').textContent = `${user.firstName} ${user.lastName}`.toUpperCase();
+
+    await Promise.all([loadAccountData(), loadStats(), loadRecentTransactions()]);
+  }
+
+  // ─── Charger les données du compte ────────────────────────
+  async function loadAccountData() {
+    try {
+      const data = await API.account.get();
+      const acc  = data.account;
+
+      document.getElementById('balanceAmount').textContent = formatCurrency(acc.balance);
+      document.getElementById('balanceAmount').classList.remove('loading');
+      document.getElementById('ibanDisplay').textContent  = acc.iban || '—';
+      document.getElementById('bicDisplay').textContent   = acc.bic  || '—';
+      document.getElementById('accountType').textContent  = acc.type === 'current' ? 'Compte courant' : acc.type;
+      document.getElementById('accountStatus').innerHTML  = statusBadge(acc.status);
+      document.getElementById('transferBalance').textContent = formatCurrency(acc.balance);
+
+      if (acc.card?.lastFourDigits) {
+        document.getElementById('cardNumber').textContent = `•••• •••• •••• ${acc.card.lastFourDigits}`;
+        document.getElementById('cardExpiry').textContent = acc.card.expiryDate || '—';
+      }
+    } catch (err) { showToast('Erreur chargement compte: ' + err.message, 'error'); }
+  }
+
+  // ─── Charger les stats ────────────────────────────────────
+  async function loadStats() {
+    try {
+      const data = await API.account.getStats();
+      statsData = data.stats;
+
+      // Stats mensuelles (mois en cours = dernier élément)
+      const lastMonth = statsData.monthly[statsData.monthly.length - 1] || { credits: 0, debits: 0 };
+      document.getElementById('monthCredits').textContent = '+' + formatCurrency(lastMonth.credits);
+      document.getElementById('monthDebits').textContent  = '-' + formatCurrency(lastMonth.debits);
+
+      renderMonthlyChart(statsData.monthly);
+      renderCategoryChart(statsData.categories);
+    } catch (err) { console.error('Stats error:', err); }
+  }
+
+  // ─── Graphe flux mensuel ──────────────────────────────────
+  function renderMonthlyChart(monthly) {
+    const ctx = document.getElementById('monthlyChart').getContext('2d');
+    if (monthlyChart) monthlyChart.destroy();
+    monthlyChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: monthly.map(m => m.label),
+        datasets: [
+          { label: 'Crédits', data: monthly.map(m => m.credits), backgroundColor: 'rgba(16,185,129,0.6)', borderRadius: 4 },
+          { label: 'Débits',  data: monthly.map(m => m.debits),  backgroundColor: 'rgba(239,68,68,0.6)',  borderRadius: 4 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { labels: { color: '#8b9bbf', font: { size: 10 } } } },
+        scales: {
+          x: { ticks: { color: '#4a5568', font: { size: 9 } }, grid: { display: false } },
+          y: { ticks: { color: '#4a5568', font: { size: 9 }, callback: v => '€' + v }, grid: { color: 'rgba(255,255,255,0.04)' } }
+        }
+      }
+    });
+  }
+
+  // ─── Graphe catégories ────────────────────────────────────
+  function renderCategoryChart(categories) {
+    const ctx = document.getElementById('categoryChart').getContext('2d');
+    if (categoryChart) categoryChart.destroy();
+    if (!categories || !categories.length) {
+      ctx.canvas.parentElement.innerHTML = '<p style="text-align:center;color:var(--color-text-3);font-size:0.8rem;padding:20px">Aucune dépense ce mois</p>';
+      return;
+    }
+    const labels = { housing:'Logement', food:'Alimentation', transport:'Transport', entertainment:'Loisirs', shopping:'Shopping', other:'Autre', fees:'Frais', income:'Revenus', loan:'Crédit' };
+    categoryChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: categories.map(c => labels[c.category] || c.category),
+        datasets: [{ data: categories.map(c => c.total), backgroundColor: ['#00d4ff','#7c3aed','#10b981','#f59e0b','#ef4444','#3b82f6','#8b5cf6'], borderWidth: 0, hoverOffset: 4 }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, cutout: '65%',
+        plugins: { legend: { position: 'bottom', labels: { color: '#8b9bbf', font: { size: 9 }, padding: 8, boxWidth: 10 } } }
+      }
+    });
+  }
+
+  // ─── Transactions récentes ────────────────────────────────
+  async function loadRecentTransactions() {
+    try {
+      const data = await API.transactions.list('limit=8');
+      const el   = document.getElementById('recentTxList');
+      if (!data.transactions.length) { el.innerHTML = '<div class="tx-empty">Aucune transaction</div>'; return; }
+      el.innerHTML = data.transactions.map(tx => `
+        <div class="tx-item">
+          <div class="tx-icon ${tx.direction}">${txIcon(tx.type)}</div>
+          <div class="tx-info">
+            <div class="tx-desc">${tx.description}</div>
+            <div class="tx-date">${formatDateTime(tx.createdAt)}</div>
+          </div>
+          <div class="tx-amount ${tx.direction}">${tx.direction === 'credit' ? '+' : '-'}${formatCurrency(tx.amount)}</div>
+        </div>`).join('');
+    } catch (err) { document.getElementById('recentTxList').innerHTML = '<div class="tx-empty">Erreur de chargement</div>'; }
+  }
+
+  // ─── Page Transactions complète ───────────────────────────
+  async function loadAllTransactions(page = 1) {
+    currentPage = page;
+    const type = document.getElementById('txFilterType').value;
+    const dir  = document.getElementById('txFilterDir').value;
+    let params = `page=${page}&limit=15`;
+    if (type) params += `&type=${type}`;
+    if (dir)  params += `&direction=${dir}`;
+
+    const tbody = document.getElementById('txTableBody');
+    tbody.innerHTML = '<tr><td colspan="5" class="tx-empty">Chargement...</td></tr>';
+
+    try {
+      const data = await API.transactions.list(params);
+      if (!data.transactions.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="tx-empty">Aucune transaction</td></tr>';
+        document.getElementById('txPagination').innerHTML = '';
+        return;
+      }
+      tbody.innerHTML = data.transactions.map(tx => `
+        <tr>
+          <td><div style="font-weight:500">${tx.description}</div><div style="font-size:0.75rem;color:var(--color-text-3)">${tx.reference}</div></td>
+          <td><span class="badge badge-neutral" style="font-size:0.7rem">${tx.type.replace(/_/g,' ')}</span></td>
+          <td style="font-size:0.82rem;color:var(--color-text-2)">${formatDateTime(tx.createdAt)}</td>
+          <td>${statusBadge(tx.status)}</td>
+          <td class="text-right tx-amount ${tx.direction}">${tx.direction === 'credit' ? '+' : '-'}${formatCurrency(tx.amount)}</td>
+        </tr>`).join('');
+
+      // Pagination
+      const pag = document.getElementById('txPagination');
+      pag.innerHTML = '';
+      for (let p = 1; p <= data.pages; p++) {
+        const btn = document.createElement('button');
+        btn.className = `btn btn-sm ${p === page ? 'btn-primary' : 'btn-secondary'}`;
+        btn.textContent = p;
+        btn.onclick = () => loadAllTransactions(p);
+        pag.appendChild(btn);
+      }
+    } catch (err) {
+      tbody.innerHTML = `<tr><td colspan="5" class="tx-empty">${err.message}</td></tr>`;
+    }
+  }
+
+  // ─── Navigation entre pages ───────────────────────────────
+  function switchPage(page) {
+    ['overview','transactions','transfer','profile'].forEach(p => {
+      document.getElementById('page-' + p).style.display = p === page ? 'block' : 'none';
+    });
+    document.querySelectorAll('.nav-item').forEach(el => {
+      el.classList.toggle('active', el.dataset.page === page);
+    });
+    const titles = { overview: 'Vue d\'ensemble', transactions: 'Transactions', transfer: 'Virement', profile: 'Profil' };
+    document.getElementById('topbarTitle').textContent = titles[page] || page;
+
+    if (page === 'transactions') loadAllTransactions(1);
+    if (page === 'profile') loadProfile();
+  }
+
+  // ─── Profil ───────────────────────────────────────────────
+  async function loadProfile() {
+    try {
+      const data = await API.auth.me();
+      const u = data.user;
+      const el = document.getElementById('profileInfo');
+      const row = (label, value) => `<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--color-border);font-size:0.88rem;"><span class="text-muted">${label}</span><span>${value || '—'}</span></div>`;
+      el.innerHTML = row('Prénom', u.firstName) + row('Nom', u.lastName) + row('Email', u.email) + row('Téléphone', u.phone) + row('Rôle', u.role) + row('KYC', u.kycStatus) + row('Membre depuis', formatDate(u.createdAt));
+    } catch {}
+  }
+
+  // ─── Modals ───────────────────────────────────────────────
+  function openModal(type)  { document.getElementById(type + 'Modal').classList.remove('hidden'); }
+  function closeModal(type) { document.getElementById(type + 'Modal').classList.add('hidden'); }
+
+  // ─── Formulaire virement modal ───────────────────────────
+  document.getElementById('modalTransferForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('mTransferBtn');
+    const alertEl = document.getElementById('modalTransferAlert');
+    btn.disabled = true; btn.textContent = 'Envoi...';
+    alertEl.style.display = 'none';
+    try {
+      const data = await API.transactions.transfer({
+        recipientIban: document.getElementById('mRecipientIban').value.trim(),
+        amount: parseFloat(document.getElementById('mAmount').value),
+        description: document.getElementById('mDesc').value.trim()
+      });
+      showToast('Virement effectué ! Nouveau solde: ' + formatCurrency(data.newBalance), 'success');
+      closeModal('transfer');
+      document.getElementById('modalTransferForm').reset();
+      await Promise.all([loadAccountData(), loadRecentTransactions()]);
+    } catch (err) {
+      alertEl.className = 'alert alert-error';
+      alertEl.textContent = err.message;
+      alertEl.style.display = 'flex';
+    } finally { btn.disabled = false; btn.textContent = 'Envoyer'; }
+  });
+
+  // ─── Formulaire dépôt modal ───────────────────────────────
+  document.getElementById('modalDepositForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('dBtn');
+    const alertEl = document.getElementById('modalDepositAlert');
+    btn.disabled = true; btn.textContent = 'Dépôt...';
+    alertEl.style.display = 'none';
+    try {
+      const data = await API.transactions.deposit({
+        amount: parseFloat(document.getElementById('dAmount').value),
+        description: document.getElementById('dDesc').value.trim() || 'Dépôt'
+      });
+      showToast('Dépôt effectué ! Nouveau solde: ' + formatCurrency(data.newBalance), 'success');
+      closeModal('deposit');
+      document.getElementById('modalDepositForm').reset();
+      await Promise.all([loadAccountData(), loadRecentTransactions()]);
+    } catch (err) {
+      alertEl.className = 'alert alert-error';
+      alertEl.textContent = err.message;
+      alertEl.style.display = 'flex';
+    } finally { btn.disabled = false; btn.textContent = 'Déposer'; }
+  });
+
+  // ─── Fermer modal en cliquant en dehors ───────────────────
+  ['transferModal','depositModal'].forEach(id => {
+    document.getElementById(id).addEventListener('click', function(e) {
+      if (e.target === this) this.classList.add('hidden');
+    });
+  });
+
+  // ─── Navigation sidebar ───────────────────────────────────
+  document.querySelectorAll('.nav-item[data-page]').forEach(item => {
+    item.addEventListener('click', () => switchPage(item.dataset.page));
+  });
+
+  // ─── Filtres transactions ─────────────────────────────────
+  ['txFilterType','txFilterDir'].forEach(id => {
+    document.getElementById(id).addEventListener('change', () => loadAllTransactions(1));
+  });
+
+  // ─── Sidebar toggle mobile ────────────────────────────────
+  document.getElementById('sidebarToggle').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+
+  // ─── Déconnexion ──────────────────────────────────────────
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    try { await API.auth.logout(); } catch {}
+    API.redirectToLogin();
+  });
+
+  // ─── Lancement ───────────────────────────────────────────
+  init();
+</script>
+<script src="../js/extras.js"></script>
+</body>
+</html>

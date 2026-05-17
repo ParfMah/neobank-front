@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installer NeoBank — Application Mobile</title>
+  <link rel="manifest" href="../manifest.json" />
+  <meta name="theme-color" content="#00d4ff" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/landing.css"/>
+  <link rel="stylesheet" href="../css/enhancements.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <style>
+    body { background: var(--color-bg); min-height: 100vh; }
+    .install-hero {
+      max-width: 900px; margin: 0 auto;
+      padding: 80px var(--space-xl) var(--space-4xl);
+      text-align: center;
+    }
+    .install-hero h1 { font-size: clamp(2rem,5vw,3rem); margin-bottom: var(--space-md); }
+    .install-hero p  { color: var(--color-text-2); max-width: 560px; margin: 0 auto var(--space-2xl); }
+    .store-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); max-width: 560px; margin: 0 auto var(--space-2xl); }
+    .store-card {
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl); padding: var(--space-xl);
+      transition: all var(--transition-base); text-align: center;
+    }
+    .store-card:hover { border-color: var(--color-accent); transform: translateY(-4px); box-shadow: var(--shadow-accent); }
+    .store-card svg { margin: 0 auto var(--space-md); display: block; }
+    .store-card h3 { margin-bottom: 6px; }
+    .store-card p  { font-size: 0.82rem; }
+    .pwa-section {
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl); padding: var(--space-2xl);
+      max-width: 700px; margin: 0 auto;
+    }
+    .pwa-steps { display: flex; flex-direction: column; gap: var(--space-md); margin: var(--space-xl) 0; text-align: left; }
+    .pwa-step {
+      display: flex; align-items: flex-start; gap: var(--space-md);
+      padding: var(--space-md); background: var(--color-surface-2);
+      border-radius: var(--radius-md);
+    }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--color-accent-glow); color: var(--color-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.82rem; font-weight: 700; flex-shrink: 0;
+    }
+    .step-text h4 { font-size: 0.9rem; margin-bottom: 3px; }
+    .step-text p  { font-size: 0.8rem; }
+    .os-tabs { display: flex; gap: 4px; background: var(--color-surface-2); border-radius: var(--radius-md); padding: 4px; margin-bottom: var(--space-lg); }
+    .os-tab { flex: 1; padding: 8px; border-radius: var(--radius-sm); background: none; border: none; color: var(--color-text-2); font-size: 0.85rem; cursor: pointer; transition: all var(--transition-fast); }
+    .os-tab.active { background: var(--color-surface); color: var(--color-text); }
+    .os-content { display: none; }
+    .os-content.active { display: block; }
+    .compat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-md); margin-top: var(--space-xl); }
+    .compat-item { text-align: center; padding: var(--space-md); background: var(--color-surface-2); border-radius: var(--radius-md); font-size: 0.82rem; }
+    .compat-icon { font-size: 1.5rem; margin-bottom: 6px; }
+    @media(max-width:600px) {
+      .store-grid { grid-template-columns: 1fr; }
+      .compat-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">◆</span>
+        <span class="logo-text">NeoBank</span>
+      </a>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-ghost">Connexion</a>
+        <a href="register.html" class="btn btn-primary">Créer un compte</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="install-hero" style="padding-top:100px;">
+    <div class="hero-badge" style="margin:0 auto var(--space-lg);">
+      <span class="badge-dot"></span> Application disponible
+    </div>
+    <h1>NeoBank dans votre poche</h1>
+    <p>Installez l'application NeoBank sur votre téléphone pour accéder à vos finances à tout moment, même sans connexion internet.</p>
+
+    <!-- Store buttons -->
+    <div class="store-grid">
+      <div class="store-card" id="iosCard">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="#f0f4ff">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        <h3>App Store</h3>
+        <p style="color:var(--color-text-2);font-size:0.78rem;margin-bottom:var(--space-md)">iOS 15+</p>
+        <button class="btn btn-secondary btn-full" onclick="showPWAInstall('ios')">
+          Bientôt disponible
+        </button>
+      </div>
+      <div class="store-card" id="androidCard">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="#f0f4ff">
+          <path d="M3.18 23.76c.3.17.64.24.99.2l12.46-7.19-2.83-2.83L3.18 23.76zm-1.1-20.2C1.79 3.9 1.67 4.2 1.67 4.56v14.88c0 .36.12.66.41.9l.08.07 8.34-8.34v-.2L2.08 3.56zm18.63 8.54l-2.37-1.37-2.9 2.9 2.9 2.9 2.37-1.37c.68-.39.68-1.03 0-1.42zm-17.53 9.9l10.2-5.89-2.83-2.83-7.37 7.37v1.35z"/>
+        </svg>
+        <h3>Google Play</h3>
+        <p style="color:var(--color-text-2);font-size:0.78rem;margin-bottom:var(--space-md)">Android 8+</p>
+        <button class="btn btn-secondary btn-full" onclick="showPWAInstall('android')">
+          Bientôt disponible
+        </button>
+      </div>
+    </div>
+
+    <!-- PWA Install -->
+    <div class="pwa-section">
+      <div class="section-tag" style="margin-bottom:var(--space-md)">Progressive Web App</div>
+      <h2 style="font-size:1.4rem;margin-bottom:var(--space-sm)">Installer maintenant via votre navigateur</h2>
+      <p style="font-size:0.9rem;color:var(--color-text-2);margin-bottom:var(--space-lg)">
+        Sans attendre les stores, installez NeoBank directement depuis votre navigateur. Fonctionne comme une vraie application native.
+      </p>
+
+      <!-- OS Tabs -->
+      <div class="os-tabs">
+        <button class="os-tab active" onclick="switchOS('ios')">🍎 iPhone / iPad</button>
+        <button class="os-tab" onclick="switchOS('android')">🤖 Android</button>
+        <button class="os-tab" onclick="switchOS('desktop')">🖥 Ordinateur</button>
+      </div>
+
+      <!-- iOS -->
+      <div class="os-content active" id="os-ios">
+        <div class="pwa-steps">
+          <div class="pwa-step">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <h4>Ouvrir dans Safari</h4>
+              <p>L'installation PWA sur iOS nécessite Safari (pas Chrome ni Firefox).</p>
+            </div>
+          </div>
+          <div class="pwa-step">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <h4>Appuyer sur le bouton Partager</h4>
+              <p>Icône carrée avec une flèche vers le haut en bas de l'écran.</p>
+            </div>
+          </div>
+          <div class="pwa-step">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <h4>Choisir "Sur l'écran d'accueil"</h4>
+              <p>Faites défiler la liste d'actions et appuyez sur "Ajouter à l'écran d'accueil".</p>
+            </div>
+          </div>
+          <div class="pwa-step">
+            <div class="step-num">4</div>
+            <div class="step-text">
+              <h4>Confirmer l'installation</h4>
+              <p>Appuyez sur "Ajouter" en haut à droite. NeoBank apparaît sur votre écran d'accueil !</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Android -->
+      <div class="os-content" id="os-android">
+        <div class="pwa-steps">
+          <div class="pwa-step">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <h4>Ouvrir dans Chrome</h4>
+              <p>Fonctionne aussi avec Samsung Internet, Edge ou Firefox pour Android.</p>
+            </div>
+          </div>
+          <div class="pwa-step">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <h4>Bannière automatique</h4>
+              <p>Chrome affiche automatiquement "Ajouter NeoBank à l'écran d'accueil". Appuyez dessus.</p>
+            </div>
+          </div>
+          <div class="pwa-step">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <h4>Ou via le menu ⋮</h4>
+              <p>Menu en haut à droite → "Ajouter à l'écran d'accueil" ou "Installer l'application".</p>
+            </div>
+          </div>
+          <div class="pwa-step">
+            <div class="step-num">4</div>
+            <div class="step-text">
+              <h4>Confirmer</h4>
+              <p>Appuyez sur "Installer". L'icône NeoBank apparaît dans votre lanceur d'applications.</p>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-full" id="androidInstallBtn" style="display:none;">
+          ⬇ Installer NeoBank maintenant
+        </button>
+      </div>
+
+      <!-- Desktop -->
+      <div class="os-content" id="os-desktop">
+        <div class="pwa-steps">
+          <div class="pwa-step">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <h4>Chrome / Edge</h4>
+              <p>Une icône d'installation apparaît dans la barre d'adresse (icône ⊕ ou ordinateur).</p>
+            </div>
+          </div>
+          <div class="pwa-step">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <h4>Cliquer sur l'icône</h4>
+              <p>Ou aller dans le menu du navigateur → "Installer NeoBank".</p>
+            </div>
+          </div>
+          <div class="pwa-step">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <h4>Confirmer l'installation</h4>
+              <p>NeoBank s'ouvre dans sa propre fenêtre sans barre de navigation du navigateur.</p>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="desktopInstallBtn">
+          ⬇ Installer sur cet ordinateur
+        </button>
+      </div>
+
+      <!-- Compatibilité -->
+      <div class="compat-grid">
+        <div class="compat-item">
+          <div class="compat-icon">📴</div>
+          <div>Fonctionne<br><strong>hors ligne</strong></div>
+        </div>
+        <div class="compat-item">
+          <div class="compat-icon">🔔</div>
+          <div>Notifications<br><strong>push</strong></div>
+        </div>
+        <div class="compat-item">
+          <div class="compat-icon">⚡</div>
+          <div>Chargement<br><strong>instantané</strong></div>
+        </div>
+        <div class="compat-item">
+          <div class="compat-icon">🔒</div>
+          <div>HTTPS<br><strong>sécurisé</strong></div>
+        </div>
+        <div class="compat-item">
+          <div class="compat-icon">📱</div>
+          <div>Interface<br><strong>native</strong></div>
+        </div>
+        <div class="compat-item">
+          <div class="compat-icon">🔄</div>
+          <div>Mise à jour<br><strong>auto</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:var(--space-2xl);">
+      <a href="index.html" class="btn btn-ghost">← Retour à l'accueil</a>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="../js/main.js"></script>
+  <script>
+    // OS tab switcher
+    function switchOS(os) {
+      document.querySelectorAll('.os-tab').forEach((t,i) => {
+        t.classList.toggle('active', ['ios','android','desktop'][i] === os);
+      });
+      document.querySelectorAll('.os-content').forEach(c => c.classList.remove('active'));
+      document.getElementById('os-' + os)?.classList.add('active');
+    }
+
+    function showPWAInstall(platform) {
+      switchOS(platform);
+      document.querySelector('.pwa-section').scrollIntoView({ behavior: 'smooth' });
+      showToast(`Instructions d'installation ${platform === 'ios' ? 'iOS' : 'Android'} affichées ci-dessous`, 'info');
+    }
+
+    // Bouton install natif (si disponible)
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('androidInstallBtn').style.display = 'block';
+      document.getElementById('desktopInstallBtn').textContent   = '⬇ Installer NeoBank maintenant';
+    });
+
+    ['androidInstallBtn','desktopInstallBtn'].forEach(id => {
+      document.getElementById(id)?.addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          showToast(outcome === 'accepted' ? '🎉 NeoBank installé !' : 'Installation annulée', outcome === 'accepted' ? 'success' : 'info');
+          deferredPrompt = null;
+        } else {
+          showToast('Utilisez le menu de votre navigateur pour installer l\'application.', 'info', 5000);
+        }
+      });
+    });
+
+    // Si déjà installée
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      document.querySelector('.pwa-section').innerHTML = `
+        <div style="text-align:center;padding:var(--space-2xl);">
+          <div style="font-size:3rem;margin-bottom:var(--space-md)">✓</div>
+          <h2 style="color:var(--color-success);margin-bottom:var(--space-md)">NeoBank est installé !</h2>
+          <p>Vous utilisez déjà la version application de NeoBank.</p>
+          <a href="dashboard.html" class="btn btn-primary" style="margin-top:var(--space-lg)">Aller au dashboard →</a>
+        </div>`;
+    }
+  </script>
+<script src="../js/extras.js"></script>
+</body>
+</html>

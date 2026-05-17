@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connexion — NeoBank</title>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <link rel="stylesheet" href="../css/enhancements.css" />
+  <link rel="stylesheet" href="../css/auth.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="manifest" href="../manifest.json" />
+  <meta name="theme-color" content="#00d4ff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.svg" />
+</head>
+<body class="auth-body">
+  <div class="auth-layout">
+    <div class="auth-brand">
+      <div class="auth-brand-inner">
+        <a href="index.html" class="nav-logo">
+          <span class="logo-icon">◆</span><span class="logo-text">NeoBank</span>
+        </a>
+        <div class="brand-content">
+          <h2>Bienvenue<br />sur NeoBank</h2>
+          <p>La banque nouvelle génération.<br />Sécurisée, rapide et transparente.</p>
+          <div class="brand-features">
+            <div class="brand-feat"><span>✓</span> Virements instantanés</div>
+            <div class="brand-feat"><span>✓</span> Carte Visa gratuite</div>
+            <div class="brand-feat"><span>✓</span> Crédit en ligne 24h</div>
+          </div>
+        </div>
+        <div class="brand-orb"></div>
+      </div>
+    </div>
+
+    <div class="auth-form-panel">
+      <div class="auth-form-inner">
+        <div class="auth-form-header">
+          <h1>Connexion</h1>
+          <p>Accédez à votre espace personnel</p>
+        </div>
+
+        <div id="loginAlert" class="alert" style="display:none;"></div>
+
+        <form id="loginForm" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="email">Adresse email</label>
+            <div class="form-input-wrap">
+              <svg class="form-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+              <input type="email" id="email" name="email" class="form-input" placeholder="vous@example.com" autocomplete="email" required />
+            </div>
+            <span class="form-error" id="emailError"></span>
+          </div>
+
+          <div class="form-group">
+            <div class="form-label-row">
+              <label class="form-label" for="password">Mot de passe</label>
+              <a href="#" class="form-link">Mot de passe oublié ?</a>
+            </div>
+            <div class="form-input-wrap">
+              <svg class="form-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="password" name="password" class="form-input" placeholder="••••••••" autocomplete="current-password" required />
+              <button type="button" class="form-toggle-password" id="togglePassword" aria-label="Afficher">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <span class="form-error" id="passwordError"></span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full btn-large" id="loginBtn">Se connecter</button>
+
+          <div class="divider">ou</div>
+          <div class="auth-footer-links">
+            <p>Pas encore de compte ? <a href="register.html" class="form-link">Créer un compte</a></p>
+          </div>
+        </form>
+
+        <div class="demo-accounts" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="../js/security.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/api.js"></script>
+  <script>
+    function fillDemo(type) {
+      const c = { user: { email: 'jean.dupont@test.com', password: 'Test@Password123!' }, admin: { email: 'admin@fintech.com', password: 'Admin@SecurePass123!' } };
+      document.getElementById('email').value = c[type].email;
+      document.getElementById('password').value = c[type].password;
+      showToast('Identifiants remplis', 'info');
+    }
+
+    document.getElementById('togglePassword').addEventListener('click', () => {
+      const i = document.getElementById('password');
+      i.type = i.type === 'password' ? 'text' : 'password';
+    });
+
+    function validateForm() {
+      let valid = true;
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      ['emailError','passwordError'].forEach(id => document.getElementById(id).classList.remove('visible'));
+      ['email','password'].forEach(id => document.getElementById(id).classList.remove('is-error'));
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('emailError').textContent = 'Email invalide';
+        document.getElementById('emailError').classList.add('visible');
+        document.getElementById('email').classList.add('is-error');
+        valid = false;
+      }
+      if (!password || password.length < 6) {
+        document.getElementById('passwordError').textContent = 'Mot de passe requis';
+        document.getElementById('passwordError').classList.add('visible');
+        document.getElementById('password').classList.add('is-error');
+        valid = false;
+      }
+      return valid;
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validateForm()) return;
+      const btn = document.getElementById('loginBtn');
+      const alertEl = document.getElementById('loginAlert');
+      btn.disabled = true; btn.textContent = 'Connexion...';
+      alertEl.style.display = 'none';
+      try {
+        const data = await API.post('/auth/login', {
+          email: document.getElementById('email').value.trim(),
+          password: document.getElementById('password').value
+        });
+        if (data.success) {
+          localStorage.setItem('accessToken', data.accessToken);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          showToast('Connexion réussie !', 'success');
+          setTimeout(() => {
+            window.location.href = (data.user.role === 'admin' || data.user.role === 'superadmin') ? 'admin.html' : 'dashboard.html';
+          }, 800);
+        }
+      } catch (err) {
+        alertEl.className = 'alert alert-error';
+        alertEl.textContent = err.message || 'Erreur de connexion.';
+        alertEl.style.display = 'flex';
+      } finally {
+        btn.disabled = false; btn.textContent = 'Se connecter';
+      }
+    });
+
+    if (localStorage.getItem('accessToken')) {
+      const u = JSON.parse(localStorage.getItem('user') || '{}');
+      window.location.href = (u.role === 'admin') ? 'admin.html' : 'dashboard.html';
+    }
+  </script>
+<script src="../js/extras.js"></script>
+</body>
+</html>

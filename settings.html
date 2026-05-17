@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paramètres — NeoBank</title>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <link rel="stylesheet" href="../css/enhancements.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="../css/settings.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="manifest" href="../manifest.json" />
+  <meta name="theme-color" content="#00d4ff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.svg" />
+</head>
+<body class="dash-body">
+<div class="dash-layout">
+
+  <!-- ─── SIDEBAR ──────────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">◆</span><span class="logo-text">NeoBank</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-label">Principal</div>
+        <a class="nav-item" href="dashboard.html"><span class="nav-item-icon">◈</span> Vue d'ensemble</a>
+        <a class="nav-item" href="dashboard.html"><span class="nav-item-icon">⇄</span> Transactions</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Crédit</div>
+        <a class="nav-item" href="loans.html"><span class="nav-item-icon">◎</span> Mes prêts</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Compte</div>
+        <a class="nav-item active"><span class="nav-item-icon">⚙</span> Paramètres</a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="user-avatar" id="userAvatar">??</div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarName">—</div>
+          <div class="user-role">Compte courant</div>
+        </div>
+      </div>
+      <button class="nav-item" id="logoutBtn" style="width:100%;margin-top:6px;border:none;background:none;">
+        <span class="nav-item-icon">⏻</span> Déconnexion
+      </button>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ─────────────────────────────────────────────── -->
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="topbar-btn" id="sidebarToggle">☰</button>
+        <span class="topbar-title">Paramètres</span>
+      </div>
+    </div>
+
+    <div class="dash-content">
+      <div class="settings-layout">
+
+        <!-- ─── NAV SETTINGS ─────────────────────────────── -->
+        <div class="settings-nav">
+          <div class="settings-nav-header">Navigation</div>
+          <button class="settings-nav-item active" data-section="profile">
+            <span class="settings-nav-icon">👤</span> Profil
+          </button>
+          <button class="settings-nav-item" data-section="security">
+            <span class="settings-nav-icon">🔒</span> Sécurité
+          </button>
+          <button class="settings-nav-item" data-section="account">
+            <span class="settings-nav-icon">🏦</span> Compte bancaire
+          </button>
+          <button class="settings-nav-item" data-section="notifications">
+            <span class="settings-nav-icon">🔔</span> Notifications
+          </button>
+          <button class="settings-nav-item" data-section="plan">
+            <span class="settings-nav-icon">⭐</span> Mon offre
+          </button>
+          <button class="settings-nav-item" data-section="danger">
+            <span class="settings-nav-icon">⚠</span> Zone critique
+          </button>
+        </div>
+
+        <!-- ─── CONTENU SECTIONS ─────────────────────────── -->
+        <div id="settingsContent">
+
+          <!-- ══ PROFIL ═══════════════════════════════════ -->
+          <div class="settings-section active" id="section-profile">
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <span class="settings-card-title">Informations personnelles</span>
+                <span class="badge badge-accent" id="kycBadge">KYC en attente</span>
+              </div>
+              <div class="settings-card-body">
+                <!-- Avatar -->
+                <div class="avatar-section">
+                  <div class="avatar-large" id="profileAvatar">
+                    ??
+                    <div class="avatar-edit-btn" title="Modifier l'avatar">✎</div>
+                  </div>
+                  <div class="avatar-info">
+                    <h3 id="profileFullName">Chargement...</h3>
+                    <p id="profileEmail">—</p>
+                    <div style="margin-top:8px;display:flex;gap:8px;">
+                      <span class="badge badge-success" id="profileStatusBadge">Actif</span>
+                      <span class="badge badge-neutral" id="profileRoleBadge">Utilisateur</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Formulaire profil -->
+                <div id="profileAlert" class="alert" style="display:none;"></div>
+                <form id="profileForm" novalidate>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">Prénom</label>
+                      <input type="text" id="firstName" class="form-input" placeholder="Jean" />
+                      <span class="form-error" id="firstNameError"></span>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Nom</label>
+                      <input type="text" id="lastName" class="form-input" placeholder="Dupont" />
+                      <span class="form-error" id="lastNameError"></span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Adresse email</label>
+                    <div class="form-input-wrap">
+                      <svg class="form-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+                      <input type="email" id="emailDisplay" class="form-input" disabled
+                             style="opacity:0.6;cursor:not-allowed;" />
+                    </div>
+                    <small class="text-muted" style="font-size:0.75rem;">L'email ne peut pas être modifié. Contactez le support.</small>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Téléphone</label>
+                    <div class="form-input-wrap">
+                      <svg class="form-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                      <input type="tel" id="phone" class="form-input" placeholder="+33 6 12 34 56 78" />
+                    </div>
+                    <span class="form-error" id="phoneError"></span>
+                  </div>
+
+                  <div style="display:flex;justify-content:flex-end;gap:var(--space-md);">
+                    <button type="button" class="btn btn-secondary" id="cancelProfileBtn">Annuler</button>
+                    <button type="submit" class="btn btn-primary" id="saveProfileBtn">
+                      Enregistrer les modifications
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Infos complémentaires (lecture seule) -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <span class="settings-card-title">Informations du compte</span>
+              </div>
+              <div class="settings-card-body">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md);">
+                  <div>
+                    <div style="font-size:0.72rem;color:var(--color-text-3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em">Membre depuis</div>
+                    <div id="memberSince" style="font-size:0.9rem;">—</div>
+                  </div>
+                  <div>
+                    <div style="font-size:0.72rem;color:var(--color-text-3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em">Dernière connexion</div>
+                    <div id="lastLogin" style="font-size:0.9rem;">—</div>
+                  </div>
+                  <div>
+                    <div style="font-size:0.72rem;color:var(--color-text-3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em">Statut KYC</div>
+                    <div id="kycStatus" style="font-size:0.9rem;">—</div>
+                  </div>
+                  <div>
+                    <div style="font-size:0.72rem;color:var(--color-text-3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em">Rôle</div>
+                    <div id="userRoleDisplay" style="font-size:0.9rem;">—</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══ SÉCURITÉ ═════════════════════════════════ -->
+          <div class="settings-section" id="section-security">
+            <!-- Changer le mot de passe -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <span class="settings-card-title">Changer le mot de passe</span>
+              </div>
+              <div class="settings-card-body">
+                <div id="passwordAlert" class="alert" style="display:none;"></div>
+                <form id="passwordForm" novalidate>
+                  <div class="form-group">
+                    <label class="form-label">Mot de passe actuel</label>
+                    <div class="form-input-wrap">
+                      <svg class="form-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                      <input type="password" id="currentPassword" class="form-input"
+                             placeholder="Votre mot de passe actuel" autocomplete="current-password" />
+                      <button type="button" class="form-toggle-password" onclick="togglePwd('currentPassword')">👁</button>
+                    </div>
+                    <span class="form-error" id="currentPasswordError"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Nouveau mot de passe</label>
+                    <div class="form-input-wrap">
+                      <svg class="form-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                      <input type="password" id="newPassword" class="form-input"
+                             placeholder="Minimum 8 caractères" autocomplete="new-password" />
+                      <button type="button" class="form-toggle-password" onclick="togglePwd('newPassword')">👁</button>
+                    </div>
+                    <!-- Barre de force -->
+                    <div class="password-strength-bar" id="newPwdStrength">
+                      <div class="psb-track"><div class="psb-fill" id="psbFill"></div></div>
+                      <div class="psb-label" id="psbLabel"></div>
+                    </div>
+                    <span class="form-error" id="newPasswordError"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Confirmer le nouveau mot de passe</label>
+                    <div class="form-input-wrap">
+                      <svg class="form-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                      <input type="password" id="confirmNewPassword" class="form-input"
+                             placeholder="Répétez le nouveau mot de passe" autocomplete="new-password" />
+                    </div>
+                    <span class="form-error" id="confirmNewPasswordError"></span>
+                  </div>
+
+                  <!-- Règles de sécurité -->
+                  <div style="background:var(--color-surface-2);border-radius:var(--radius-md);padding:var(--space-md);margin-bottom:var(--space-lg);">
+                    <div style="font-size:0.75rem;color:var(--color-text-3);margin-bottom:8px;font-weight:600;">RÈGLES DU MOT DE PASSE</div>
+                    <div id="pwdRules" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:0.78rem;">
+                      <div class="pwd-rule" data-rule="length">○ Minimum 8 caractères</div>
+                      <div class="pwd-rule" data-rule="upper">○ Une majuscule</div>
+                      <div class="pwd-rule" data-rule="lower">○ Une minuscule</div>
+                      <div class="pwd-rule" data-rule="number">○ Un chiffre</div>
+                      <div class="pwd-rule" data-rule="special">○ Un caractère spécial</div>
+                      <div class="pwd-rule" data-rule="noRepeat">○ Pas de répétition excessive</div>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary" id="changePasswordBtn">
+                    Mettre à jour le mot de passe
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Sessions et activité -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <span class="settings-card-title">Activité récente</span>
+              </div>
+              <div class="settings-card-body">
+                <div id="securityEvents">
+                  <!-- Rempli dynamiquement -->
+                  <div class="security-event">
+                    <div class="security-event-icon ok">✓</div>
+                    <div>
+                      <div class="security-event-title">Connexion réussie</div>
+                      <div class="security-event-meta" id="lastLoginEvent">—</div>
+                    </div>
+                  </div>
+                  <div class="security-event">
+                    <div class="security-event-icon ok">◈</div>
+                    <div>
+                      <div class="security-event-title">Compte créé</div>
+                      <div class="security-event-meta" id="accountCreatedEvent">—</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="alert alert-info" style="font-size:0.82rem;margin-top:var(--space-md)">
+                  ℹ Pour des raisons de sécurité, les sessions expirent automatiquement après 30 min d'inactivité.
+                </div>
+              </div>
+            </div>
+
+            <!-- Sécurité avancée -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <span class="settings-card-title">Sécurité avancée</span>
+              </div>
+              <div class="settings-card-body">
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Alertes de connexion</div>
+                    <div class="toggle-desc">Recevoir une notification à chaque nouvelle connexion</div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="toggle2fa" checked />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Déconnexion automatique</div>
+                    <div class="toggle-desc">Se déconnecter après 30 min d'inactivité</div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="toggleAutoLogout" checked />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Protection anti-fraude</div>
+                    <div class="toggle-desc">Bloquer les transactions suspectes automatiquement</div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="toggleFraud" checked disabled />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══ COMPTE BANCAIRE ═══════════════════════════ -->
+          <div class="settings-section" id="section-account">
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <span class="settings-card-title">Informations bancaires</span>
+              </div>
+              <div class="settings-card-body">
+                <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+                  <div style="background:var(--color-surface-2);border-radius:var(--radius-md);padding:var(--space-lg);">
+                    <div style="font-size:0.72rem;color:var(--color-text-3);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em;">IBAN</div>
+                    <div id="ibanFull" style="font-family:monospace;font-size:0.95rem;letter-spacing:0.05em;">—</div>
+                    <button class="btn btn-ghost btn-sm" style="margin-top:8px;" onclick="copyIban()">📋 Copier</button>
+                  </div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-md);">
+                    <div>
+                      <div style="font-size:0.72rem;color:var(--color-text-3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em">BIC</div>
+                      <div id="bicFull" style="font-size:0.9rem;font-family:monospace;">—</div>
+                    </div>
+                    <div>
+                      <div style="font-size:0.72rem;color:var(--color-text-3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em">Type</div>
+                      <div id="accountTypeFull" style="font-size:0.9rem;">—</div>
+                    </div>
+                    <div>
+                      <div style="font-size:0.72rem;color:var(--color-text-3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em">Statut</div>
+                      <div id="accountStatusFull">—</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Carte bancaire -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <span class="settings-card-title">Carte bancaire</span>
+              </div>
+              <div class="settings-card-body">
+                <div style="background:linear-gradient(135deg,#0d1a2e,#1a2744);border:1px solid rgba(0,212,255,0.2);border-radius:16px;padding:20px 24px;max-width:300px;margin-bottom:var(--space-lg);">
+                  <div style="display:flex;justify-content:space-between;margin-bottom:20px;">
+                    <span style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;color:var(--color-accent)">◆ NEOBANK</span>
+                    <span id="cardTypeDisplay" style="font-size:0.75rem;color:var(--color-text-2)">VISA</span>
+                  </div>
+                  <div style="width:32px;height:22px;background:linear-gradient(135deg,#d4af37,#f5d020);border-radius:3px;margin-bottom:16px;"></div>
+                  <div id="cardNumberDisplay" style="font-family:monospace;font-size:0.9rem;letter-spacing:0.12em;color:var(--color-text-2);margin-bottom:12px;">•••• •••• •••• ——</div>
+                  <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--color-text-2);">
+                    <span id="cardHolderDisplay">—</span>
+                    <span id="cardExpiryDisplay">——/——</span>
+                  </div>
+                </div>
+                <div style="display:flex;gap:var(--space-sm);">
+                  <span id="cardStatusBadge" class="badge badge-success">Carte active</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Limites -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <span class="settings-card-title">Limites du compte</span>
+              </div>
+              <div class="settings-card-body">
+                <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+                  <div class="toggle-row">
+                    <div class="toggle-info">
+                      <div class="toggle-label">Limite virement quotidien</div>
+                      <div class="toggle-desc">Maximum par jour pour les virements sortants</div>
+                    </div>
+                    <span id="dailyLimit" style="font-weight:600;color:var(--color-accent);">—</span>
+                  </div>
+                  <div class="toggle-row">
+                    <div class="toggle-info">
+                      <div class="toggle-label">Limite virement mensuel</div>
+                      <div class="toggle-desc">Maximum par mois pour les virements sortants</div>
+                    </div>
+                    <span id="monthlyLimit" style="font-weight:600;color:var(--color-accent);">—</span>
+                  </div>
+                  <div class="toggle-row">
+                    <div class="toggle-info">
+                      <div class="toggle-label">Autorisation découvert</div>
+                      <div class="toggle-desc">Montant maximum en dessous de zéro autorisé</div>
+                    </div>
+                    <span id="overdraftLimit" style="font-weight:600;">—</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══ NOTIFICATIONS ════════════════════════════ -->
+          <div class="settings-section" id="section-notifications">
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <span class="settings-card-title">Préférences de notifications</span>
+              </div>
+              <div class="settings-card-body">
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Transactions</div>
+                    <div class="toggle-desc">Notification à chaque mouvement sur le compte</div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" checked onchange="savePrefs()" />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Remboursements de prêt</div>
+                    <div class="toggle-desc">Rappel avant chaque échéance (3 jours avant)</div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" checked onchange="savePrefs()" />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Alertes de sécurité</div>
+                    <div class="toggle-desc">Connexions depuis un nouvel appareil</div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" checked disabled />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Newsletter mensuelle</div>
+                    <div class="toggle-desc">Conseils financiers et nouvelles fonctionnalités</div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" onchange="savePrefs()" />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="toggle-row">
+                  <div class="toggle-info">
+                    <div class="toggle-label">Rapport mensuel</div>
+                    <div class="toggle-desc">Résumé de vos dépenses en fin de mois</div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" checked onchange="savePrefs()" />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══ MON OFFRE ═════════════════════════════════ -->
+          <div class="settings-section" id="section-plan">
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <span class="settings-card-title">Votre offre actuelle</span>
+              </div>
+              <div class="settings-card-body">
+                <div class="plan-card">
+                  <div>
+                    <div class="plan-name">NeoBank Essentiel</div>
+                    <div class="plan-desc">Compte courant avec carte Visa incluse</div>
+                  </div>
+                  <div class="plan-price">Gratuit</div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:var(--space-xl);">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:0.875rem;">
+                    <span style="color:var(--color-success)">✓</span> Carte Visa incluse
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;font-size:0.875rem;">
+                    <span style="color:var(--color-success)">✓</span> Virements illimités
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;font-size:0.875rem;">
+                    <span style="color:var(--color-success)">✓</span> Accès aux crédits personnels
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;font-size:0.875rem;">
+                    <span style="color:var(--color-success)">✓</span> Dashboard & analytics
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;font-size:0.875rem;opacity:0.5;">
+                    <span>○</span> Support prioritaire (Premium)
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;font-size:0.875rem;opacity:0.5;">
+                    <span>○</span> Cashback 1% (Premium)
+                  </div>
+                </div>
+
+                <div style="background:linear-gradient(135deg,rgba(124,58,237,0.1),rgba(0,212,255,0.1));border:1px solid rgba(124,58,237,0.2);border-radius:var(--radius-lg);padding:var(--space-lg);display:flex;justify-content:space-between;align-items:center;">
+                  <div>
+                    <div style="font-family:var(--font-display);font-weight:700;margin-bottom:4px;">Passer à Premium</div>
+                    <div style="font-size:0.82rem;color:var(--color-text-2);">Cashback, support 24/7, limites augmentées</div>
+                  </div>
+                  <button class="btn btn-primary" onclick="showToast('Disponible bientôt !','info')">9,90€/mois →</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══ ZONE CRITIQUE ════════════════════════════ -->
+          <div class="settings-section" id="section-danger">
+            <div class="settings-card danger-zone">
+              <div class="settings-card-header">
+                <span class="settings-card-title">⚠ Zone critique</span>
+              </div>
+              <div class="settings-card-body">
+                <div class="alert alert-warning" style="margin-bottom:var(--space-xl);">
+                  Les actions de cette section sont irréversibles. Procédez avec la plus grande prudence.
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:var(--space-lg);">
+                  <div style="display:flex;justify-content:space-between;align-items:center;padding:var(--space-md) 0;border-bottom:1px solid var(--color-border);">
+                    <div>
+                      <div style="font-size:0.9rem;font-weight:500;margin-bottom:4px;">Exporter mes données</div>
+                      <div style="font-size:0.78rem;color:var(--color-text-2);">Télécharger toutes vos transactions et informations (RGPD)</div>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" onclick="exportData()">⬇ Exporter</button>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;padding:var(--space-md) 0;border-bottom:1px solid var(--color-border);">
+                    <div>
+                      <div style="font-size:0.9rem;font-weight:500;margin-bottom:4px;">Fermer le compte</div>
+                      <div style="font-size:0.78rem;color:var(--color-text-2);">Désactiver définitivement votre compte NeoBank</div>
+                    </div>
+                    <button class="btn btn-danger btn-sm" onclick="confirmCloseAccount()">Fermer le compte</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /settingsContent -->
+      </div><!-- /settings-layout -->
+    </div><!-- /dash-content -->
+  </main>
+</div>
+
+<!-- ─── MODAL CONFIRMATION FERMETURE ─────────────────────────── -->
+<div class="modal-overlay hidden" id="closeAccountModal">
+  <div class="modal" style="max-width:440px;">
+    <div class="modal-header">
+      <span class="modal-title" style="color:var(--color-danger)">⚠ Fermer le compte</span>
+      <button class="modal-close" onclick="document.getElementById('closeAccountModal').classList.add('hidden')">✕</button>
+    </div>
+    <div class="alert alert-error" style="margin-bottom:var(--space-lg);">
+      Cette action est irréversible. Toutes vos données seront supprimées.
+    </div>
+    <div class="form-group">
+      <label class="form-label">Tapez <strong>CONFIRMER</strong> pour continuer</label>
+      <input type="text" id="closeConfirmInput" class="form-input" placeholder="CONFIRMER" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Mot de passe actuel</label>
+      <input type="password" id="closePasswordInput" class="form-input" placeholder="••••••••" />
+    </div>
+    <button class="btn btn-danger btn-full" id="closeAccountBtn">Fermer définitivement mon compte</button>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="../js/security.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/api.js"></script>
+<script>
+if (!requireAuth()) throw new Error('not authenticated');
+
+let originalProfile = {};
+
+// ─── Init ──────────────────────────────────────────────────────
+async function init() {
+  const user = API.getCurrentUser();
+  if (!user) { API.redirectToLogin(); return; }
+  document.getElementById('userAvatar').textContent  = (user.firstName[0]+user.lastName[0]).toUpperCase();
+  document.getElementById('sidebarName').textContent = `${user.firstName} ${user.lastName}`;
+  await Promise.all([loadProfile(), loadAccount()]);
+}
+
+// ─── Charger le profil ─────────────────────────────────────────
+async function loadProfile() {
+  try {
+    const data = await API.auth.me();
+    const u = data.user;
+    originalProfile = { firstName: u.firstName, lastName: u.lastName, phone: u.phone || '' };
+
+    // Avatar
+    document.getElementById('profileAvatar').textContent  = (u.firstName[0]+u.lastName[0]).toUpperCase();
+    document.getElementById('profileFullName').textContent = `${u.firstName} ${u.lastName}`;
+    document.getElementById('profileEmail').textContent    = u.email;
+
+    // Formulaire
+    document.getElementById('firstName').value    = u.firstName;
+    document.getElementById('lastName').value     = u.lastName;
+    document.getElementById('emailDisplay').value = u.email;
+    document.getElementById('phone').value        = u.phone || '';
+
+    // Badges
+    document.getElementById('profileStatusBadge').textContent = u.isSuspended ? 'Suspendu' : 'Actif';
+    document.getElementById('profileStatusBadge').className   = `badge ${u.isSuspended ? 'badge-danger' : 'badge-success'}`;
+    document.getElementById('profileRoleBadge').textContent   = u.role;
+    document.getElementById('kycBadge').textContent           = `KYC: ${u.kycStatus}`;
+    document.getElementById('kycBadge').className             = `badge ${u.kycStatus==='verified'?'badge-success':u.kycStatus==='rejected'?'badge-danger':'badge-warning'}`;
+
+    // Infos
+    document.getElementById('memberSince').textContent   = formatDate(u.createdAt);
+    document.getElementById('lastLogin').textContent     = u.lastLoginAt ? formatDateTime(u.lastLoginAt) : 'Première connexion';
+    document.getElementById('kycStatus').textContent     = u.kycStatus;
+    document.getElementById('userRoleDisplay').textContent = u.role;
+
+    // Activité sécurité
+    document.getElementById('lastLoginEvent').textContent    = `${u.lastLoginAt ? formatDateTime(u.lastLoginAt) : 'Aujourd\'hui'} · IP: ${u.lastLoginIp || 'Inconnue'}`;
+    document.getElementById('accountCreatedEvent').textContent = formatDate(u.createdAt);
+
+    // Sidebar
+    document.getElementById('sidebarName').textContent = `${u.firstName} ${u.lastName}`;
+    document.getElementById('userAvatar').textContent  = (u.firstName[0]+u.lastName[0]).toUpperCase();
+    localStorage.setItem('user', JSON.stringify(u));
+  } catch (err) { showToast('Erreur chargement profil: ' + err.message, 'error'); }
+}
+
+// ─── Charger les données du compte ────────────────────────────
+async function loadAccount() {
+  try {
+    const data = await API.account.get();
+    const acc  = data.account;
+    document.getElementById('ibanFull').textContent         = acc.iban || '—';
+    document.getElementById('bicFull').textContent          = acc.bic  || '—';
+    document.getElementById('accountTypeFull').textContent  = acc.type === 'current' ? 'Courant' : acc.type;
+    document.getElementById('accountStatusFull').innerHTML  = statusBadge(acc.status);
+    document.getElementById('dailyLimit').textContent       = formatCurrency(acc.dailyTransferLimit || 0);
+    document.getElementById('monthlyLimit').textContent     = formatCurrency(acc.monthlyTransferLimit || 0);
+    document.getElementById('overdraftLimit').textContent   = formatCurrency(acc.overdraftLimit || 0);
+
+    const u = API.getCurrentUser();
+    if (u) {
+      document.getElementById('cardHolderDisplay').textContent = `${u.firstName} ${u.lastName}`.toUpperCase();
+    }
+    if (acc.card?.lastFourDigits) {
+      document.getElementById('cardNumberDisplay').textContent = `•••• •••• •••• ${acc.card.lastFourDigits}`;
+      document.getElementById('cardExpiryDisplay').textContent = acc.card.expiryDate || '—';
+      document.getElementById('cardTypeDisplay').textContent   = (acc.card.type || 'visa').toUpperCase();
+      document.getElementById('cardStatusBadge').textContent   = acc.card.isActive ? 'Carte active' : 'Carte inactive';
+      document.getElementById('cardStatusBadge').className     = `badge ${acc.card.isActive ? 'badge-success' : 'badge-danger'}`;
+    }
+  } catch {}
+}
+
+// ─── Navigation entre sections ────────────────────────────────
+function switchSection(name) {
+  document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.settings-nav-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + name)?.classList.add('active');
+  document.querySelector(`.settings-nav-item[data-section="${name}"]`)?.classList.add('active');
+}
+document.querySelectorAll('.settings-nav-item[data-section]').forEach(btn =>
+  btn.addEventListener('click', () => switchSection(btn.dataset.section))
+);
+
+// ─── Formulaire profil ────────────────────────────────────────
+document.getElementById('profileForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('saveProfileBtn');
+  const alertEl = document.getElementById('profileAlert');
+
+  // Validation
+  let valid = true;
+  const fn = document.getElementById('firstName').value.trim();
+  const ln = document.getElementById('lastName').value.trim();
+  ['firstNameError','lastNameError'].forEach(id => document.getElementById(id).classList.remove('visible'));
+
+  if (!fn || fn.length < 2) {
+    document.getElementById('firstNameError').textContent = 'Prénom requis (min 2 caractères)';
+    document.getElementById('firstNameError').classList.add('visible'); valid = false;
+  }
+  if (!ln || ln.length < 2) {
+    document.getElementById('lastNameError').textContent = 'Nom requis (min 2 caractères)';
+    document.getElementById('lastNameError').classList.add('visible'); valid = false;
+  }
+  if (!valid) return;
+
+  btn.disabled = true; btn.textContent = 'Sauvegarde...';
+  alertEl.style.display = 'none';
+
+  try {
+    const data = await API.put('/users/profile', {
+      firstName: fn, lastName: ln,
+      phone: document.getElementById('phone').value.trim() || undefined
+    });
+    originalProfile = { firstName: fn, lastName: ln };
+    localStorage.setItem('user', JSON.stringify(data.user));
+    showToast('Profil mis à jour avec succès !', 'success');
+    await loadProfile();
+  } catch (err) {
+    alertEl.className = 'alert alert-error';
+    alertEl.textContent = err.message;
+    alertEl.style.display = 'flex';
+  } finally { btn.disabled = false; btn.textContent = 'Enregistrer les modifications'; }
+});
+
+document.getElementById('cancelProfileBtn').addEventListener('click', () => {
+  document.getElementById('firstName').value = originalProfile.firstName || '';
+  document.getElementById('lastName').value  = originalProfile.lastName  || '';
+  document.getElementById('phone').value     = originalProfile.phone     || '';
+  showToast('Modifications annulées', 'info');
+});
+
+// ─── Changement mot de passe ──────────────────────────────────
+function togglePwd(id) {
+  const input = document.getElementById(id);
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+// Indicateur de force en temps réel
+document.getElementById('newPassword').addEventListener('input', function() {
+  const val = this.value;
+  const bar  = document.getElementById('newPwdStrength');
+  bar.classList.toggle('visible', val.length > 0);
+
+  const result = window.Security ? Security.validatePassword(val) : { score: 0, errors: [] };
+  const score  = result.score || 0;
+  const colors = ['#ef4444','#f59e0b','#3b82f6','#10b981'];
+  const labels = ['Très faible','Faible','Moyen','Fort'];
+  const pct    = Math.min(100, score * 14);
+
+  document.getElementById('psbFill').style.width      = pct + '%';
+  document.getElementById('psbFill').style.background = colors[Math.min(3, Math.floor(score/2))];
+  document.getElementById('psbLabel').textContent     = labels[Math.min(3, Math.floor(score/2))];
+  document.getElementById('psbLabel').style.color     = colors[Math.min(3, Math.floor(score/2))];
+
+  // Règles visuelles
+  const rules = {
+    length:    val.length >= 8,
+    upper:     /[A-Z]/.test(val),
+    lower:     /[a-z]/.test(val),
+    number:    /\d/.test(val),
+    special:   /[@$!%*?&#\-_]/.test(val),
+    noRepeat:  !/(.)\1{3,}/.test(val)
+  };
+  Object.entries(rules).forEach(([rule, ok]) => {
+    const el = document.querySelector(`.pwd-rule[data-rule="${rule}"]`);
+    if (el) {
+      el.textContent = el.textContent.replace(/^[○✓]/, ok ? '✓' : '○');
+      el.style.color = ok ? 'var(--color-success)' : 'var(--color-text-3)';
+    }
+  });
+});
+
+document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('changePasswordBtn');
+  const alertEl = document.getElementById('passwordAlert');
+  const current  = document.getElementById('currentPassword').value;
+  const newPwd   = document.getElementById('newPassword').value;
+  const confirm  = document.getElementById('confirmNewPassword').value;
+
+  // Validation
+  let valid = true;
+  ['currentPasswordError','newPasswordError','confirmNewPasswordError'].forEach(id => {
+    document.getElementById(id).classList.remove('visible');
+  });
+
+  if (!current) {
+    document.getElementById('currentPasswordError').textContent = 'Mot de passe actuel requis';
+    document.getElementById('currentPasswordError').classList.add('visible'); valid = false;
+  }
+
+  const pwdCheck = window.Security ? Security.validatePassword(newPwd) : { valid: newPwd.length >= 8, errors: [] };
+  if (!pwdCheck.valid) {
+    document.getElementById('newPasswordError').textContent = pwdCheck.errors[0] || 'Mot de passe invalide';
+    document.getElementById('newPasswordError').classList.add('visible'); valid = false;
+  }
+
+  if (newPwd !== confirm) {
+    document.getElementById('confirmNewPasswordError').textContent = 'Les mots de passe ne correspondent pas';
+    document.getElementById('confirmNewPasswordError').classList.add('visible'); valid = false;
+  }
+
+  if (!valid) return;
+
+  btn.disabled = true; btn.textContent = 'Mise à jour...';
+  alertEl.style.display = 'none';
+
+  try {
+    await API.put('/auth/change-password', {
+      currentPassword:    current,
+      newPassword:        newPwd,
+      confirmNewPassword: confirm
+    });
+    showToast('Mot de passe modifié. Reconnexion requise.', 'success', 5000);
+    document.getElementById('passwordForm').reset();
+    document.getElementById('newPwdStrength').classList.remove('visible');
+    setTimeout(() => API.redirectToLogin(), 2500);
+  } catch (err) {
+    alertEl.className = 'alert alert-error';
+    alertEl.textContent = err.message;
+    alertEl.style.display = 'flex';
+  } finally { btn.disabled = false; btn.textContent = 'Mettre à jour le mot de passe'; }
+});
+
+// ─── Utilitaires ──────────────────────────────────────────────
+function copyIban() {
+  const iban = document.getElementById('ibanFull').textContent;
+  navigator.clipboard.writeText(iban).then(() => showToast('IBAN copié !', 'success'));
+}
+
+function savePrefs() { showToast('Préférences sauvegardées', 'success'); }
+
+function exportData() {
+  const user = API.getCurrentUser();
+  const data = { user, exportDate: new Date().toISOString(), note: 'Export RGPD NeoBank' };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url; a.download = `neobank_export_${Date.now()}.json`; a.click();
+  URL.revokeObjectURL(url);
+  showToast('Export téléchargé', 'success');
+}
+
+function confirmCloseAccount() {
+  document.getElementById('closeAccountModal').classList.remove('hidden');
+}
+
+document.getElementById('closeAccountBtn').addEventListener('click', () => {
+  const input = document.getElementById('closeConfirmInput').value;
+  if (input !== 'CONFIRMER') {
+    showToast('Tapez exactement CONFIRMER', 'error'); return;
+  }
+  // Simulation — en prod : appel API DELETE /users/me
+  showToast('Compte fermé. Vous allez être déconnecté.', 'warning', 5000);
+  setTimeout(() => API.redirectToLogin(), 3000);
+});
+
+document.getElementById('closeAccountModal').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.add('hidden');
+});
+
+document.getElementById('sidebarToggle').addEventListener('click', () =>
+  document.getElementById('sidebar').classList.toggle('open')
+);
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  try { await API.auth.logout(); } catch {}
+  API.redirectToLogin();
+});
+
+init();
+</script>
+<script src="../js/extras.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+{
+  "name": "NeoBank — Votre banque du futur",
+  "short_name": "NeoBank",
+  "description": "Gérez vos finances, demandez des crédits et suivez vos transactions en temps réel.",
+  "start_url": "/pages/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#080c14",
+  "theme_color": "#00d4ff",
+  "orientation": "portrait-primary",
+  "lang": "fr",
+  "dir": "ltr",
+  "categories": ["finance", "business", "productivity"],
+  "icons": [
+    {
+      "src": "assets/icons/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "form_factor": "narrow",
+      "label": "Dashboard NeoBank"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Mon Dashboard",
+      "short_name": "Dashboard",
+      "description": "Accéder à votre espace personnel",
+      "url": "/pages/dashboard.html",
+      "icons": [{ "src": "assets/icons/favicon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Nouveau virement",
+      "short_name": "Virement",
+      "description": "Effectuer un virement rapidement",
+      "url": "/pages/dashboard.html",
+      "icons": [{ "src": "assets/icons/favicon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Simuler un crédit",
+      "short_name": "Simulateur",
+      "description": "Calculer vos mensualités",
+      "url": "/pages/loans.html#simulator",
+      "icons": [{ "src": "assets/icons/favicon.svg", "sizes": "any" }]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.neobank.app",
+      "id": "com.neobank.app"
+    },
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/app/neobank/id000000000"
+    }
+  ],
+  "prefer_related_applications": false
+}

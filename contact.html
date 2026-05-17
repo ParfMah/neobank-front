@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Contact — NeoBank</title>
+  <link rel="stylesheet" href="../css/main.css"/><link rel="stylesheet" href="../css/landing.css"/>
+  <link rel="stylesheet" href="../css/enhancements.css"/><link rel="stylesheet" href="../css/pages.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <meta name="theme-color" content="#00d4ff"/>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo"><span class="logo-icon">◆</span><span class="logo-text">NeoBank</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#features">Fonctionnalités</a></li><li><a href="about.html">À Propos</a></li><li><a href="simulator.html">Simulateur</a></li><li><a href="pricing.html">Tarifs</a></li><li><a href="faq.html">FAQ</a></li><li><a href="download.html">📱 App</a></li>
+      <li class="nav-mobile-register" style="display:none;"><a href="register.html" class="btn btn-primary btn-full">Ouvrir un compte</a></li>
+    </ul>
+    <div class="nav-actions"><a href="login.html" class="btn btn-ghost">Connexion</a><a href="register.html" class="btn btn-primary">Ouvrir un compte</a></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-bg"><div class="page-orb page-orb-1"></div><div class="page-orb page-orb-2"></div><div class="page-grid-bg"></div></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Accueil</a><span class="breadcrumb-sep">›</span><span>Contact</span></div>
+    <div class="page-tag">Support & Contact</div>
+    <h1>Nous sommes là pour <span class="gradient-text">vous aider</span></h1>
+    <p>Une question, un problème ou une suggestion ? Notre équipe vous répond dans les plus brefs délais.</p>
+  </div>
+</section>
+
+<section class="nb-img-support">
+  <div class="page-wrap">
+    <div class="contact-layout">
+      <!-- INFO -->
+      <div class="reveal">
+        <div class="section-label" style="margin-bottom:var(--space-lg);">Nos coordonnées</div>
+        <div class="contact-info-card">
+          <div class="contact-ico">📧</div>
+          <div><h4>Email</h4><p>support@neobank.fr<br/>Réponse sous 24h</p></div>
+        </div>
+        <div class="contact-info-card">
+          <div class="contact-ico contact-ico-purple">📞</div>
+          <div><h4>Téléphone</h4><p>+33 1 23 45 67 89<br/>Lun–Ven 9h–18h</p></div>
+        </div>
+        <div class="contact-info-card">
+          <div class="contact-ico">💬</div>
+          <div><h4>Chat en direct</h4><p>Disponible dans l'application<br/>7j/7 de 8h à 22h</p></div>
+        </div>
+        <div class="contact-info-card">
+          <div class="contact-ico contact-ico-purple">📍</div>
+          <div><h4>Adresse</h4><p>42 Rue de la Fintech<br/>75008 Paris, France</p></div>
+        </div>
+        <div style="margin-top:var(--space-xl);padding:var(--space-lg);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);">
+          <p style="font-size:.82rem;color:var(--color-text-2);margin:0;"><strong style="color:var(--color-text);">⚡ Réponse rapide</strong><br/>Consultez notre <a href="faq.html" style="color:var(--color-accent);">FAQ</a> — la plupart des questions trouvent leur réponse immédiatement.</p>
+        </div>
+      </div>
+
+      <!-- FORMULAIRE -->
+      <div class="contact-form-card reveal rd1">
+        <h3 style="font-size:1.1rem;margin-bottom:var(--space-xl);">Envoyer un message</h3>
+        <!-- ⚠️ Remplacez YOUR_FORM_ID par votre vrai ID Formspree (formspree.io) -->
+        <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Prénom *</label>
+              <input type="text" name="firstName" class="form-input" placeholder="Pierre" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nom *</label>
+              <input type="text" name="lastName" class="form-input" placeholder="Dupont" required/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Adresse email *</label>
+            <input type="email" name="email" class="form-input" placeholder="pierre@exemple.com" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Sujet *</label>
+            <select name="subject" class="form-select" required>
+              <option value="">— Choisir un sujet —</option>
+              <option value="compte">Mon compte</option>
+              <option value="virement">Virement / Paiement</option>
+              <option value="credit">Demande de crédit</option>
+              <option value="securite">Sécurité / Fraude</option>
+              <option value="technique">Problème technique</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message *</label>
+            <textarea name="message" class="form-textarea" placeholder="Décrivez votre demande..." required></textarea>
+          </div>
+          <div class="form-group" style="display:flex;align-items:flex-start;gap:10px;">
+            <input type="checkbox" id="rgpd" name="rgpd" required style="margin-top:3px;accent-color:var(--color-accent);"/>
+            <label for="rgpd" style="font-size:.8rem;color:var(--color-text-2);cursor:pointer;">
+              J'accepte que mes données soient traitées pour répondre à ma demande. <a href="legal.html" style="color:var(--color-accent);">Politique de confidentialité</a>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+            <span id="submitText">Envoyer le message</span>
+            <span id="submitSpinner" style="display:none;">⏳</span>
+          </button>
+          <div class="success-msg" id="successMsg" style="display:flex;">
+            ✅ Message envoyé ! Nous vous répondrons sous 24h.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ RAPIDE -->
+<div class="alt-bg">
+  <div class="page-wrap">
+    <div class="section-header-center reveal"><div class="section-label">Réponses rapides</div><h2 class="section-h2">Questions fréquentes</h2></div>
+    <div class="grid-2">
+      <div class="card reveal rd1"><h3>Comment réinitialiser mon mot de passe ?</h3><p>Cliquez sur "Mot de passe oublié" sur la page de connexion et suivez les instructions envoyées par email.</p></div>
+      <div class="card reveal rd2"><h3>Mon virement tarde à arriver ?</h3><p>Les virements SEPA prennent 1 à 2 jours ouvrés. Les virements instantanés arrivent en quelques secondes.</p></div>
+      <div class="card reveal rd3"><h3>Comment bloquer ma carte ?</h3><p>Dans l'application → Carte → Bloquer temporairement. Pour un blocage définitif, contactez le support.</p></div>
+      <div class="card reveal rd4"><h3>Comment fermer mon compte ?</h3><p>Envoyez-nous un email à support@neobank.fr depuis votre adresse enregistrée avec votre demande.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:var(--space-2xl);">
+      <a href="faq.html" class="btn btn-outline">Voir toutes les questions →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand"><div class="nav-logo" style="margin-bottom:var(--space-sm)"><span class="logo-icon">◆</span><span class="logo-text">NeoBank</span></div><p>La banque du futur, aujourd'hui.</p></div>
+    <div class="footer-links">
+      <div class="footer-col"><h4>Produits</h4><a href="open-account.html">Compte courant</a><a href="simulator.html">Crédit</a><a href="pricing.html">Tarifs</a></div>
+      <div class="footer-col"><h4>Entreprise</h4><a href="about.html">À Propos</a><a href="security.html">Sécurité</a><a href="contact.html">Contact</a><a href="faq.html">FAQ</a></div>
+      <div class="footer-col"><h4>Accès</h4><a href="login.html">Connexion</a><a href="register.html">Créer un compte</a></div>
+      <div class="footer-col"><h4>Légal</h4><a href="legal.html">CGU</a><a href="legal.html">Confidentialité</a><a href="legal.html">Mentions légales</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 NeoBank. Tous droits réservés.</p></div>
+</footer>
+<div id="toast-container"></div>
+<script src="../js/main.js"></script>
+<script>
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+  // Gestion Formspree avec AJAX
+  document.getElementById('contactForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const txt = document.getElementById('submitText');
+    const spin = document.getElementById('submitSpinner');
+    const success = document.getElementById('successMsg');
+    btn.disabled = true; txt.textContent = 'Envoi...'; spin.style.display = 'inline';
+    try {
+      const res = await fetch(this.action, { method:'POST', body: new FormData(this), headers:{ 'Accept':'application/json' }});
+      if (res.ok) {
+        success.style.display = 'flex';
+        this.reset();
+        txt.textContent = '✅ Envoyé !';
+      } else {
+        txt.textContent = 'Erreur — réessayez';
+        btn.disabled = false;
+      }
+    } catch {
+      txt.textContent = 'Erreur réseau';
+      btn.disabled = false;
+    }
+    spin.style.display = 'none';
+  });
+</script>
+<script src="../js/extras.js"></script>
+</body>
+</html>

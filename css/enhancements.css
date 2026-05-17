@@ -1,0 +1,629 @@
+/* ══════════════════════════════════════════════════════════════
+   NEOBANK — VISUAL ENHANCEMENTS v2.0
+   Senior-grade typography, color palette & background images
+   Auteur: optimisation UI/UX production-ready
+   ══════════════════════════════════════════════════════════════ */
+
+/* ─── 1. RENDU DES POLICES ─────────────────────────────────── */
+*,*::before,*::after {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Charge les variantes supplémentaires pour plus d'expressivité */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ─── 2. TOKENS ADDITIONNELS ───────────────────────────────── */
+:root {
+  /* Nouvelles couleurs d'accent */
+  --color-gold:        #f59e0b;
+  --color-gold-light:  #fbbf24;
+  --color-teal:        #14b8a6;
+  --color-pink:        #ec4899;
+  --color-emerald:     #10b981;
+  --color-violet:      #8b5cf6;
+
+  /* Gradients enrichis */
+  --grad-gold:    linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+  --grad-green:   linear-gradient(135deg, #10b981 0%, #00d4ff 100%);
+  --grad-violet:  linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+  --grad-warm:    linear-gradient(135deg, #fbbf24 0%, #f97316 100%);
+  --grad-main:    linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
+
+  /* Ombres enrichies */
+  --shadow-gold:   0 0 32px rgba(245,158,11,0.2);
+  --shadow-green:  0 0 32px rgba(16,185,129,0.2);
+  --shadow-violet: 0 0 32px rgba(139,92,246,0.2);
+}
+
+/* ─── 3. TEXTES MULTI-COULEURS ─────────────────────────────── */
+.text-gradient {
+  background: var(--grad-main);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-gradient-gold {
+  background: var(--grad-gold);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-gradient-green {
+  background: var(--grad-green);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-gradient-violet {
+  background: var(--grad-violet);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-gradient-warm {
+  background: var(--grad-warm);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Mot-clé coloré inline dans un titre */
+.accent-word {
+  background: var(--grad-main);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; font-weight: 800;
+}
+.accent-word-gold   { background: var(--grad-gold);   -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-weight:800; }
+.accent-word-green  { background: var(--grad-green);  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-weight:800; }
+.accent-word-violet { background: var(--grad-violet); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-weight:800; }
+
+/* ─── 4. TYPOGRAPHIE ENRICHIE ──────────────────────────────── */
+
+/* Section tags plus visibles */
+.section-tag {
+  background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(124,58,237,0.1));
+  border: 1px solid rgba(0,212,255,0.3);
+  color: var(--color-accent) !important;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  box-shadow: 0 0 16px rgba(0,212,255,0.12);
+}
+
+/* Titres de section plus expressifs */
+.section-title {
+  letter-spacing: -0.025em;
+  line-height: 1.15 !important;
+}
+
+/* Sous-titres avec meilleure lisibilité */
+.section-desc {
+  font-size: 1.05rem !important;
+  line-height: 1.75 !important;
+  color: #a0aec0 !important;
+}
+
+/* Description de feature */
+.feature-card p {
+  color: #8b9bbf;
+  line-height: 1.7;
+}
+
+/* ─── 5. CARTES AMÉLIORÉES ─────────────────────────────────── */
+.feature-card {
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease !important;
+}
+.feature-card:hover {
+  transform: translateY(-6px) scale(1.01) !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,212,255,0.15) !important;
+}
+
+/* Icônes de feature plus expressives */
+.feature-icon {
+  font-size: 2rem !important;
+  filter: drop-shadow(0 2px 8px rgba(0,212,255,0.3));
+  transition: transform 0.3s ease;
+}
+.feature-card:hover .feature-icon {
+  transform: scale(1.15) rotate(-3deg);
+}
+
+/* ─── 6. BOUTONS ENRICHIS ──────────────────────────────────── */
+.btn-primary {
+  position: relative; overflow: hidden;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 24px rgba(0,212,255,0.25), 0 1px 0 rgba(255,255,255,0.1) inset !important;
+  transition: all 0.25s cubic-bezier(0.4,0,0.2,1) !important;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute; top:0; left:-100%; width:200%; height:100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  transition: left 0.5s ease;
+}
+.btn-primary:hover::after { left: 100%; }
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,212,255,0.4), 0 1px 0 rgba(255,255,255,0.1) inset !important;
+}
+
+.btn-outline {
+  letter-spacing: 0.02em;
+  transition: all 0.25s ease !important;
+}
+.btn-outline:hover {
+  background: rgba(0,212,255,0.08) !important;
+  border-color: rgba(0,212,255,0.4) !important;
+  color: var(--color-accent) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+/* ─── 7. SECTIONS AVEC IMAGES DE FOND ─────────────────────── */
+/*
+ * Stratégie senior pour les images de fond :
+ * - Superposition gradient + image Unsplash CDN
+ * - Format WebP via ?fm=webp (30% plus léger)
+ * - Qualité 72 : bon rendu, fichier léger (~90-140KB)
+ * - background-attachment: scroll sur mobile (performance)
+ * - will-change: omis (pas de parallax = pas de perf hit)
+ */
+
+/* Section : accord de prêt / contrat bancaire */
+.nb-img-loan {
+  background-image:
+    linear-gradient(
+      135deg,
+      rgba(8,12,20,0.88) 0%,
+      rgba(15,23,42,0.82) 50%,
+      rgba(8,12,20,0.90) 100%
+    ),
+    url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1440&q=72&fm=webp&auto=format&fit=crop&crop=center');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-top: 1px solid rgba(0,212,255,0.1);
+  border-bottom: 1px solid rgba(0,212,255,0.1);
+}
+
+/* Section : joie / réussite bancaire */
+.nb-img-success {
+  background-image:
+    linear-gradient(
+      135deg,
+      rgba(8,12,20,0.85) 0%,
+      rgba(12,18,35,0.80) 40%,
+      rgba(20,10,40,0.87) 100%
+    ),
+    url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1440&q=72&fm=webp&auto=format&fit=crop&crop=center');
+  background-size: cover;
+  background-position: center 35%;
+  background-repeat: no-repeat;
+}
+
+/* Section : famille heureuse grâce à la banque */
+.nb-img-family {
+  background-image:
+    linear-gradient(
+      160deg,
+      rgba(8,12,20,0.87) 0%,
+      rgba(10,20,40,0.80) 50%,
+      rgba(15,12,30,0.88) 100%
+    ),
+    url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1440&q=72&fm=webp&auto=format&fit=crop&crop=faces,center');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+/* Section : analyse financière / planning */
+.nb-img-finance {
+  background-image:
+    linear-gradient(
+      135deg,
+      rgba(8,12,20,0.90) 0%,
+      rgba(14,20,42,0.83) 60%,
+      rgba(8,12,20,0.90) 100%
+    ),
+    url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1440&q=72&fm=webp&auto=format&fit=crop&crop=center');
+  background-size: cover;
+  background-position: center 40%;
+  background-repeat: no-repeat;
+}
+
+/* Décorateur commun pour toutes les sections images */
+.nb-img-loan,
+.nb-img-success,
+.nb-img-family,
+.nb-img-finance {
+  position: relative;
+}
+/* Ligne lumineuse en haut */
+.nb-img-loan::before,
+.nb-img-success::before,
+.nb-img-family::before,
+.nb-img-finance::before {
+  content: '';
+  position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.4), transparent);
+}
+
+/* ─── 8. SECTION SOCIAL PROOF / CHIFFRES CLÉS ─────────────── */
+.nb-proof-section {
+  padding: var(--space-4xl, 96px) 0;
+}
+.nb-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 0;
+  max-width: 900px;
+  margin: 0 auto var(--space-3xl, 64px);
+}
+.nb-proof-item {
+  text-align: center;
+  padding: var(--space-xl, 32px) var(--space-lg, 24px);
+  border-right: 1px solid rgba(255,255,255,0.07);
+}
+.nb-proof-item:last-child { border-right: none; }
+.nb-proof-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800;
+  display: block;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+.nb-proof-lbl {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Testimonial card */
+.nb-testimonials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg, 24px);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.nb-testimonial {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: var(--space-xl, 32px);
+  position: relative;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.nb-testimonial:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0,212,255,0.18);
+}
+.nb-testimonial::before {
+  content: '"';
+  position: absolute; top: 16px; left: 20px;
+  font-size: 3.5rem; line-height: 1;
+  font-family: 'Space Grotesk', serif;
+  font-weight: 800;
+  background: var(--grad-main);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.6;
+}
+.nb-testimonial-text {
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: rgba(240,244,255,0.8);
+  margin-bottom: var(--space-lg, 24px);
+  padding-top: 28px;
+}
+.nb-testimonial-author {
+  display: flex; align-items: center; gap: 12px;
+}
+.nb-testimonial-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.9rem;
+  flex-shrink: 0;
+}
+.nb-testimonial-name { font-size: 0.85rem; font-weight: 700; margin-bottom: 2px; }
+.nb-testimonial-role { font-size: 0.72rem; color: rgba(255,255,255,0.4); }
+.nb-stars { color: var(--color-gold, #f59e0b); font-size: 0.75rem; margin-bottom: 4px; }
+
+/* ─── 9. SECTION FAMILLE / AVANTAGES AVEC IMAGE ───────────── */
+.nb-family-section {
+  padding: var(--space-4xl, 96px) 0;
+}
+.nb-family-inner {
+  max-width: 1100px; margin: 0 auto;
+  padding: 0 var(--space-2xl, 48px);
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: var(--space-3xl, 64px); align-items: center;
+}
+.nb-family-text h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+  font-weight: 800; line-height: 1.2;
+  margin-bottom: var(--space-lg, 24px);
+}
+.nb-family-text p {
+  color: #a0aec0; line-height: 1.75; font-size: 1rem;
+  margin-bottom: var(--space-md, 16px);
+}
+.nb-benefit-list { list-style: none; padding: 0; margin: var(--space-lg, 24px) 0; }
+.nb-benefit-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.88rem;
+}
+.nb-benefit-item:last-child { border-bottom: none; }
+.nb-benefit-check {
+  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, #10b981, #00d4ff);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; color: white; font-weight: 800; margin-top: 1px;
+}
+.nb-benefit-item span { color: rgba(240,244,255,0.8); line-height: 1.5; }
+.nb-family-visual {
+  background: linear-gradient(135deg, rgba(0,212,255,0.06), rgba(124,58,237,0.06));
+  border: 1px solid rgba(0,212,255,0.12);
+  border-radius: 24px; padding: var(--space-2xl, 48px);
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.nb-family-visual-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  font-weight: 800; line-height: 1;
+  background: var(--grad-main);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+.nb-family-visual-lbl {
+  font-size: 0.85rem; color: rgba(255,255,255,0.5);
+  margin-bottom: var(--space-lg, 24px);
+}
+.nb-mini-stats {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-top: var(--space-lg, 24px);
+}
+.nb-mini-stat {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px; padding: 16px 12px; text-align: center;
+}
+.nb-mini-stat-val {
+  font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem;
+  font-weight: 800; margin-bottom: 2px;
+}
+.nb-mini-stat-lbl { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ─── 10. DIVIDERS DÉCORATIFS ──────────────────────────────── */
+.nb-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.25), rgba(124,58,237,0.2), transparent);
+  margin: 0;
+}
+.nb-divider-warm {
+  background: linear-gradient(90deg, transparent, rgba(245,158,11,0.3), rgba(239,68,68,0.2), transparent);
+}
+
+/* ─── 11. BADGES COLORÉS ───────────────────────────────────── */
+.nb-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 14px; border-radius: 999px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.nb-badge-cyan   { background:rgba(0,212,255,0.1); border:1px solid rgba(0,212,255,0.25); color:var(--color-accent); }
+.nb-badge-gold   { background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); color:#fbbf24; }
+.nb-badge-green  { background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); color:#34d399; }
+.nb-badge-violet { background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.3); color:#a78bfa; }
+
+/* ─── 12. SECTION-LABEL AMÉLIORÉ (pages.css) ──────────────── */
+.section-label {
+  background: linear-gradient(135deg, rgba(0,212,255,0.12), rgba(124,58,237,0.08)) !important;
+  border-color: rgba(0,212,255,0.3) !important;
+  box-shadow: 0 0 12px rgba(0,212,255,0.1);
+  font-weight: 700 !important;
+  letter-spacing: 0.09em !important;
+}
+
+/* ─── 13. FOOTER AMÉLIORÉ ──────────────────────────────────── */
+.footer {
+  background: #050810 !important;
+  border-top: 1px solid rgba(0,212,255,0.1) !important;
+}
+.footer-col h4 {
+  background: var(--grad-main);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em;
+}
+
+/* ─── 14. NAVBAR AMÉLIORÉE ─────────────────────────────────── */
+.navbar {
+  border-bottom: 1px solid rgba(0,212,255,0.08) !important;
+}
+.nav-links a:hover {
+  color: var(--color-accent) !important;
+  text-shadow: 0 0 12px rgba(0,212,255,0.4);
+}
+
+/* ─── 15. SCROLL BAR ───────────────────────────────────────── */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: #080c14; }
+::-webkit-scrollbar-thumb { background: rgba(0,212,255,0.25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,212,255,0.4); }
+
+/* ─── 16. RESPONSIVE ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .nb-proof-grid { grid-template-columns: repeat(2,1fr); }
+  .nb-proof-item:nth-child(2) { border-right: none; }
+  .nb-testimonials { grid-template-columns: 1fr; }
+  .nb-family-inner { grid-template-columns: 1fr; gap: var(--space-2xl, 48px); }
+  .nb-family-visual { display: none; } /* Masqué sur mobile — trop chargé */
+}
+@media (max-width: 480px) {
+  .nb-proof-grid { grid-template-columns: repeat(2,1fr); gap: 0; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   IMAGES DE FOND — Mise à jour complète v3.0
+   Images Unsplash CDN · WebP · Qualité optimisée
+   ══════════════════════════════════════════════════════════════ */
+
+/* ─── HERO PAGE D'ACCUEIL ──────────────────────────────────────
+   Ville financière la nuit — profondeur et modernité
+   Image: Financial District at night (Unsplash, CC0)
+   Format WebP, 1920px, q=70 = ~130KB, chargement <0.8s CDN
+*/
+.hero {
+  background-image:
+    linear-gradient(
+      160deg,
+      rgba(8,12,20,0.93) 0%,
+      rgba(10,16,36,0.82) 40%,
+      rgba(20,10,45,0.88) 80%,
+      rgba(8,12,20,0.95) 100%
+    ),
+    url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=70&fm=webp&auto=format&fit=crop&crop=center') !important;
+  background-size: cover !important;
+  background-position: center bottom !important;
+  background-repeat: no-repeat !important;
+}
+
+/* ─── SECTION FEATURES (Pourquoi NeoBank) ──────────────────────
+   Arrière-plan subtil pour différencier visuellement
+   Image: Abstract digital network (Unsplash, CC0)
+*/
+.features {
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(8,12,20,0.97) 0%,
+      rgba(12,18,38,0.93) 50%,
+      rgba(8,12,20,0.97) 100%
+    ),
+    url('https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=1440&q=65&fm=webp&auto=format&fit=crop&crop=center') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* ─── PAGE HEROES (toutes les pages secondaires) ────────────────
+   Image de fond sur les bandeaux héros des pages internes
+   Image: Modern city skyline at dusk
+*/
+.page-hero {
+  background-image:
+    linear-gradient(
+      150deg,
+      rgba(8,12,20,0.94) 0%,
+      rgba(15,20,50,0.85) 50%,
+      rgba(8,12,20,0.92) 100%
+    ),
+    url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1440&q=68&fm=webp&auto=format&fit=crop&crop=center') !important;
+  background-size: cover !important;
+  background-position: center 60% !important;
+  background-repeat: no-repeat !important;
+}
+
+/* ─── SECTION SÉCURITÉ ─────────────────────────────────────────
+   Image: Cybersecurity / digital protection
+*/
+.nb-img-security {
+  background-image:
+    linear-gradient(
+      135deg,
+      rgba(8,12,20,0.88) 0%,
+      rgba(6,15,30,0.83) 50%,
+      rgba(10,8,25,0.90) 100%
+    ),
+    url('https://images.unsplash.com/photo-1614064641938-2cd2dd21d5a3?w=1440&q=70&fm=webp&auto=format&fit=crop&crop=center');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.nb-img-security::before {
+  content: '';
+  position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(16,185,129,0.4), transparent);
+}
+
+/* ─── SECTION TARIFS ───────────────────────────────────────────
+   Image: Financial success / premium lifestyle
+*/
+.nb-img-pricing {
+  background-image:
+    linear-gradient(
+      135deg,
+      rgba(8,12,20,0.90) 0%,
+      rgba(15,18,40,0.83) 60%,
+      rgba(8,12,20,0.92) 100%
+    ),
+    url('https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=1440&q=70&fm=webp&auto=format&fit=crop&crop=center');
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.nb-img-pricing::before {
+  content: '';
+  position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245,158,11,0.35), transparent);
+}
+
+/* ─── SECTION CONTACT / FAQ ────────────────────────────────────
+   Image: Collaborative modern workspace
+*/
+.nb-img-support {
+  background-image:
+    linear-gradient(
+      135deg,
+      rgba(8,12,20,0.87) 0%,
+      rgba(12,20,45,0.80) 50%,
+      rgba(8,12,20,0.90) 100%
+    ),
+    url('https://images.unsplash.com/photo-1521791055366-0d553872952f?w=1440&q=70&fm=webp&auto=format&fit=crop&crop=center');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.nb-img-support::before {
+  content: '';
+  position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(124,58,237,0.4), transparent);
+}
+
+/* ─── BANNIÈRE FEATURES ────────────────────────────────────────
+   Image: Digital fintech — laptop + data
+*/
+.nb-img-features {
+  background-image:
+    linear-gradient(
+      135deg,
+      rgba(8,12,20,0.89) 0%,
+      rgba(10,18,42,0.82) 50%,
+      rgba(8,12,20,0.91) 100%
+    ),
+    url('https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1440&q=70&fm=webp&auto=format&fit=crop&crop=center');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.nb-img-features::before {
+  content: '';
+  position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.4), transparent);
+}
+
+/* Décorateur partagé toutes images */
+.nb-img-security, .nb-img-pricing, .nb-img-support, .nb-img-features {
+  border-top: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}

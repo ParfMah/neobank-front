@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Télécharger NeoBank — Application Mobile</title>
+  <link rel="stylesheet" href="../css/main.css"/><link rel="stylesheet" href="../css/landing.css"/>
+  <link rel="stylesheet" href="../css/enhancements.css"/><link rel="stylesheet" href="../css/pages.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    .phone-mockup {
+      width: 240px; height: 480px; border-radius: 36px;
+      background: linear-gradient(135deg, #0f1729, #1a0a35);
+      border: 2px solid rgba(0,212,255,0.2);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05), inset 0 0 60px rgba(0,212,255,0.03);
+      position: relative; overflow: hidden; flex-shrink: 0;
+    }
+    .phone-mockup::before {
+      content:''; position:absolute; top:12px; left:50%; transform:translateX(-50%);
+      width:80px; height:6px; background:rgba(255,255,255,0.12); border-radius:3px;
+    }
+    .phone-screen {
+      position:absolute; inset:20px 8px 8px;
+      background:var(--color-bg,#080c14); border-radius:28px; overflow:hidden;
+      display:flex; flex-direction:column;
+    }
+    .phone-topbar { height:28px; background:rgba(0,212,255,0.06); display:flex; align-items:center; padding:0 10px; justify-content:space-between; }
+    .phone-topbar span { font-size:8px; color:rgba(255,255,255,0.5); font-weight:600; }
+    .phone-balance { padding:12px 10px 8px; }
+    .phone-balance-lbl { font-size:7px; color:rgba(255,255,255,0.4); margin-bottom:2px; }
+    .phone-balance-val { font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:800; background:linear-gradient(135deg,#00d4ff,#7c3aed); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .phone-card { margin:0 8px 8px; padding:10px; background:linear-gradient(135deg,rgba(0,212,255,0.06),rgba(124,58,237,0.06)); border:1px solid rgba(0,212,255,0.12); border-radius:12px; }
+    .phone-card-row { display:flex; justify-content:space-between; margin-bottom:4px; }
+    .phone-card-lbl { font-size:6px; color:rgba(255,255,255,0.3); }
+    .phone-card-val { font-size:7px; color:rgba(255,255,255,0.6); }
+    .phone-actions { display:flex; gap:4px; padding:0 8px 8px; }
+    .phone-action { flex:1; padding:6px 2px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:8px; text-align:center; font-size:6px; color:rgba(255,255,255,0.4); }
+    .phone-tx { padding:0 8px; }
+    .phone-tx-item { display:flex; justify-content:space-between; align-items:center; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+    .phone-tx-name { font-size:7px; color:rgba(255,255,255,0.6); }
+    .phone-tx-amt { font-size:7px; font-weight:700; }
+    .phone-tabbar { margin-top:auto; height:36px; background:rgba(0,0,0,0.4); border-top:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; padding:0 4px; }
+    .phone-tab { flex:1; text-align:center; font-size:14px; opacity:0.4; }
+    .phone-tab.active { opacity:1; }
+    .dl-btn {
+      display:flex; align-items:center; gap:14px; padding:16px 24px;
+      background:var(--color-surface,#151d2e); border:1px solid var(--color-border,rgba(255,255,255,0.07));
+      border-radius:16px; cursor:pointer; transition:all .2s; text-decoration:none; color:inherit;
+    }
+    .dl-btn:hover { border-color:rgba(0,212,255,0.3); background:rgba(0,212,255,0.04); transform:translateY(-2px); }
+    .dl-btn-icon { font-size:2.2rem; flex-shrink:0; }
+    .dl-btn-title { font-size:.95rem; font-weight:700; margin-bottom:2px; }
+    .dl-btn-sub { font-size:.78rem; color:var(--color-text-2,#8892a4); }
+    .install-steps { counter-reset:step; }
+    .install-step { display:flex; gap:16px; align-items:flex-start; margin-bottom:20px; counter-increment:step; }
+    .install-step::before {
+      content:counter(step); min-width:28px; height:28px; border-radius:50%;
+      background:linear-gradient(135deg,#00d4ff,#7c3aed); display:flex; align-items:center;
+      justify-content:center; font-weight:800; font-size:.8rem; flex-shrink:0; margin-top:2px;
+    }
+    .install-step h4 { font-size:.9rem; margin-bottom:4px; }
+    .install-step p { font-size:.82rem; color:var(--color-text-2,#8892a4); margin:0; }
+
+    /* ── FIX phone-tx layout ─────────────────────────── */
+    .phone-tx-item {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.04);
+      gap:4px; min-width:0;
+    }
+    .phone-tx-name {
+      font-size:7px; color:rgba(255,255,255,0.6);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      flex:1; min-width:0;
+    }
+    .phone-tx-amt {
+      font-size:7px; font-weight:700; flex-shrink:0;
+      white-space:nowrap;
+    }
+
+    /* ── Responsive download page ────────────────────── */
+    .dl-hero-grid {
+      display:grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--space-3xl, 3rem);
+      align-items: center;
+    }
+    .dl-install-grid {
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3xl, 3rem);
+    }
+
+    @media (max-width: 768px) {
+      .dl-hero-grid {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: var(--space-xl, 2rem);
+      }
+      .dl-install-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl, 2rem);
+      }
+      .phone-mockup {
+        width: 200px !important;
+        height: 400px !important;
+      }
+      .dl-btn {
+        padding: 14px 16px;
+      }
+      .dl-btn-icon { font-size: 1.8rem; }
+      .dl-btn-title { font-size: .88rem; }
+      .dl-btn-sub { font-size: .72rem; }
+    }
+
+    @media (max-width: 480px) {
+      .phone-mockup {
+        width: 180px !important;
+        height: 360px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo"><span class="logo-icon">◆</span><span class="logo-text">NeoBank</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="features.html">Fonctionnalités</a></li><li><a href="about.html">À Propos</a></li><li><a href="simulator.html">Simulateur</a></li><li><a href="pricing.html">Tarifs</a></li><li><a href="faq.html">FAQ</a></li><li><a href="download.html">📱 App</a></li>
+      <li class="nav-mobile-register" style="display:none;"><a href="register.html" class="btn btn-primary btn-full">Ouvrir un compte</a></li>
+    </ul>
+    <div class="nav-actions"><a href="login.html" class="btn btn-ghost">Connexion</a><a href="register.html" class="btn btn-primary">Ouvrir un compte</a></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-bg"><div class="page-orb page-orb-1"></div><div class="page-orb page-orb-2"></div><div class="page-grid-bg"></div></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Accueil</a><span class="breadcrumb-sep">›</span><span>Application mobile</span></div>
+    <div class="page-tag">📱 Application disponible</div>
+    <h1>NeoBank dans votre<br/><span class="gradient-text">poche</span></h1>
+    <p>Une application bancaire complète, belle et rapide — installable sur Android et iPhone en quelques secondes, sans passer par un store.</p>
+    <a href="app/index.html" class="btn btn-primary btn-large" style="margin-top:8px;">
+      🚀 Ouvrir l'application →
+    </a>
+  </div>
+</section>
+
+<!-- APERÇU + TÉLÉCHARGEMENT -->
+<section>
+  <div class="page-wrap">
+    <div class="dl-hero-grid">
+      <!-- Mockup téléphone -->
+      <div class="reveal" style="display:flex;justify-content:center;">
+        <div class="phone-mockup">
+          <div class="phone-screen">
+            <div class="phone-topbar"><span>NeoBank</span><span>9:41</span></div>
+            <div class="phone-balance">
+              <div class="phone-balance-lbl">Solde disponible</div>
+              <div class="phone-balance-val">€24 850</div>
+            </div>
+            <div class="phone-card">
+              <div class="phone-card-row"><span class="phone-card-lbl">•••• •••• •••• 4291</span><span class="phone-card-val" style="color:rgba(0,212,255,0.8)">VISA</span></div>
+              <div class="phone-card-row"><span class="phone-card-lbl">Pierre Friant</span><span class="phone-card-val">12/27</span></div>
+            </div>
+            <div class="phone-actions">
+              <div class="phone-action">↗️<br/>Virer</div>
+              <div class="phone-action">↙️<br/>Recevoir</div>
+              <div class="phone-action">💳<br/>Cartes</div>
+              <div class="phone-action">📊<br/>Crédit</div>
+            </div>
+            <div class="phone-tx">
+              <div style="font-size:7px;color:rgba(255,255,255,0.3);margin-bottom:4px;font-weight:700;letter-spacing:0.06em;">RÉCENT</div>
+              <div class="phone-tx-item"><span class="phone-tx-name">💰 Salaire</span><span class="phone-tx-amt" style="color:#10b981">+€3 200</span></div>
+              <div class="phone-tx-item"><span class="phone-tx-name">🛒 Carrefour</span><span class="phone-tx-amt">-€87,50</span></div>
+              <div class="phone-tx-item"><span class="phone-tx-name">🎬 Netflix</span><span class="phone-tx-amt">-€17,99</span></div>
+              <div class="phone-tx-item"><span class="phone-tx-name">↔️ Virement</span><span class="phone-tx-amt" style="color:#10b981">+€250</span></div>
+            </div>
+            <div class="phone-tabbar">
+              <div class="phone-tab active">🏠</div><div class="phone-tab">💳</div>
+              <div class="phone-tab">↗️</div><div class="phone-tab">📊</div><div class="phone-tab">👤</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boutons téléchargement -->
+      <div class="reveal rd1">
+        <div class="section-label" style="margin-bottom:var(--space-lg);">Télécharger</div>
+        <h2 class="section-h2" style="margin-bottom:var(--space-sm);">Installez NeoBank sur votre appareil</h2>
+        <p class="section-sub" style="margin-bottom:var(--space-xl);">Application Progressive Web App — fonctionne comme une vraie app native, aucun store requis.</p>
+
+        <div style="display:flex;flex-direction:column;gap:12px;max-width:380px;">
+          <a href="app/index.html" class="dl-btn">
+            <div class="dl-btn-icon">🤖</div>
+            <div>
+              <div class="dl-btn-title">Android (Chrome)</div>
+              <div class="dl-btn-sub">Ouvrir → Menu ⋮ → "Ajouter à l'écran d'accueil"</div>
+            </div>
+          </a>
+          <a href="app/index.html" class="dl-btn">
+            <div class="dl-btn-icon">🍎</div>
+            <div>
+              <div class="dl-btn-title">iPhone (Safari)</div>
+              <div class="dl-btn-sub">Ouvrir → Partager 📤 → "Sur l'écran d'accueil"</div>
+            </div>
+          </a>
+          <a href="app/index.html" class="dl-btn">
+            <div class="dl-btn-icon">💻</div>
+            <div>
+              <div class="dl-btn-title">Bureau (Chrome/Edge)</div>
+              <div class="dl-btn-sub">Cliquer l'icône ⊕ dans la barre d'adresse</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUCTIONS -->
+<div class="alt-bg">
+  <div class="page-wrap">
+    <div class="dl-install-grid">
+      <div class="reveal">
+        <div class="section-label" style="margin-bottom:var(--space-lg);">Android</div>
+        <h3 style="margin-bottom:var(--space-xl);font-size:1.1rem;">Installation sur Android</h3>
+        <div class="install-steps">
+          <div class="install-step"><div><h4>Ouvrez Chrome</h4><p>Naviguez vers l'app NeoBank depuis le navigateur Chrome.</p></div></div>
+          <div class="install-step"><div><h4>Menu → Installer</h4><p>Appuyez sur ⋮ (menu) puis "Ajouter à l'écran d'accueil" ou "Installer l'application".</p></div></div>
+          <div class="install-step"><div><h4>Confirmez</h4><p>Appuyez sur "Installer". L'icône NeoBank apparaît sur votre écran d'accueil.</p></div></div>
+        </div>
+      </div>
+      <div class="reveal rd1">
+        <div class="section-label" style="margin-bottom:var(--space-lg);">iPhone & iPad</div>
+        <h3 style="margin-bottom:var(--space-xl);font-size:1.1rem;">Installation sur iOS</h3>
+        <div class="install-steps">
+          <div class="install-step"><div><h4>Ouvrez Safari</h4><p>L'installation PWA sur iPhone nécessite Safari (pas Chrome).</p></div></div>
+          <div class="install-step"><div><h4>Bouton Partager 📤</h4><p>Appuyez sur l'icône Partager en bas au centre de Safari.</p></div></div>
+          <div class="install-step"><div><h4>"Sur l'écran d'accueil"</h4><p>Faites défiler et appuyez sur "Sur l'écran d'accueil" puis "Ajouter".</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FONCTIONNALITÉS APP -->
+<section>
+  <div class="page-wrap">
+    <div class="section-header-center reveal">
+      <div class="section-label">Fonctionnalités</div>
+      <h2 class="section-h2">Tout ce qu'offre l'application</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card reveal rd1"><div class="card-icon">📊</div><h3>Dashboard complet</h3><p>Solde en temps réel, graphique de dépenses, statistiques mensuelles et transactions récentes.</p></div>
+      <div class="card reveal rd2"><div class="card-icon card-icon-purple">⚡</div><h3>Virements instantanés</h3><p>Envoyez de l'argent en quelques secondes depuis le pavé numérique intégré.</p></div>
+      <div class="card reveal rd3"><div class="card-icon">💳</div><h3>Gestion des cartes</h3><p>Visualisez vos cartes, bloquez-les, consultez les transactions par carte.</p></div>
+      <div class="card reveal rd1"><div class="card-icon card-icon-purple">🏦</div><h3>Simulateur de crédit</h3><p>Calculez vos mensualités et soumettez une demande de prêt directement depuis l'app.</p></div>
+      <div class="card reveal rd2"><div class="card-icon">🔒</div><h3>Sécurité bancaire</h3><p>Connexion JWT sécurisée, déconnexion automatique, protection des données chiffrée.</p></div>
+      <div class="card reveal rd3"><div class="card-icon card-icon-purple">📶</div><h3>Mode hors ligne</h3><p>Consultez vos dernières données même sans connexion internet grâce au cache PWA.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="alt-bg">
+  <div class="page-wrap">
+    <div class="cta-bloc reveal">
+      <h2>Prêt à tester l'application ?</h2>
+      <p>Ouvrez l'app directement dans votre navigateur ou installez-la sur votre téléphone.</p>
+      <div class="cta-row">
+        <a href="app/index.html" class="btn btn-primary btn-large">🚀 Lancer l'application</a>
+        <a href="register.html" class="btn btn-outline btn-large">Créer un compte</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand"><div class="nav-logo" style="margin-bottom:var(--space-sm)"><span class="logo-icon">◆</span><span class="logo-text">NeoBank</span></div><p>La banque du futur, aujourd'hui.</p></div>
+    <div class="footer-links">
+      <div class="footer-col"><h4>Produits</h4><a href="open-account.html">Compte courant</a><a href="simulator.html">Crédit</a><a href="pricing.html">Tarifs</a></div>
+      <div class="footer-col"><h4>Entreprise</h4><a href="about.html">À Propos</a><a href="security.html">Sécurité</a><a href="contact.html">Contact</a><a href="faq.html">FAQ</a></div>
+      <div class="footer-col"><h4>Application</h4><a href="download.html">Télécharger</a><a href="app/index.html">Ouvrir l'app</a><a href="install.html">Guide installation</a></div>
+      <div class="footer-col"><h4>Légal</h4><a href="legal.html">CGU</a><a href="legal.html">Confidentialité</a><a href="legal.html">Mentions légales</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 NeoBank. Tous droits réservés.</p></div>
+</footer>
+<div id="toast-container"></div>
+<script src="../js/main.js"></script>
+<script src="../js/extras.js"></script>
+<script>
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

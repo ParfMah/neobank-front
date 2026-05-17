@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — NeoBank</title>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <link rel="stylesheet" href="../css/enhancements.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="../css/admin.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="manifest" href="../manifest.json" />
+  <meta name="theme-color" content="#00d4ff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.svg" />
+</head>
+<body class="dash-body">
+<div class="dash-layout">
+
+  <!-- ─── SIDEBAR ADMIN ─────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">◆</span>
+      <span class="logo-text">NeoBank</span>
+      <span class="badge badge-purple" style="margin-left:auto;font-size:0.6rem">ADMIN</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-label">Administration</div>
+        <a class="nav-item active" data-tab="dashboard"><span class="nav-item-icon">◈</span> Dashboard</a>
+        <a class="nav-item" data-tab="users"><span class="nav-item-icon">👥</span> Utilisateurs</a>
+        <a class="nav-item" data-tab="loans"><span class="nav-item-icon">◎</span> Prêts <span class="nav-badge" id="pendingBadge">0</span></a>
+        <a class="nav-item" data-tab="credit"><span class="nav-item-icon">✚</span> Crédit/Débit</a>
+        <a class="nav-item" data-tab="logs"><span class="nav-item-icon">📋</span> Audit Logs</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Navigation</div>
+        <a class="nav-item" href="dashboard.html"><span class="nav-item-icon">←</span> Espace client</a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="user-avatar" id="adminAvatar" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">AD</div>
+        <div class="user-info">
+          <div class="user-name" id="adminName">Admin</div>
+          <div class="user-role" style="color:#a78bfa">Administrateur</div>
+        </div>
+      </div>
+      <button class="nav-item" id="logoutBtn" style="width:100%;margin-top:6px;border:none;background:none;">
+        <span class="nav-item-icon">⏻</span> Déconnexion
+      </button>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ─────────────────────────────────────────────── -->
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="topbar-btn" id="sidebarToggle">☰</button>
+        <span class="topbar-title" id="topbarTitle">Dashboard</span>
+      </div>
+      <div class="topbar-actions">
+        <span class="badge badge-purple">Admin Panel v1.0</span>
+      </div>
+    </div>
+
+    <div class="dash-content">
+
+      <!-- ══ TAB: DASHBOARD ════════════════════════════════════ -->
+      <div id="tab-dashboard">
+        <!-- KPIs -->
+        <div class="kpi-grid" id="kpiGrid">
+          <div class="kpi-card accent-blue"><span class="kpi-icon">👥</span><div class="kpi-label">Utilisateurs</div><div class="kpi-value" id="kpiUsers">—</div><div class="kpi-sub" id="kpiUsersSub">—</div></div>
+          <div class="kpi-card accent-green"><span class="kpi-icon">💰</span><div class="kpi-label">Volume transactions</div><div class="kpi-value" id="kpiVolume">—</div><div class="kpi-sub" id="kpiVolumeCount">—</div></div>
+          <div class="kpi-card accent-orange"><span class="kpi-icon">◎</span><div class="kpi-label">Prêts actifs</div><div class="kpi-value" id="kpiLoans">—</div><div class="kpi-sub" id="kpiLoansPending">— en attente</div></div>
+          <div class="kpi-card accent-purple"><span class="kpi-icon">⚡</span><div class="kpi-label">Taux d'activité</div><div class="kpi-value" id="kpiActivity">—</div><div class="kpi-sub">utilisateurs actifs</div></div>
+        </div>
+
+        <!-- Charts -->
+        <div class="admin-chart-grid">
+          <div class="card card-sm">
+            <div class="section-header-row" style="margin-bottom:var(--space-md)">
+              <span class="section-title-sm">Flux journalier (30j)</span>
+            </div>
+            <div class="admin-chart-container"><canvas id="dailyChart"></canvas></div>
+          </div>
+          <div class="card card-sm">
+            <div class="section-header-row" style="margin-bottom:var(--space-md)">
+              <span class="section-title-sm">Répartition prêts</span>
+            </div>
+            <div class="admin-chart-container"><canvas id="loanChart"></canvas></div>
+          </div>
+        </div>
+
+        <!-- Récents -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-lg)">
+          <div class="card card-sm">
+            <div class="section-header-row" style="margin-bottom:var(--space-md)">
+              <span class="section-title-sm">Derniers inscrits</span>
+              <button class="btn btn-ghost btn-sm" onclick="switchTab('users')">Voir tout</button>
+            </div>
+            <div id="recentUsersList"></div>
+          </div>
+          <div class="card card-sm">
+            <div class="section-header-row" style="margin-bottom:var(--space-md)">
+              <span class="section-title-sm">Prêts en attente</span>
+              <button class="btn btn-ghost btn-sm" onclick="switchTab('loans')">Voir tout</button>
+            </div>
+            <div id="recentLoansList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB: UTILISATEURS ════════════════════════════════ -->
+      <div id="tab-users" style="display:none;">
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <input type="text" id="userSearch" class="search-input" placeholder="🔍  Rechercher par nom ou email..." />
+            <select id="userStatusFilter" class="filter-select">
+              <option value="">Tous les statuts</option>
+              <option value="active">Actifs</option>
+              <option value="suspended">Suspendus</option>
+              <option value="inactive">Inactifs</option>
+            </select>
+          </div>
+          <div class="toolbar-right">
+            <span id="userCount" class="text-muted" style="font-size:0.82rem;"></span>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Utilisateur</th>
+                <th>Email</th>
+                <th>Solde</th>
+                <th>KYC</th>
+                <th>Statut</th>
+                <th>Inscription</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody"><tr><td colspan="7" class="tx-empty">Chargement...</td></tr></tbody>
+          </table>
+        </div>
+        <div id="usersPagination" style="display:flex;justify-content:center;gap:8px;padding:var(--space-lg) 0;"></div>
+      </div>
+
+      <!-- ══ TAB: PRÊTS ════════════════════════════════════════ -->
+      <div id="tab-loans" style="display:none;">
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <select id="loanStatusFilter" class="filter-select">
+              <option value="">Tous les statuts</option>
+              <option value="pending">En attente</option>
+              <option value="active">Actifs</option>
+              <option value="paid">Remboursés</option>
+              <option value="rejected">Rejetés</option>
+            </select>
+          </div>
+          <span id="loanCount" class="text-muted" style="font-size:0.82rem;"></span>
+        </div>
+        <div id="loansAdminList" class="pending-loans"></div>
+        <div id="loansPagination" style="display:flex;justify-content:center;gap:8px;padding:var(--space-lg) 0;"></div>
+      </div>
+
+      <!-- ══ TAB: CRÉDIT/DÉBIT ══════════════════════════════════ -->
+      <div id="tab-credit" style="display:none;">
+        <div class="credit-form-wrap">
+          <div class="card card-sm">
+            <div class="section-title-sm" style="margin-bottom:var(--space-lg)">Opération manuelle sur compte</div>
+            <div id="creditAlert" class="alert" style="display:none;"></div>
+            <form id="creditForm" novalidate>
+              <!-- Recherche utilisateur -->
+              <div class="form-group">
+                <label class="form-label">Rechercher l'utilisateur</label>
+                <input type="text" id="creditUserSearch" class="form-input" placeholder="Email ou nom..." />
+                <div id="creditUserResults" style="margin-top:6px;display:flex;flex-direction:column;gap:4px;"></div>
+                <input type="hidden" id="creditUserId" />
+                <div id="creditUserSelected" style="display:none;margin-top:8px;padding:10px;background:var(--color-surface-2);border-radius:var(--radius-md);font-size:0.85rem;"></div>
+              </div>
+
+              <!-- Direction -->
+              <div class="form-group">
+                <label class="form-label">Type d'opération</label>
+                <div style="display:flex;gap:var(--space-sm);">
+                  <button type="button" class="btn btn-secondary" id="dirCredit" onclick="setDirection('credit')" style="flex:1;border-color:var(--color-success);color:var(--color-success)">
+                    ↑ Créditer
+                  </button>
+                  <button type="button" class="btn btn-secondary" id="dirDebit" onclick="setDirection('debit')" style="flex:1;">
+                    ↓ Débiter
+                  </button>
+                </div>
+              </div>
+
+              <!-- Montant -->
+              <div class="form-group">
+                <label class="form-label">Montant (€)</label>
+                <input type="number" id="creditAmount" class="form-input" placeholder="0.00" min="0.01" step="0.01" />
+                <span class="form-error" id="creditAmountError"></span>
+              </div>
+
+              <!-- Description -->
+              <div class="form-group">
+                <label class="form-label">Motif obligatoire</label>
+                <input type="text" id="creditDescription" class="form-input" placeholder="Ex: Bonus de bienvenue, Correction erreur..." maxlength="500" />
+                <span class="form-error" id="creditDescError"></span>
+              </div>
+
+              <div class="alert alert-warning" style="font-size:0.82rem;">
+                ⚠️ Cette opération est irréversible et entièrement auditée. Assurez-vous des informations avant de confirmer.
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full" id="creditBtn">Confirmer l'opération</button>
+            </form>
+          </div>
+
+          <!-- Aperçu -->
+          <div>
+            <div class="credit-preview">
+              <div class="section-title-sm" style="margin-bottom:var(--space-md)">Aperçu opération</div>
+              <div class="credit-preview-amount credit-mode" id="creditPreviewAmount">€ 0.00</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div class="sim-box-detail"><span class="text-muted">Compte</span><span id="previewUser">—</span></div>
+                <div class="sim-box-detail"><span class="text-muted">Opération</span><span id="previewDir" class="text-success">Crédit</span></div>
+                <div class="sim-box-detail"><span class="text-muted">Motif</span><span id="previewDesc" style="font-size:0.78rem;text-align:right;max-width:160px">—</span></div>
+                <div class="sim-box-detail"><span class="text-muted">Effectuée par</span><span id="previewAdmin">—</span></div>
+              </div>
+              <div class="alert alert-info" style="margin-top:var(--space-md);font-size:0.78rem;">
+                Cette opération sera enregistrée dans les logs d'audit avec votre identité.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB: AUDIT LOGS ══════════════════════════════════ -->
+      <div id="tab-logs" style="display:none;">
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <select id="logActionFilter" class="filter-select">
+              <option value="">Toutes les actions</option>
+              <option value="LOGIN_FAILED">Connexions échouées</option>
+              <option value="ADMIN_CREDIT">Crédits admin</option>
+              <option value="LOAN_APPROVED">Prêts approuvés</option>
+              <option value="LOAN_REJECTED">Prêts rejetés</option>
+              <option value="USER_SUSPENDED">Suspensions</option>
+              <option value="USER_ROLE_CHANGED">Changements de rôle</option>
+            </select>
+            <select id="logSeverityFilter" class="filter-select">
+              <option value="">Toutes sévérités</option>
+              <option value="critical">Critique</option>
+              <option value="high">Haute</option>
+              <option value="medium">Moyenne</option>
+              <option value="low">Faible</option>
+            </select>
+          </div>
+          <span id="logCount" class="text-muted" style="font-size:0.82rem;"></span>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Action</th>
+                <th>Par</th>
+                <th>Cible</th>
+                <th>Description</th>
+                <th>Sévérité</th>
+              </tr>
+            </thead>
+            <tbody id="logsTableBody"><tr><td colspan="6" class="tx-empty">Chargement...</td></tr></tbody>
+          </table>
+        </div>
+        <div id="logsPagination" style="display:flex;justify-content:center;gap:8px;padding:var(--space-lg) 0;"></div>
+      </div>
+
+    </div><!-- /dash-content -->
+  </main>
+</div>
+
+<!-- ─── MODAL DÉTAIL UTILISATEUR ─────────────────────────────── -->
+<div class="modal-overlay hidden" id="userDetailModal">
+  <div class="modal" style="max-width:680px;">
+    <div class="modal-header">
+      <span class="modal-title">Détail utilisateur</span>
+      <button class="modal-close" onclick="document.getElementById('userDetailModal').classList.add('hidden')">✕</button>
+    </div>
+    <div id="userDetailContent"></div>
+  </div>
+</div>
+
+<!-- ─── MODAL REJETER PRÊT ────────────────────────────────────── -->
+<div class="modal-overlay hidden" id="rejectModal">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-header">
+      <span class="modal-title">Rejeter le prêt</span>
+      <button class="modal-close" onclick="document.getElementById('rejectModal').classList.add('hidden')">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Raison du rejet (obligatoire)</label>
+      <input type="text" id="rejectReason" class="form-input" placeholder="Ex: Revenus insuffisants, dossier incomplet..." />
+    </div>
+    <button class="btn btn-danger btn-full" id="confirmRejectBtn">Confirmer le rejet</button>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="../js/security.js"></script>
+  <script src="../js/main.js"></script>
+<script src="../js/api.js"></script>
+<script>
+if (!requireAdmin()) throw new Error('not admin');
+
+let currentDirection = 'credit';
+let selectedUserId   = null;
+let dailyChart = null, loanChart = null;
+let rejectLoanId = null;
+
+// ─── Init ──────────────────────────────────────────────────────
+async function init() {
+  const user = API.getCurrentUser();
+  if (user) {
+    document.getElementById('adminAvatar').textContent = (user.firstName[0]+user.lastName[0]).toUpperCase();
+    document.getElementById('adminName').textContent   = `${user.firstName} ${user.lastName}`;
+    document.getElementById('previewAdmin').textContent = user.email;
+  }
+  await loadDashboard();
+  initCreditForm();
+}
+
+// ─── Dashboard ─────────────────────────────────────────────────
+async function loadDashboard() {
+  try {
+    const data = await API.admin.getStats();
+    const s = data.stats;
+
+    // KPIs
+    document.getElementById('kpiUsers').textContent       = s.users.total.toLocaleString('fr-FR');
+    document.getElementById('kpiUsersSub').textContent    = `${s.users.active} actifs · ${s.users.suspended} suspendus`;
+    document.getElementById('kpiVolume').textContent      = formatCurrency(s.transactions.totalVolume);
+    document.getElementById('kpiVolumeCount').textContent = `${s.transactions.count.toLocaleString('fr-FR')} transactions`;
+    document.getElementById('kpiLoans').textContent       = s.loans.active;
+    document.getElementById('kpiLoansPending').textContent= `${s.loans.pending} en attente`;
+    document.getElementById('kpiActivity').textContent    = s.users.total ? Math.round(s.users.active / s.users.total * 100) + '%' : '—';
+    document.getElementById('pendingBadge').textContent   = s.loans.pending;
+
+    // Charts
+    renderDailyChart(s.dailyFlow);
+    renderLoanChart(s.loans);
+
+    // Derniers inscrits
+    const ul = document.getElementById('recentUsersList');
+    ul.innerHTML = s.recentUsers.length ? s.recentUsers.map(u => `
+      <div class="tx-item" style="cursor:pointer" onclick="openUserDetail('${u._id}')">
+        <div class="user-avatar" style="width:36px;height:36px;font-size:0.75rem;flex-shrink:0">${(u.firstName[0]+u.lastName[0]).toUpperCase()}</div>
+        <div class="tx-info">
+          <div class="tx-desc">${u.firstName} ${u.lastName}</div>
+          <div class="tx-date">${u.email}</div>
+        </div>
+        ${statusBadge(u.isSuspended ? 'suspended' : 'active')}
+      </div>`).join('') : '<div class="tx-empty">Aucun utilisateur récent</div>';
+
+    // Prêts en attente (dashboard)
+    const pl = document.getElementById('recentLoansList');
+    pl.innerHTML = s.recentLoans.length ? s.recentLoans.map(l => `
+      <div class="tx-item">
+        <div class="tx-info">
+          <div class="tx-desc">${l.borrower?.firstName} ${l.borrower?.lastName} — ${formatCurrency(l.principalAmount)}</div>
+          <div class="tx-date">${l.loanNumber} · ${formatDate(l.appliedAt)}</div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-primary btn-sm" onclick="quickApproveLoan('${l._id}')">✓</button>
+          <button class="btn btn-danger btn-sm" onclick="openRejectModal('${l._id}')">✕</button>
+        </div>
+      </div>`).join('') : '<div class="tx-empty">Aucun prêt en attente</div>';
+
+  } catch (err) { showToast('Erreur chargement stats: ' + err.message, 'error'); }
+}
+
+function renderDailyChart(flow) {
+  const ctx = document.getElementById('dailyChart').getContext('2d');
+  if (dailyChart) dailyChart.destroy();
+  dailyChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: flow.map(d => d._id.slice(5)),
+      datasets: [
+        { label: 'Crédits', data: flow.map(d => d.credits), borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.1)', fill: true, tension: 0.4, pointRadius: 2 },
+        { label: 'Débits',  data: flow.map(d => d.debits),  borderColor: '#ef4444', backgroundColor: 'rgba(239,68,68,0.1)',  fill: true, tension: 0.4, pointRadius: 2 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { color: '#8b9bbf', font: { size: 10 } } } },
+      scales: {
+        x: { ticks: { color: '#4a5568', font: { size: 9 }, maxTicksLimit: 10 }, grid: { display: false } },
+        y: { ticks: { color: '#4a5568', font: { size: 9 }, callback: v => '€'+v }, grid: { color: 'rgba(255,255,255,0.04)' } }
+      }
+    }
+  });
+}
+
+function renderLoanChart(loans) {
+  const ctx = document.getElementById('loanChart').getContext('2d');
+  if (loanChart) loanChart.destroy();
+  loanChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Actifs', 'En attente', 'Remboursés', 'Rejetés'],
+      datasets: [{ data: [loans.active, loans.pending, loans.total - loans.active - loans.pending, 0], backgroundColor: ['#10b981','#f59e0b','#00d4ff','#ef4444'], borderWidth: 0 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'bottom', labels: { color: '#8b9bbf', font: { size: 10 }, padding: 10 } } } }
+  });
+}
+
+// ─── Utilisateurs ──────────────────────────────────────────────
+async function loadUsers(page = 1) {
+  const search = document.getElementById('userSearch').value;
+  const status = document.getElementById('userStatusFilter').value;
+  let params = `page=${page}&limit=15`;
+  if (search) params += `&search=${encodeURIComponent(search)}`;
+  if (status) params += `&status=${status}`;
+
+  const tbody = document.getElementById('usersTableBody');
+  tbody.innerHTML = '<tr><td colspan="7" class="tx-empty">Chargement...</td></tr>';
+
+  try {
+    const data = await API.admin.getUsers(params);
+    document.getElementById('userCount').textContent = `${data.total} utilisateur(s)`;
+
+    if (!data.users.length) { tbody.innerHTML = '<tr><td colspan="7" class="tx-empty">Aucun utilisateur</td></tr>'; return; }
+
+    tbody.innerHTML = data.users.map(u => `
+      <tr>
+        <td>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="user-avatar" style="width:30px;height:30px;font-size:0.65rem;flex-shrink:0">${(u.firstName[0]+u.lastName[0]).toUpperCase()}</div>
+            <div>
+              <div style="font-weight:500;font-size:0.88rem">${u.firstName} ${u.lastName}</div>
+              <div style="font-size:0.72rem;color:var(--color-text-3)">${u.role}</div>
+            </div>
+          </div>
+        </td>
+        <td style="font-size:0.85rem">${u.email}</td>
+        <td class="${u.balance >= 0 ? 'text-success' : 'text-danger'}" style="font-weight:600">${formatCurrency(u.balance || 0)}</td>
+        <td>${statusBadge(u.kycStatus || 'pending')}</td>
+        <td>${statusBadge(u.isSuspended ? 'suspended' : 'active')}</td>
+        <td style="font-size:0.8rem;color:var(--color-text-2)">${formatDate(u.createdAt)}</td>
+        <td>
+          <div class="action-btns">
+            <button class="btn-icon" title="Détail" onclick="openUserDetail('${u._id}')">👁</button>
+            <button class="btn-icon" title="Crédit/Débit" onclick="goCreditUser('${u._id}','${u.email}')">💳</button>
+            <button class="btn-icon danger" title="${u.isSuspended ? 'Réactiver' : 'Suspendre'}" onclick="toggleSuspend('${u._id}','${u.isSuspended}')">
+              ${u.isSuspended ? '✓' : '⊘'}
+            </button>
+          </div>
+        </td>
+      </tr>`).join('');
+
+    // Pagination
+    renderPagination('usersPagination', page, data.pages, loadUsers);
+  } catch (err) { tbody.innerHTML = `<tr><td colspan="7" class="tx-empty">${err.message}</td></tr>`; }
+}
+
+async function openUserDetail(id) {
+  const modal = document.getElementById('userDetailModal');
+  const content = document.getElementById('userDetailContent');
+  modal.classList.remove('hidden');
+  content.innerHTML = '<div style="text-align:center;padding:var(--space-xl)"><div class="loader-spinner" style="margin:auto"></div></div>';
+  try {
+    const data = await API.admin.getUser(id);
+    const u = data.user; const acc = data.account;
+    content.innerHTML = `
+      <div class="user-detail-header">
+        <div class="user-detail-avatar">${(u.firstName[0]+u.lastName[0]).toUpperCase()}</div>
+        <div>
+          <div class="user-detail-name">${u.firstName} ${u.lastName}</div>
+          <div class="user-detail-email">${u.email}</div>
+          <div style="margin-top:6px;display:flex;gap:6px;">${statusBadge(u.isSuspended?'suspended':'active')} ${statusBadge(u.kycStatus||'pending')}</div>
+        </div>
+        <div style="margin-left:auto;display:flex;flex-direction:column;gap:6px;">
+          <button class="btn btn-sm ${u.isSuspended?'btn-primary':'btn-danger'}" onclick="toggleSuspend('${u._id}','${u.isSuspended}');document.getElementById('userDetailModal').classList.add('hidden')">
+            ${u.isSuspended ? '✓ Réactiver' : '⊘ Suspendre'}
+          </button>
+          <button class="btn btn-sm btn-secondary" onclick="goCreditUser('${u._id}','${u.email}');document.getElementById('userDetailModal').classList.add('hidden')">💳 Crédit/Débit</button>
+        </div>
+      </div>
+      ${acc ? `
+      <div style="background:var(--color-surface-2);border-radius:var(--radius-md);padding:var(--space-md);margin-bottom:var(--space-lg);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span class="text-muted">Solde actuel</span>
+          <span style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:${acc.balance>=0?'var(--color-success)':'var(--color-danger)'}">${formatCurrency(acc.balance)}</span>
+        </div>
+        <div style="font-size:0.75rem;color:var(--color-text-3);font-family:monospace">${acc.iban}</div>
+      </div>` : '<div class="alert alert-warning" style="font-size:0.82rem">Aucun compte bancaire lié</div>'}
+      <div style="margin-bottom:var(--space-lg);">
+        <div class="section-title-sm" style="margin-bottom:var(--space-md)">Dernières transactions</div>
+        ${data.recentTransactions.length ? data.recentTransactions.map(tx => `
+          <div class="tx-item">
+            <div class="tx-icon ${tx.direction}">${txIcon(tx.type)}</div>
+            <div class="tx-info"><div class="tx-desc">${tx.description}</div><div class="tx-date">${formatDateTime(tx.createdAt)}</div></div>
+            <div class="tx-amount ${tx.direction}">${tx.direction==='credit'?'+':'-'}${formatCurrency(tx.amount)}</div>
+          </div>`).join('') : '<div class="tx-empty">Aucune transaction</div>'}
+      </div>`;
+  } catch (err) { content.innerHTML = `<div class="tx-empty">${err.message}</div>`; }
+}
+
+async function toggleSuspend(id, isSuspended) {
+  const reason = isSuspended ? '' : (prompt('Raison de la suspension (optionnel):') || '');
+  try {
+    const data = await API.admin.suspendUser(id, { reason });
+    showToast(data.message, 'success');
+    if (document.getElementById('tab-users').style.display !== 'none') loadUsers();
+    await loadDashboard();
+  } catch (err) { showToast(err.message, 'error'); }
+}
+
+function goCreditUser(id, email) {
+  switchTab('credit');
+  selectedUserId = id;
+  document.getElementById('creditUserId').value = id;
+  document.getElementById('creditUserSelected').style.display = 'block';
+  document.getElementById('creditUserSelected').innerHTML = `✓ Sélectionné: <strong>${email}</strong>`;
+  document.getElementById('previewUser').textContent = email;
+  document.getElementById('creditUserSearch').value = email;
+}
+
+// ─── Prêts ─────────────────────────────────────────────────────
+async function loadLoansAdmin(page = 1) {
+  const status = document.getElementById('loanStatusFilter').value;
+  let params = `page=${page}&limit=10`;
+  if (status) params += `&status=${status}`;
+
+  const container = document.getElementById('loansAdminList');
+  container.innerHTML = '<div style="text-align:center;padding:var(--space-xl)"><div class="loader-spinner" style="margin:auto"></div></div>';
+
+  try {
+    const data = await API.admin.getLoans(params);
+    document.getElementById('loanCount').textContent = `${data.total} prêt(s)`;
+
+    if (!data.loans.length) { container.innerHTML = '<div class="empty-state"><div class="empty-icon">◎</div><div class="empty-title">Aucun prêt</div></div>'; return; }
+
+    container.innerHTML = data.loans.map(l => `
+      <div class="pending-loan-card">
+        <div class="pending-loan-header">
+          <div class="pending-loan-info">
+            <h4>${l.borrower?.firstName} ${l.borrower?.lastName}</h4>
+            <p>${l.borrower?.email} · ${l.loanNumber}</p>
+          </div>
+          <div style="text-align:right;">
+            <div class="pending-loan-amount">${formatCurrency(l.principalAmount)}</div>
+            ${statusBadge(l.status)}
+          </div>
+        </div>
+        <div class="pending-loan-meta">
+          <span>📅 ${l.durationMonths} mois</span>
+          <span>📊 ${l.annualInterestRate}% / an</span>
+          <span>💳 ${formatCurrency(l.monthlyPayment)} / mois</span>
+          <span>🏷 ${l.type}</span>
+          <span>📆 ${formatDate(l.appliedAt)}</span>
+        </div>
+        ${l.purpose ? `<div style="font-size:0.82rem;color:var(--color-text-2);margin-bottom:var(--space-md)">Objet: ${l.purpose}</div>` : ''}
+        ${l.status === 'pending' ? `
+          <div class="pending-loan-actions">
+            <button class="btn btn-primary" onclick="quickApproveLoan('${l._id}')">✓ Approuver</button>
+            <button class="btn btn-danger" onclick="openRejectModal('${l._id}')">✕ Rejeter</button>
+          </div>` : (l.reviewedBy ? `<div style="font-size:0.78rem;color:var(--color-text-3)">Traité par: ${l.reviewedBy.firstName} ${l.reviewedBy.lastName}</div>` : '')}
+      </div>`).join('');
+
+    renderPagination('loansPagination', page, data.pages, loadLoansAdmin);
+  } catch (err) { container.innerHTML = `<div class="tx-empty">${err.message}</div>`; }
+}
+
+async function quickApproveLoan(id, note = 'Approuvé via panel admin') {
+  if (!confirm('Confirmer l\'approbation de ce prêt ? Les fonds seront décaissés immédiatement.')) return;
+  try {
+    await API.admin.approveLoan(id, { note });
+    showToast('Prêt approuvé et fonds décaissés !', 'success');
+    await loadDashboard();
+    if (document.getElementById('tab-loans').style.display !== 'none') loadLoansAdmin();
+  } catch (err) { showToast(err.message, 'error'); }
+}
+
+function openRejectModal(id) {
+  rejectLoanId = id;
+  document.getElementById('rejectReason').value = '';
+  document.getElementById('rejectModal').classList.remove('hidden');
+}
+
+document.getElementById('confirmRejectBtn').addEventListener('click', async () => {
+  const reason = document.getElementById('rejectReason').value.trim();
+  if (!reason) { showToast('La raison est obligatoire.', 'error'); return; }
+  try {
+    await API.admin.rejectLoan(rejectLoanId, { reason });
+    showToast('Prêt rejeté.', 'success');
+    document.getElementById('rejectModal').classList.add('hidden');
+    await loadDashboard();
+    if (document.getElementById('tab-loans').style.display !== 'none') loadLoansAdmin();
+  } catch (err) { showToast(err.message, 'error'); }
+});
+
+// ─── Crédit/Débit ──────────────────────────────────────────────
+function setDirection(dir) {
+  currentDirection = dir;
+  const btnCredit = document.getElementById('dirCredit');
+  const btnDebit  = document.getElementById('dirDebit');
+  btnCredit.style.borderColor = dir === 'credit' ? 'var(--color-success)' : 'var(--color-border)';
+  btnCredit.style.color       = dir === 'credit' ? 'var(--color-success)' : 'var(--color-text-2)';
+  btnDebit.style.borderColor  = dir === 'debit'  ? 'var(--color-danger)'  : 'var(--color-border)';
+  btnDebit.style.color        = dir === 'debit'  ? 'var(--color-danger)'  : 'var(--color-text-2)';
+  document.getElementById('creditPreviewAmount').className = `credit-preview-amount ${dir}-mode`;
+  document.getElementById('previewDir').textContent = dir === 'credit' ? 'Crédit ↑' : 'Débit ↓';
+  document.getElementById('previewDir').style.color = dir === 'credit' ? 'var(--color-success)' : 'var(--color-danger)';
+}
+
+function initCreditForm() {
+  // Recherche utilisateur avec debounce
+  document.getElementById('creditUserSearch').addEventListener('input', debounce(async function() {
+    const q = this.value.trim();
+    const results = document.getElementById('creditUserResults');
+    if (q.length < 2) { results.innerHTML = ''; return; }
+    try {
+      const data = await API.admin.getUsers(`search=${encodeURIComponent(q)}&limit=5`);
+      results.innerHTML = data.users.map(u => `
+        <div onclick="selectCreditUser('${u._id}','${u.email}')" style="padding:8px 12px;background:var(--color-surface-2);border-radius:var(--radius-sm);cursor:pointer;font-size:0.85rem;transition:background var(--transition-fast);"
+             onmouseover="this.style.background='var(--color-surface)'" onmouseout="this.style.background='var(--color-surface-2)'">
+          ${u.firstName} ${u.lastName} <span class="text-muted">&lt;${u.email}&gt;</span> — ${formatCurrency(u.balance||0)}
+        </div>`).join('');
+    } catch {}
+  }, 350));
+
+  // Live preview
+  document.getElementById('creditAmount').addEventListener('input', function() {
+    const v = parseFloat(this.value) || 0;
+    document.getElementById('creditPreviewAmount').textContent = formatCurrency(v);
+  });
+  document.getElementById('creditDescription').addEventListener('input', function() {
+    document.getElementById('previewDesc').textContent = this.value || '—';
+  });
+
+  // Soumission
+  document.getElementById('creditForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const userId = document.getElementById('creditUserId').value;
+    const amount = parseFloat(document.getElementById('creditAmount').value);
+    const description = document.getElementById('creditDescription').value.trim();
+
+    if (!userId) { showToast('Sélectionnez un utilisateur.', 'error'); return; }
+    if (!amount || amount <= 0) { document.getElementById('creditAmountError').textContent = 'Montant invalide'; document.getElementById('creditAmountError').classList.add('visible'); return; }
+    if (!description || description.length < 5) { document.getElementById('creditDescError').textContent = 'Motif requis (min 5 caractères)'; document.getElementById('creditDescError').classList.add('visible'); return; }
+
+    if (!confirm(`Confirmer ${currentDirection === 'credit' ? 'le crédit' : 'le débit'} de ${formatCurrency(amount)} ?\n\nMotif: ${description}`)) return;
+
+    const btn = document.getElementById('creditBtn');
+    btn.disabled = true; btn.textContent = 'Traitement...';
+
+    try {
+      const data = await API.admin.creditAccount({ userId, amount, description, direction: currentDirection });
+      showToast(`${data.message} Nouveau solde: ${formatCurrency(data.newBalance)}`, 'success', 6000);
+      document.getElementById('creditForm').reset();
+      document.getElementById('creditUserSelected').style.display = 'none';
+      document.getElementById('creditPreviewAmount').textContent = formatCurrency(0);
+      document.getElementById('previewUser').textContent = '—';
+      document.getElementById('previewDesc').textContent = '—';
+      selectedUserId = null;
+    } catch (err) {
+      const alertEl = document.getElementById('creditAlert');
+      alertEl.className = 'alert alert-error'; alertEl.textContent = err.message; alertEl.style.display = 'flex';
+    } finally { btn.disabled = false; btn.textContent = 'Confirmer l\'opération'; }
+  });
+}
+
+function selectCreditUser(id, email) {
+  selectedUserId = id;
+  document.getElementById('creditUserId').value = id;
+  document.getElementById('creditUserResults').innerHTML = '';
+  document.getElementById('creditUserSelected').style.display = 'block';
+  document.getElementById('creditUserSelected').innerHTML = `✓ Sélectionné: <strong>${email}</strong>`;
+  document.getElementById('previewUser').textContent = email;
+}
+
+// ─── Audit Logs ────────────────────────────────────────────────
+async function loadLogs(page = 1) {
+  const action   = document.getElementById('logActionFilter').value;
+  const severity = document.getElementById('logSeverityFilter').value;
+  let params = `page=${page}&limit=30`;
+  if (action)   params += `&action=${action}`;
+  if (severity) params += `&severity=${severity}`;
+
+  const tbody = document.getElementById('logsTableBody');
+  tbody.innerHTML = '<tr><td colspan="6" class="tx-empty">Chargement...</td></tr>';
+
+  try {
+    const data = await API.admin.getLogs(params);
+    document.getElementById('logCount').textContent = `${data.total} entrée(s)`;
+
+    if (!data.logs.length) { tbody.innerHTML = '<tr><td colspan="6" class="tx-empty">Aucun log</td></tr>'; return; }
+
+    const sevColors = { low: 'badge-neutral', medium: 'badge-info', high: 'badge-warning', critical: 'badge-danger' };
+    tbody.innerHTML = data.logs.map(l => `
+      <tr class="log-severity-${l.severity}">
+        <td style="font-size:0.78rem;color:var(--color-text-2);white-space:nowrap">${formatDateTime(l.createdAt)}</td>
+        <td><span class="badge badge-neutral" style="font-size:0.7rem;font-family:monospace">${l.action}</span></td>
+        <td style="font-size:0.82rem">${l.performedBy?.email || '—'}</td>
+        <td style="font-size:0.82rem;color:var(--color-text-2)">${l.targetUser?.email || '—'}</td>
+        <td style="font-size:0.8rem;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${l.description}">${l.description}</td>
+        <td><span class="badge ${sevColors[l.severity]||'badge-neutral'}">${l.severity}</span></td>
+      </tr>`).join('');
+
+    renderPagination('logsPagination', page, data.pages, loadLogs);
+  } catch (err) { tbody.innerHTML = `<tr><td colspan="6" class="tx-empty">${err.message}</td></tr>`; }
+}
+
+// ─── Helper pagination ─────────────────────────────────────────
+function renderPagination(containerId, currentPage, totalPages, loadFn) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = '';
+  if (totalPages <= 1) return;
+  for (let p = 1; p <= totalPages; p++) {
+    const btn = document.createElement('button');
+    btn.className = `btn btn-sm ${p === currentPage ? 'btn-primary' : 'btn-secondary'}`;
+    btn.textContent = p; btn.onclick = () => loadFn(p);
+    el.appendChild(btn);
+  }
+}
+
+// ─── Navigation ────────────────────────────────────────────────
+const tabLoaders = { users: () => loadUsers(1), loans: () => loadLoansAdmin(1), logs: () => loadLogs(1), dashboard: () => loadDashboard() };
+function switchTab(tab) {
+  ['dashboard','users','loans','credit','logs'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t === tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.nav-item[data-tab]').forEach(i => i.classList.toggle('active', i.dataset.tab === tab));
+  const titles = { dashboard:'Dashboard', users:'Utilisateurs', loans:'Prêts', credit:'Crédit / Débit', logs:'Audit Logs' };
+  document.getElementById('topbarTitle').textContent = titles[tab] || tab;
+  if (tabLoaders[tab]) tabLoaders[tab]();
+}
+
+document.querySelectorAll('.nav-item[data-tab]').forEach(i => i.addEventListener('click', () => switchTab(i.dataset.tab)));
+document.getElementById('userSearch').addEventListener('input', debounce(() => loadUsers(1), 400));
+document.getElementById('userStatusFilter').addEventListener('change', () => loadUsers(1));
+document.getElementById('loanStatusFilter').addEventListener('change', () => loadLoansAdmin(1));
+document.getElementById('logActionFilter').addEventListener('change', () => loadLogs(1));
+document.getElementById('logSeverityFilter').addEventListener('change', () => loadLogs(1));
+document.getElementById('sidebarToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
+document.getElementById('logoutBtn').addEventListener('click', async () => { try { await API.auth.logout(); } catch {} API.redirectToLogin(); });
+['userDetailModal','rejectModal'].forEach(id => document.getElementById(id).addEventListener('click', function(e) { if(e.target===this) this.classList.add('hidden'); }));
+
+init();
+</script>
+<script src="../js/extras.js"></script>
+</body>
+</html>

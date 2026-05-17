@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>FAQ — NeoBank</title>
+  <link rel="stylesheet" href="../css/main.css"/><link rel="stylesheet" href="../css/landing.css"/>
+  <link rel="stylesheet" href="../css/enhancements.css"/><link rel="stylesheet" href="../css/pages.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo"><span class="logo-icon">◆</span><span class="logo-text">NeoBank</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#features">Fonctionnalités</a></li><li><a href="about.html">À Propos</a></li><li><a href="simulator.html">Simulateur</a></li><li><a href="pricing.html">Tarifs</a></li><li><a href="faq.html">FAQ</a></li><li><a href="download.html">📱 App</a></li>
+      <li class="nav-mobile-register" style="display:none;"><a href="register.html" class="btn btn-primary btn-full">Ouvrir un compte</a></li>
+    </ul>
+    <div class="nav-actions"><a href="login.html" class="btn btn-ghost">Connexion</a><a href="register.html" class="btn btn-primary">Ouvrir un compte</a></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-bg"><div class="page-orb page-orb-1"></div><div class="page-orb page-orb-2"></div><div class="page-grid-bg"></div></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Accueil</a><span class="breadcrumb-sep">›</span><span>FAQ</span></div>
+    <div class="page-tag">Centre d'aide</div>
+    <h1>Questions <span class="gradient-text">fréquentes</span></h1>
+    <p>Trouvez rapidement les réponses à vos questions. Si vous ne trouvez pas ce que vous cherchez, <a href="contact.html" style="color:var(--color-accent);">contactez-nous</a>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="page-wrap">
+    <!-- CATÉGORIES -->
+    <div class="faq-cats reveal">
+      <button class="faq-cat-btn active" data-cat="all">Toutes</button>
+      <button class="faq-cat-btn" data-cat="compte">💳 Mon compte</button>
+      <button class="faq-cat-btn" data-cat="virement">💸 Virements</button>
+      <button class="faq-cat-btn" data-cat="credit">🏦 Crédit</button>
+      <button class="faq-cat-btn" data-cat="securite">🔒 Sécurité</button>
+      <button class="faq-cat-btn" data-cat="tarifs">💰 Tarifs</button>
+    </div>
+
+    <div class="faq-list" id="faqList">
+      <!-- COMPTE -->
+      <div class="faq-item reveal" data-cat="compte">
+        <button class="faq-q">Comment ouvrir un compte NeoBank ?<span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p>L'ouverture de compte se fait entièrement en ligne en moins de 5 minutes. Rendez-vous sur notre page <a href="register.html" style="color:var(--color-accent)">Créer un compte</a>, renseignez vos informations personnelles, confirmez votre email et voilà — votre compte est actif immédiatement.</p></div>
+      </div>
+      <div class="faq-item reveal rd1" data-cat="compte">
+        <button class="faq-q">Quels documents sont nécessaires ?<span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p>Pour le compte Essentiel gratuit, aucun document n'est requis : juste un email valide. Pour le compte Premium et les services de crédit, une pièce d'identité et un justificatif de domicile vous seront demandés lors d'une étape de vérification complémentaire.</p></div>
+      </div>
+      <div class="faq-item reveal rd2" data-cat="compte">
+        <button class="faq-q">Puis-je avoir plusieurs comptes NeoBank ?<span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p>Chaque personne physique ne peut détenir qu'un seul compte NeoBank à titre personnel. Cependant, si vous êtes entrepreneur, vous pouvez ouvrir un compte professionnel distinct de votre compte personnel.</p></div>
+      </div>
+      <div class="faq-item reveal" data-cat="compte">
+        <button class="faq-q">Comment fermer mon compte ?<span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p>Pour fermer votre compte, connectez-vous, allez dans Paramètres → Compte → Fermer mon compte. Ou envoyez un email à support@neobank.fr depuis votre adresse enregistrée. Le solde restant vous sera remboursé sous 5 jours ouvrés.</p></div>
+      </div>
+      <!-- VIREMENTS -->
+      <div class="faq-item reveal" data-cat="virement">
+        <button class="faq-q">Combien de temps prend un virement SEPA ?<span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p>Les virements SEPA standard arrivent en 1 à 2 jours ouvrés. Les virements SEPA instantanés (disponibles avec le compte Premium) arrivent en moins de 10 secondes, 24h/24 et 7j/7 y compris les week-ends et jours fériés.</p></div>
+      </div>
+      <div class="faq-item reveal rd1" data-cat="virement">
+        <button class="faq-q">Y a-t-il des frais sur les virements ?<span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p>Les virements SEPA entrants et sortants sont gratuits pour tous les clients. Les virements internationaux (hors zone SEPA) sont facturés selon notre <a href="pricing.html" style="color:var(--color-accent)">grille tarifaire</a>. Le compte Premium bénéficie de virements internationaux à tarif réduit.</p></div>
+      </div>
+      <div class="faq-item reveal rd2" data-cat="virement">
+        <button class="faq-q">Mon virement n'est pas arrivé — que faire ?<span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p>Vérifiez d'abord l'IBAN du bénéficiaire dans votre historique de transactions. Si le virement est effectué depuis plus de 2 jours ouvrés, <a href="contact.html" style="color:var(--color-accent)">contactez notre support</a> avec le numéro de référence de la transaction.</p></div>
+      </div>
+      <!-- CRÉDIT -->
+      <div class="faq-item reveal" data-cat="credit">
+        <button class="faq-q">Quels types de crédits proposez-vous ?<span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p>NeoBank propose des crédits personnels (500€ à 75 000€), des crédits auto, des prêts immobiliers et des prêts étudiants. Utilisez notre <a href="simulator.html" style="color:var(--color-accent)">simulateur</a> pour estimer vos mensualités avant de faire une demande.</p></div>
+      </div>
+      <div class="faq-item reveal rd1" data-cat="credit">
+        <button class="faq-q">Comment faire une demande de crédit ?<span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p>Depuis votre dashboard NeoBank, allez dans la section "Crédit" et remplissez le formulaire de demande en ligne. Vous recevrez une réponse de principe sous 24 à 48 heures. Des justificatifs de revenus vous seront demandés à cette étape.</p></div>
+      </div>
+      <div class="faq-item reveal rd2" data-cat="credit">
+        <button class="faq-q">Quel est le taux d'intérêt ?<span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p>Les taux varient selon le type de crédit, la durée et votre profil. À titre indicatif : crédit personnel à partir de 2,9% TAEG, crédit auto à partir de 4,2% TAEG, prêt immobilier à partir de 1,8% TAEG. Consultez notre <a href="simulator.html" style="color:var(--color-accent)">simulateur</a> pour une estimation personnalisée.</p></div>
+      </div>
+      <!-- SÉCURITÉ -->
+      <div class="faq-item reveal" data-cat="securite">
+        <button class="faq-q">Mes fonds sont-ils en sécurité ?<span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p>Oui. NeoBank est un établissement de paiement agréé. Vos fonds sont protégés et ségrégués des fonds propres de la société, conformément à la réglementation européenne. De plus, nous bénéficions du Fonds de Garantie des Dépôts et de Résolution (FGDR) jusqu'à 100 000€.</p></div>
+      </div>
+      <div class="faq-item reveal rd1" data-cat="securite">
+        <button class="faq-q">Comment activer l'authentification à deux facteurs ?<span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p>Connectez-vous, allez dans Paramètres → Sécurité → Authentification à deux facteurs. Vous pouvez activer le 2FA par SMS ou via une application d'authentification (Google Authenticator, Authy). Nous recommandons vivement cette option.</p></div>
+      </div>
+      <div class="faq-item reveal rd2" data-cat="securite">
+        <button class="faq-q">J'ai perdu mon téléphone — que faire ?<span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p>Bloquez immédiatement l'accès à votre compte en appelant notre ligne sécurité : +33 1 23 45 67 89 (disponible 24/7). Vous pouvez également vous connecter depuis un autre appareil et suspendre les sessions actives dans Paramètres → Sécurité → Sessions.</p></div>
+      </div>
+      <!-- TARIFS -->
+      <div class="faq-item reveal" data-cat="tarifs">
+        <button class="faq-q">Le compte de base est-il vraiment gratuit ?<span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p>Oui, le compte Essentiel est totalement gratuit : pas de frais d'ouverture, pas d'abonnement mensuel. Certaines opérations spécifiques (virements internationaux, assurances, etc.) peuvent être facturées. Consultez notre <a href="pricing.html" style="color:var(--color-accent)">grille tarifaire complète</a>.</p></div>
+      </div>
+      <div class="faq-item reveal rd1" data-cat="tarifs">
+        <button class="faq-q">Comment passer au compte Premium ?<span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><p>Depuis votre dashboard → Paramètres → Mon abonnement → Passer à Premium. L'abonnement est de 9€/mois, sans engagement. Le premier mois est offert. Vous pouvez revenir au compte gratuit à tout moment.</p></div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-bloc reveal" style="margin-top:var(--space-3xl);">
+      <h2>Vous n'avez pas trouvé votre réponse ?</h2>
+      <p>Notre équipe support est disponible pour vous aider personnellement.</p>
+      <div class="cta-row">
+        <a href="contact.html" class="btn btn-primary btn-large">Contacter le support</a>
+        <a href="register.html" class="btn btn-outline btn-large">Ouvrir un compte</a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ─── BANNIÈRE IMAGE SUPPORT ──────────────────────────────── -->
+<div class="nb-divider"></div>
+<section class="nb-img-support" style="padding:64px 0;">
+  <div style="max-width:800px;margin:0 auto;padding:0 24px;text-align:center;">
+    <div class="nb-badge nb-badge-violet" style="margin-bottom:20px;">💬 Support humain</div>
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:800;margin-bottom:16px;">
+      Une vraie personne, pas un <span class="text-gradient-violet">chatbot</span>
+    </h2>
+    <p style="color:#a0aec0;line-height:1.75;max-width:560px;margin:0 auto 28px;">
+      Notre équipe support est disponible 7j/7 pour répondre à toutes vos questions. Parce que votre argent mérite une attention humaine.
+    </p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="contact.html" class="btn btn-primary" style="width:auto;padding:14px 28px;">Nous contacter</a>
+      <a href="register.html" class="btn btn-outline" style="width:auto;padding:14px 28px;">Ouvrir un compte</a>
+    </div>
+  </div>
+</section>
+<div class="nb-divider-warm nb-divider"></div>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand"><div class="nav-logo" style="margin-bottom:var(--space-sm)"><span class="logo-icon">◆</span><span class="logo-text">NeoBank</span></div><p>La banque du futur, aujourd'hui.</p></div>
+    <div class="footer-links">
+      <div class="footer-col"><h4>Produits</h4><a href="open-account.html">Compte courant</a><a href="simulator.html">Crédit</a><a href="pricing.html">Tarifs</a></div>
+      <div class="footer-col"><h4>Entreprise</h4><a href="about.html">À Propos</a><a href="security.html">Sécurité</a><a href="contact.html">Contact</a><a href="faq.html">FAQ</a></div>
+      <div class="footer-col"><h4>Accès</h4><a href="login.html">Connexion</a><a href="register.html">Créer un compte</a></div>
+      <div class="footer-col"><h4>Légal</h4><a href="legal.html">CGU</a><a href="legal.html">Confidentialité</a><a href="legal.html">Mentions légales</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 NeoBank. Tous droits réservés.</p></div>
+</footer>
+<div id="toast-container"></div>
+<script src="../js/main.js"></script>
+<script>
+  // Accordion
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', function(){
+      const item = this.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+  // Filtre catégories
+  document.querySelectorAll('.faq-cat-btn').forEach(btn => {
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.faq-cat-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const cat = this.dataset.cat;
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.style.display = (cat === 'all' || item.dataset.cat === cat) ? '' : 'none';
+      });
+    });
+  });
+  // Reveal
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}}),{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+<script src="../js/extras.js"></script>
+</body>
+</html>
